@@ -1,0 +1,20 @@
+.title {
+    font-family: 'Permanent Marker', cursive;
+}
+
+.nav button,  .search button {
+    background-color: #904FBB;
+    border: #904FBB;
+    color: white;
+}
+
+.nav button:hover,  .search button:hover {
+    background-color: #cb96ee;
+    border: #cb96ee;
+    color: black;
+}
+
+
+
+
+
