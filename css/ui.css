@@ -36,5 +36,21 @@
     margin-left: 1%;
     margin-top: 5%;
 }
+ 
+@media (max-width: 576px) {
+    .browseMusic, .browseCommunity {
+        justify-content: center;
+    }
+}
+
+@media (min-width: 576px) {
+    .browseMusic {
+        justify-content: end;
+    }
+
+    .browseCommunity {
+        justify-content: start;
+    }
+}
 
 
