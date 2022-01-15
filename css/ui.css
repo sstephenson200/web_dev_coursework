@@ -1,25 +1,40 @@
-html, body, video {
-    padding: 0;
-    margin: 0;
+.content {
+    background-color: black;
+    color: white;
 }
 
-.title {
+.title, .welcomeMessage {
     font-family: 'Permanent Marker', cursive;
 }
 
-.nav button,  .search button {
+.nav button,  .search button, .introButtons button {
     background-color: #904FBB;
     border: #904FBB;
     color: white;
 }
 
-.nav button:hover,  .search button:hover {
+.nav button:hover,  .search button:hover, .introButtons button:hover {
     background-color: #cb96ee;
     border: #cb96ee;
     color: black;
 }
 
 .showcase {
-    height: 80vh;
+    background-image: url("../img/showcase_background.jpg");
+    background-size: cover;
+    background-position: center;
+    height: 75vh;
 }
+
+.welcomeMessage {
+    text-align: center;
+    padding-top: 10%;
+    text-shadow: 1px 0 black, 0 1px black, 1px 0 black, 0 1px black;
+}
+
+.introButtons button{
+    margin-left: 1%;
+    margin-top: 5%;
+}
+
 

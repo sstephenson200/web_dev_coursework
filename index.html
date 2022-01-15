@@ -19,13 +19,13 @@
 
 <body>
 
-    <div class="container-fluid p-0">
+    <div class="container-fluid p-0 content">
 
         <!-- Header with search bar -->
         <header class="py-2">
             <div class="row">
                 <div class="col-12 col-sm-8 col-md-9">
-                    <a href="#" class="d-flex mb-3 mb-lg-0 text-dark text-decoration-none">
+                    <a href="#" class="d-flex mb-3 mb-lg-0 text-light text-decoration-none">
                         <img class="me-2" width="40" height="32" src="img/logo.png">
                         <span class="fs-4 title">Pebble Revolution</span>
                     </a>
@@ -34,7 +34,7 @@
                     <div class="d-flex flex-row">
                         <form class="col-12 col-lg-auto mb-3 mb-lg-0 input-group search">
                             <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
-                            <button class="btn btn-outline-success" type="submit"><i class="fa fa-search"></i></button>
+                            <button class="btn" type="submit"><i class="fa fa-search"></i></button>
                         </form>
                     </div>
                 </div>
@@ -45,7 +45,7 @@
         <nav class="py-2">
             <div class="row d-flex align-items-center">
                 <div class="col-3 col-md-8">
-                    <nav class="navbar navbar-expand-sm navbar-light">
+                    <nav class="navbar navbar-expand-sm navbar-dark">
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false"
                             aria-label="Toggle navigation">
@@ -54,14 +54,13 @@
                         <div class="collapse navbar-collapse" id="navbarMenu">
                             <ul class="navbar-nav me-auto">
                                 <li class="nav-item">
-                                    <a class="nav-link link-dark px-2 active" aria-current="page"
-                                        href="index.html">Home</a>
+                                    <a class="nav-link px-2 active" aria-current="page" href="index.html">Home</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link link-dark px-2" href="#">Music</a>
+                                    <a class="nav-link px-2" href="#">Music</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link link-dark px-2" href="#">Communities</a>
+                                    <a class="nav-link px-2" href="#">Communities</a>
                                 </li>
                             </ul>
                         </div>
@@ -69,8 +68,8 @@
                 </div>
                 <div class="col-9 col-md-4 d-flex justify-content-end">
                     <ul class="nav">
-                        <li class="nav-item px-2"><button type="button" class="btn btn-primary">Login</button></li>
-                        <li class="nav-item px-2"><button type="button" class="btn btn-primary">Sign up</button>
+                        <li class="nav-item px-2"><button type="button" class="btn">Login</button></li>
+                        <li class="nav-item px-2"><button type="button" class="btn">Sign up</button>
                         </li>
                     </ul>
                 </div>
@@ -78,11 +77,16 @@
         </nav>
 
         <!-- Jumbotron -->
-        <div class="jumbotron-fluid showcase">
-            <video autoplay muted loop src="img/showcase.mp4" type="video/mp4"></video>
-            <h1 class="display-3">Revolutionise your listening</h1>
-            <p><a class="btn btn-primary btn-lg" href="#" role="button">Browse All Music &raquo;</a></p>
-            <p><a class="btn btn-primary btn-lg" href="#" role="button">Browse All Communities &raquo;</a></p>
+        <div class="jumbotron jumbotron-fluid showcase">
+            <div class="row">
+                <h1 class="display-2 welcomeMessage">Revolutionise your listening</h1>
+            </div>
+            <div class="row">
+                <div class="col-12 introButtons d-flex justify-content-center">
+                    <button type="button" class="btn btn-lg text-nowrap">Browse Music &raquo;</button>
+                    <button type="button" class="btn btn-lg text-nowrap">Browse Communities &raquo;</button>
+                </div>
+            </div>
         </div>
 
     </div>
