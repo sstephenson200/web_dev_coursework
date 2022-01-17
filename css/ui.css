@@ -36,6 +36,29 @@
     margin-left: 1%;
     margin-top: 5%;
 }
+
+.trendingMusic {
+    margin-top: 1.5%;
+}
+
+.fa-arrow-circle-left, .fa-arrow-circle-right {
+    color: #904FBB;
+}
+
+.card {
+    color: black;
+    margin: 0;
+    width: 18rem;
+}
+
+.artist, .communityDescription {
+    font-style: italic;
+}
+
+.rightButton {
+    margin: 0px;
+    padding: 0px;
+}
  
 @media (max-width: 576px) {
     .browseMusic, .browseCommunity {
