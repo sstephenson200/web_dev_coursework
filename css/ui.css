@@ -41,23 +41,43 @@
     margin-top: 1.5%;
 }
 
-.fa-arrow-circle-left, .fa-arrow-circle-right {
-    color: #904FBB;
+#musicCarousel {
+    margin-left: 10vh;
+    margin-right: 10vh;
+}
+
+.musicCard {
+    float: left;
 }
 
 .card {
     color: black;
-    margin: 0;
     width: 18rem;
+    float: right;
 }
 
 .artist, .communityDescription {
     font-style: italic;
 }
 
-.rightButton {
-    margin: 0px;
-    padding: 0px;
+.view a {
+    background-color: #904FBB;
+    border: #904FBB;
+    color: white; 
+}
+
+.view a:hover {
+    background-color: #cb96ee;
+    border: #cb96ee;
+    color: black;
+}
+
+.carousel-control-prev {
+    margin-left: -20vh;
+}
+
+.carousel-control-next {
+    margin-right: -20vh;
 }
  
 @media (max-width: 576px) {
@@ -75,5 +95,3 @@
         justify-content: start;
     }
 }
-
-
