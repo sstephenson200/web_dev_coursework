@@ -1,5 +1,5 @@
 .content {
-    background-color: black;
+    background-color: #1F1B24;
     color: white;
 }
 
@@ -7,13 +7,13 @@
     font-family: 'Permanent Marker', cursive;
 }
 
-.nav button,  .search button, .introButtons button {
+.nav button,  .search button, .introButtons button, .footer button {
     background-color: #904FBB;
     border: #904FBB;
     color: white;
 }
 
-.nav button:hover,  .search button:hover, .introButtons button:hover {
+.nav button:hover,  .search button:hover, .introButtons button:hover, .footer button:hover {
     background-color: #cb96ee;
     border: #cb96ee;
     color: black;
@@ -41,23 +41,38 @@
     margin-top: 1.5%;
 }
 
-#musicCarousel {
-    margin-left: 10vh;
-    margin-right: 10vh;
-}
-
-.musicCard {
+.music {
     float: left;
 }
 
-.card {
-    color: black;
+.musicCard {
     width: 18rem;
     float: right;
+    padding: 2%;
+}
+
+.musicCard:hover {
+    opacity: 0.75;
+}
+
+.albumArt {
+    border-radius: 5% !important; 
 }
 
 .artist, .communityDescription {
     font-style: italic;
+}
+
+.fa-star {
+    color: gold;
+}
+
+.fa-check, .fa-plus {
+    color: green;
+}
+
+.fa-heart {
+    color: red;
 }
 
 .view a {
@@ -72,12 +87,42 @@
     color: black;
 }
 
-.carousel-control-prev {
-    margin-left: -20vh;
+.footer h6 {
+    font-weight: bold;
 }
 
-.carousel-control-next {
-    margin-right: -20vh;
+#emailSignUp {
+    padding-left: 2%;
+    padding-right: 30%;
+}
+
+.fab {
+    text-decoration: none;
+    text-align: center;
+    color: white;
+    padding: 0.5%;
+    margin: 0.5%;
+}
+
+.fa-facebook {
+    background: #3B5998;
+}
+
+.fa-twitter {
+    background: #55ACEE;
+}
+
+.fa-instagram {
+    background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
+}
+
+.fab:hover {
+    opacity: 0.75;
+    color: white;
+}
+
+.trademark {
+    color: gray;
 }
  
 @media (max-width: 576px) {
