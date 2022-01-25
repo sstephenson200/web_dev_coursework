@@ -104,21 +104,24 @@
     color: black;
 }
 
+.footer {
+    background-color: rgb(65, 26, 57);
+}
+
 .footer h6 {
     font-weight: bold;
 }
 
 #emailSignUp {
     padding-left: 2%;
-    padding-right: 30%;
 }
 
 .fab {
     text-decoration: none;
     text-align: center;
     color: white;
-    padding: 0.5%;
-    margin: 0.5%;
+    padding: 1%;
+    margin: 1.5%;
 }
 
 .fa-facebook {
