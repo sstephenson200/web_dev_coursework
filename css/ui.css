@@ -3,11 +3,21 @@
     color: white;
 }
 
+.site_header {
+    background-color: #1F1B24;
+}
+
 .title, .welcomeMessage {
     font-family: 'Permanent Marker', cursive;
 }
 
 .nav button,  .search button, .introButtons button, .footer button {
+    background-color: #904FBB;
+    border: #904FBB;
+    color: white;
+}
+
+.styled_button {
     background-color: #904FBB;
     border: #904FBB;
     color: white;
