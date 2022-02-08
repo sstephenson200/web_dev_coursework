@@ -36,11 +36,6 @@
     text-shadow: 1px 0 black, 0 1px black, 1px 0 black, 0 1px black;
 }
 
-.introButtons button{
-    margin-left: 1%;
-    margin-top: 5%;
-}
-
 .trendingMusic {
     margin-top: 1.5%;
 }
@@ -112,7 +107,7 @@
     background-color: rgb(65, 26, 57);
 }
 
-.footer h6 {
+.footer_title {
     font-weight: bold;
 }
 

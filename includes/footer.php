@@ -2,7 +2,7 @@
             <div class="row">
                 <div class="col-12 col-md-9" id="emailSignUp">
                     <div class="row my-2">
-                        <h6>Join The Revolution</h6>
+                        <h6 class="footer_title">Join The Revolution</h6>
                     </div>
                     <div class="row">
                         <p>Sign up to our newsletter to hear more about Pebble Revolution!</p>
@@ -18,7 +18,7 @@
                 </div>
                 <div class="col-12 col-md-3 contact">
                     <div class="row my-2">
-                        <h6>Stay In Touch</h6>
+                        <h6 class="footer_title">Stay In Touch</h6>
                     </div>
                     <div class="row">
                         <p>Keep up to date with our social media</p>
