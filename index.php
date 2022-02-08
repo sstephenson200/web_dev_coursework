@@ -55,8 +55,8 @@
             </div>
             <div id="musicCarousel" class="row carousel slide carousel-multi-item" data-bs-interval="false">
 
-                <div class="col-1 carouselArrowLeft">
-                    <button class="carousel-control-prev" data-bs-target="#musicCarousel" data-bs-slide="prev">
+                <div class="col-1">
+                    <button class="carousel-control-prev carouselArrowLeft" data-bs-target="#musicCarousel" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="sr-only">Previous</span>
                     </button>
@@ -66,73 +66,9 @@
                     <div class="carousel-inner ">
                         <div class="carousel-item active">
 
-                            <div class="col-2 music mx-4">
-                                <div class="card musicCard text-center bg-dark text-white border-secondary mb-3">
-                                    <img class="card-img-top albumArt" src="img/album_cover.jpg" alt="Card image cap">
-                                    <div class="card-body">
-                                        <p>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        </p>
-                                        <h6 class="card-title album">Sgt. Pepper's Lonely Hearts Club Band</h6>
-                                        <h6 class="card-subtitle artist">The Beatles</h6>
-                                    </div>
-                                    <div class="card-footer row border-secondary align-items-center mx-0">
-                                        <div class="col-4 own">
-                                            <a role="button">
-                                                <i id="ownIcon" class="fas fa-plus fa-lg" data-toggle="popover"
-                                                    title="Own" data-content="Add to owned music"></i>
-                                            </a>
-                                        </div>
-                                        <div class="col-4 favourite">
-                                            <a role="button">
-                                                <i id="favouriteIcon" class="far fa-heart fa-lg" data-toggle="popover"
-                                                    title="Favourite" data-content="Add to your favourites"></i>
-                                            </a>
-                                        </div>
-                                        <div class="col-4 view">
-                                            <a href="#" class="btn">View</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-2 music mx-4">
-                                <div class="card musicCard text-center bg-dark text-white border-secondary mb-3">
-                                    <img class="card-img-top albumArt" src="img/album_cover.jpg" alt="Card image cap">
-                                    <div class="card-body">
-                                        <p>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        </p>
-                                        <h6 class="card-title album">Sgt. Pepper's Lonely Hearts Club Band</h6>
-                                        <h6 class="card-subtitle artist">The Beatles</h6>
-                                    </div>
-                                    <div class="card-footer row border-secondary align-items-center mx-0">
-                                        <div class="col-4 own">
-                                            <a role="button">
-                                                <i id="ownIcon" class="fas fa-plus fa-lg" data-toggle="popover"
-                                                    title="Own" data-content="Add to owned music"></i>
-                                            </a>
-                                        </div>
-                                        <div class="col-4 favourite">
-                                            <a role="button">
-                                                <i id="favouriteIcon" class="far fa-heart fa-lg" data-toggle="popover"
-                                                    title="Favourite" data-content="Add to your favourites"></i>
-                                            </a>
-                                        </div>
-                                        <div class="col-4 view">
-                                            <a href="#" class="btn">View</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <?php
+                            include("includes/music_card.php");
+                            ?>
 
                             <div class="col-2 music mx-4">
                                 <div class="card musicCard text-center bg-dark text-white border-secondary mb-3">
@@ -314,8 +250,8 @@
                     </div>
                 </div>
 
-                <div class="col-1 carouselArrowRight">
-                    <button class="carousel-control-next" data-bs-target="#musicCarousel" data-bs-slide="next">
+                <div class="col-1">
+                    <button class="carousel-control-next carouselArrowRight" data-bs-target="#musicCarousel" data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="sr-only">Next</span>
                     </button>
@@ -332,8 +268,8 @@
             </div>
             <div id="communityCarousel" class="row carousel slide carousel-multi-item" data-bs-interval="false">
 
-                <div class="col-1 carouselArrowLeft">
-                    <button class="carousel-control-prev" data-bs-target="#communityCarousel" data-bs-slide="prev">
+                <div class="col-1">
+                    <button class="carousel-control-prev carouselArrowLeft" data-bs-target="#communityCarousel" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="sr-only">Previous</span>
                     </button>
@@ -342,30 +278,6 @@
                 <div class="col-10">
                     <div class="carousel-inner ">
                         <div class="carousel-item active">
-
-                            <div class="col-2 community mx-4">
-                                <div class="card communityCard text-center bg-dark text-white border-secondary mb-3">
-                                    <img class="card-img-top communityArt" src="img/community_pic.jpg"
-                                        alt="Card image cap">
-                                    <div class="card-body">
-                                        <h6 class="card-title communityName">Clashing with Giants</h6>
-                                        <h6 class="card-text communityDescription">A community for fans of The Clash! |
-                                            46,000 fans
-                                        </h6>
-                                    </div>
-                                    <div class="card-footer row border-secondary align-items-center mx-0">
-                                        <div class="col-6 own">
-                                            <a role="button">
-                                                <i id="joinIcon" class="fas fa-user-plus fa-lg" data-toggle="popover"
-                                                    title="Join" data-content="Join this community"></i>
-                                            </a>
-                                        </div>
-                                        <div class="col-6 view">
-                                            <a href="#" class="btn">View</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
                             <div class="col-2 community mx-4">
                                 <div class="card communityCard text-center bg-dark text-white border-secondary mb-3">
@@ -520,8 +432,8 @@
                     </div>
                 </div>
 
-                <div class="col-1 carouselArrowRight">
-                    <button class="carousel-control-next" data-bs-target="#communityCarousel" data-bs-slide="next">
+                <div class="col-1">
+                    <button class="carousel-control-next carouselArrowRight" data-bs-target="#communityCarousel" data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="sr-only">Next</span>
                     </button>
@@ -541,29 +453,6 @@
 
 </body>
 
-<script>
-
-    $(document).ready(function () {
-        $('[data-toggle="popover"]').popover({
-            placement: 'bottom',
-            trigger: 'hover'
-        });
-    });
-
-    $('#favouriteIcon').click(function () {
-        $(this).toggleClass("far fa-heart fa-lg");
-        $(this).toggleClass("fas fa-heart fa-lg");
-    });
-
-    $('#ownIcon').click(function () {
-        $(this).toggleClass("fas fa-plus fa-lg");
-        $(this).toggleClass("fas fa-check fa-lg");
-    });
-
-    $('#joinIcon').click(function () {
-        $(this).toggleClass("fas fa-user-plus fa-lg");
-        $(this).toggleClass("fas fa-users fa-lg");
-    });
-</script>
+<script type="text/javascript" src="js/card_functions.js"></script>
 
 </html>
