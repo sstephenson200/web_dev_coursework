@@ -60,7 +60,7 @@
 
 .musicCard, .communityCard {
     width: 18rem;
-    padding: 0.5%;
+    padding: 5%;
 }
 
 .musicCard:hover, .communityCard:hover {
@@ -75,7 +75,7 @@
     font-style: italic;
 }
 
-.fa-star {
+.fa-star-half, .fa-star {
     color: gold;
 }
 
@@ -89,18 +89,6 @@
 
 .fa-user-plus, .fa-users {
     color: white;
-}
-
-.view a {
-    background-color: #904FBB;
-    border: #904FBB;
-    color: white; 
-}
-
-.view a:hover {
-    background-color: #cb96ee;
-    border: #cb96ee;
-    color: black;
 }
 
 .footer {

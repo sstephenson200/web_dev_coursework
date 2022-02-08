@@ -1,3 +1,27 @@
+<?php
+
+    include("connections/dbconn.php");
+
+    $trending_music_query = "SELECT album.album_title, artist.artist_name, art.art_url, AVG(review.review_rating) AS AverageRating FROM album 
+                            INNER JOIN review 
+                            ON album.album_id = review.album_id 
+                            INNER JOIN artist
+                            ON album.artist_id = artist.artist_id
+                            INNER JOIN art 
+                            ON album.art_id = art.art_id
+                            GROUP BY album.album_id 
+                            ORDER BY AverageRating DESC
+                            LIMIT 12;";
+
+    
+    $music_result = $conn -> query($trending_music_query);
+
+    if(!$music_result){
+		echo $conn -> error;
+	}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -64,113 +88,22 @@
 
                 <div class="col-10">
                     <div class="carousel-inner ">
+
                         <div class="carousel-item active">
 
-                            <?php
+                        <?php
+
+                        while($row = $music_result -> fetch_assoc()){
+                            $album_art_url = $row['art_url'];
+                            $rating = $row['AverageRating'];
+                            $album_title = $row['album_title'];
+                            $album_artist = $row['artist_name'];
+
+                            echo "<div class='col-2 music mx-5'>";
                             include("includes/music_card.php");
-                            ?>
-
-                            <div class="col-2 music mx-4">
-                                <div class="card musicCard text-center bg-dark text-white border-secondary mb-3">
-                                    <img class="card-img-top albumArt" src="img/album_cover.jpg" alt="Card image cap">
-                                    <div class="card-body">
-                                        <p>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        </p>
-                                        <h6 class="card-title album">Sgt. Pepper's Lonely Hearts Club Band</h6>
-                                        <h6 class="card-subtitle artist">The Beatles</h6>
-                                    </div>
-                                    <div class="card-footer row border-secondary align-items-center mx-0">
-                                        <div class="col-4 own">
-                                            <a role="button">
-                                                <i id="ownIcon" class="fas fa-plus fa-lg" data-toggle="popover"
-                                                    title="Own" data-content="Add to owned music"></i>
-                                            </a>
-                                        </div>
-                                        <div class="col-4 favourite">
-                                            <a role="button">
-                                                <i id="favouriteIcon" class="far fa-heart fa-lg" data-toggle="popover"
-                                                    title="Favourite" data-content="Add to your favourites"></i>
-                                            </a>
-                                        </div>
-                                        <div class="col-4 view">
-                                            <a href="#" class="btn">View</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-2 music mx-4">
-                                <div class="card musicCard text-center bg-dark text-white border-secondary mb-3">
-                                    <img class="card-img-top albumArt" src="img/album_cover.jpg" alt="Card image cap">
-                                    <div class="card-body">
-                                        <p>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        </p>
-                                        <h6 class="card-title album">Sgt. Pepper's Lonely Hearts Club Band</h6>
-                                        <h6 class="card-subtitle artist">The Beatles</h6>
-                                    </div>
-                                    <div class="card-footer row border-secondary align-items-center mx-0">
-                                        <div class="col-4 own">
-                                            <a role="button">
-                                                <i id="ownIcon" class="fas fa-plus fa-lg" data-toggle="popover"
-                                                    title="Own" data-content="Add to owned music"></i>
-                                            </a>
-                                        </div>
-                                        <div class="col-4 favourite">
-                                            <a role="button">
-                                                <i id="favouriteIcon" class="far fa-heart fa-lg" data-toggle="popover"
-                                                    title="Favourite" data-content="Add to your favourites"></i>
-                                            </a>
-                                        </div>
-                                        <div class="col-4 view">
-                                            <a href="#" class="btn">View</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-2 music mx-4">
-                                <div class="card musicCard text-center bg-dark text-white border-secondary mb-3">
-                                    <img class="card-img-top albumArt" src="img/album_cover.jpg" alt="Card image cap">
-                                    <div class="card-body">
-                                        <p>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        </p>
-                                        <h6 class="card-title album">Sgt. Pepper's Lonely Hearts Club Band</h6>
-                                        <h6 class="card-subtitle artist">The Beatles</h6>
-                                    </div>
-                                    <div class="card-footer row border-secondary align-items-center mx-0">
-                                        <div class="col-4 own">
-                                            <a role="button">
-                                                <i id="ownIcon" class="fas fa-plus fa-lg" data-toggle="popover"
-                                                    title="Own" data-content="Add to owned music"></i>
-                                            </a>
-                                        </div>
-                                        <div class="col-4 favourite">
-                                            <a role="button">
-                                                <i id="favouriteIcon" class="far fa-heart fa-lg" data-toggle="popover"
-                                                    title="Favourite" data-content="Add to your favourites"></i>
-                                            </a>
-                                        </div>
-                                        <div class="col-4 view">
-                                            <a href="#" class="btn">View</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            echo "</div>";
+                        }
+                        ?>
 
                         </div>
                         <div class="carousel-item">
