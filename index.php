@@ -28,7 +28,6 @@
 
     <div class="container-fluid p-0 content">
 
-    <!-- Sticky Header & Navbar-->
         <?php
         include("includes/navbar.php");
         ?>
@@ -39,12 +38,12 @@
                 <h1 class="display-2 welcomeMessage">Revolutionise your listening</h1>
             </div>
             <div class="row ">
-                <div class="col-xs-12 col-sm-6 introButtons d-flex browseMusic">
-                    <button type="button" class="btn btn-lg text-nowrap" href="album_browse.php">Browse Music &raquo;</button>
+                <div class="col-xs-12 col-sm-6 d-flex browseMusic">
+                    <a type="button" class="btn btn-lg text-nowrap styled_button mt-3" href="album_browse.php">Browse Music &raquo;</a>
                 </div>
-                <div class="col-xs-12 col-sm-6 introButtons d-flex browseCommunity">
-                    <button type="button" class="btn btn-lg text-nowrap" href="community_browse.php">Browse Communities
-                        &raquo;</button>
+                <div class="col-xs-12 col-sm-6 d-flex browseCommunity">
+                    <a type="button" class="btn btn-lg text-nowrap styled_button mt-3" href="community_browse.php">Browse Communities
+                        &raquo;</a>
                 </div>
             </div>
         </div>
