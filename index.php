@@ -2,6 +2,9 @@
 
     include("connections/dbconn.php");
 
+    $music_card_count=0;
+    $community_card_count=0;
+
     $trending_music_query = "SELECT album.album_title, artist.artist_name, art.art_url, AVG(review.review_rating) AS AverageRating FROM album 
                             INNER JOIN review 
                             ON album.album_id = review.album_id 
@@ -19,6 +22,21 @@
     if(!$music_result){
 		echo $conn -> error;
 	}
+
+    $top_communities_query = "SELECT community.community_name, community.community_description, art.art_url, COUNT(joined_communities.user_id) FROM community
+                            INNER JOIN art
+                            ON community.art_id = art.art_id
+                            INNER JOIN joined_communities
+                            ON community.community_id = joined_communities.community_id
+                            GROUP BY community.community_id
+                            ORDER BY COUNT(joined_communities.user_id) DESC
+                            LIMIT 12;";
+
+    $community_result = $conn -> query($top_communities_query);
+
+    if(!$community_result){
+        echo $conn -> error;
+    }
 
 ?>
 
@@ -87,99 +105,38 @@
                 </div>
 
                 <div class="col-10">
-                    <div class="carousel-inner ">
-
-                        <div class="carousel-item active">
+                    <div class="carousel-inner">
 
                         <?php
+                        $inner_music_card_count = 0;
 
                         while($row = $music_result -> fetch_assoc()){
+
+                            if($music_card_count % 4 == 0) {
+                                if($music_card_count < 4){
+                                    echo '<div class="carousel-item active">';
+                                } else {
+                                    echo '<div class="carousel-item">';
+                                }
+                                $inner_music_card_count = 0;
+                            }
+
                             $album_art_url = $row['art_url'];
                             $rating = $row['AverageRating'];
                             $album_title = $row['album_title'];
                             $album_artist = $row['artist_name'];
 
-                            echo "<div class='col-2 music mx-5'>";
                             include("includes/music_card.php");
-                            echo "</div>";
+
+                            $music_card_count++;
+                            $inner_music_card_count++;
+
+                            if($inner_music_card_count == 4) {
+                                echo '</div>';
+                            }
                         }
                         ?>
-
-                        </div>
-                        <div class="carousel-item">
-
-                            <div class="col-2 music mx-4">
-                                <div class="card musicCard text-center bg-dark text-white border-secondary mb-3">
-                                    <img class="card-img-top albumArt" src="img/album_cover.jpg" alt="Card image cap">
-                                    <div class="card-body">
-                                        <p>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        </p>
-                                        <h6 class="card-title album">Sgt. Pepper's Lonely Hearts Club Band</h6>
-                                        <h6 class="card-subtitle artist">The Beatles</h6>
-                                    </div>
-                                    <div class="card-footer row border-secondary align-items-center mx-0">
-                                        <div class="col-4 own">
-                                            <a role="button">
-                                                <i id="ownIcon" class="fas fa-plus fa-lg" data-toggle="popover"
-                                                    title="Own" data-content="Add to owned music"></i>
-                                            </a>
-                                        </div>
-                                        <div class="col-4 favourite">
-                                            <a role="button">
-                                                <i id="favouriteIcon" class="far fa-heart fa-lg" data-toggle="popover"
-                                                    title="Favourite" data-content="Add to your favourites"></i>
-                                            </a>
-                                        </div>
-                                        <div class="col-4 view">
-                                            <a href="#" class="btn">View</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="carousel-item">
-
-                            <div class="col-2 music mx-4">
-                                <div class="card musicCard text-center bg-dark text-white border-secondary mb-3">
-                                    <img class="card-img-top albumArt" src="img/album_cover.jpg" alt="Card image cap">
-                                    <div class="card-body">
-                                        <p>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        </p>
-                                        <h6 class="card-title album">Sgt. Pepper's Lonely Hearts Club Band</h6>
-                                        <h6 class="card-subtitle artist">The Beatles</h6>
-                                    </div>
-                                    <div class="card-footer row border-secondary align-items-center mx-0">
-                                        <div class="col-4 own">
-                                            <a role="button">
-                                                <i id="ownIcon" class="fas fa-plus fa-lg" data-toggle="popover"
-                                                    title="Own" data-content="Add to owned music"></i>
-                                            </a>
-                                        </div>
-                                        <div class="col-4 favourite">
-                                            <a role="button">
-                                                <i id="favouriteIcon" class="far fa-heart fa-lg" data-toggle="popover"
-                                                    title="Favourite" data-content="Add to your favourites"></i>
-                                            </a>
-                                        </div>
-                                        <div class="col-4 view">
-                                            <a href="#" class="btn">View</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
+  
                     </div>
                 </div>
 
@@ -210,158 +167,37 @@
 
                 <div class="col-10">
                     <div class="carousel-inner ">
-                        <div class="carousel-item active">
+                        
+                            <?php
+                            $inner_community_card_count = 0;
 
-                            <div class="col-2 community mx-4">
-                                <div class="card communityCard text-center bg-dark text-white border-secondary mb-3">
-                                    <img class="card-img-top communityArt" src="img/community_pic.jpg"
-                                        alt="Card image cap">
-                                    <div class="card-body">
-                                        <h6 class="card-title communityName">Clashing with Giants</h6>
-                                        <h6 class="card-text communityDescription">A community for fans of The Clash! |
-                                            46,000 fans
-                                        </h6>
-                                    </div>
-                                    <div class="card-footer row border-secondary align-items-center mx-0">
-                                        <div class="col-6 own">
-                                            <a role="button">
-                                                <i id="joinIcon" class="fas fa-user-plus fa-lg" data-toggle="popover"
-                                                    title="Join" data-content="Join this community"></i>
-                                            </a>
-                                        </div>
-                                        <div class="col-6 view">
-                                            <a href="#" class="btn">View</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            while($row = $community_result -> fetch_assoc()){
 
-                            <div class="col-2 community mx-4">
-                                <div class="card communityCard text-center bg-dark text-white border-secondary mb-3">
-                                    <img class="card-img-top communityArt" src="img/community_pic.jpg"
-                                        alt="Card image cap">
-                                    <div class="card-body">
-                                        <h6 class="card-title communityName">Clashing with Giants</h6>
-                                        <h6 class="card-text communityDescription">A community for fans of The Clash! |
-                                            46,000 fans
-                                        </h6>
-                                    </div>
-                                    <div class="card-footer row border-secondary align-items-center mx-0">
-                                        <div class="col-6 own">
-                                            <a role="button">
-                                                <i id="joinIcon" class="fas fa-user-plus fa-lg" data-toggle="popover"
-                                                    title="Join" data-content="Join this community"></i>
-                                            </a>
-                                        </div>
-                                        <div class="col-6 view">
-                                            <a href="#" class="btn">View</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                if($community_card_count % 4 == 0) {
+                                    if($community_card_count < 4){
+                                        echo '<div class="carousel-item active">';
+                                    } else {
+                                        echo '<div class="carousel-item">';
+                                }
+                                $inner_community_card_count = 0;
+                            }
 
-                            <div class="col-2 community mx-4">
-                                <div class="card communityCard text-center bg-dark text-white border-secondary mb-3">
-                                    <img class="card-img-top communityArt" src="img/community_pic.jpg"
-                                        alt="Card image cap">
-                                    <div class="card-body">
-                                        <h6 class="card-title communityName">Clashing with Giants</h6>
-                                        <h6 class="card-text communityDescription">A community for fans of The Clash! |
-                                            46,000 fans
-                                        </h6>
-                                    </div>
-                                    <div class="card-footer row border-secondary align-items-center mx-0">
-                                        <div class="col-6 own">
-                                            <a role="button">
-                                                <i id="joinIcon" class="fas fa-user-plus fa-lg" data-toggle="popover"
-                                                    title="Join" data-content="Join this community"></i>
-                                            </a>
-                                        </div>
-                                        <div class="col-6 view">
-                                            <a href="#" class="btn">View</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                $community_art_url = $row['art_url'];
+                                $community_name = $row['community_name'];
+                                $community_description = $row['community_description'];
+                                $community_members = $row['COUNT(joined_communities.user_id)'];
 
-                            <div class="col-2 community mx-4">
-                                <div class="card communityCard text-center bg-dark text-white border-secondary mb-3">
-                                    <img class="card-img-top communityArt" src="img/community_pic.jpg"
-                                        alt="Card image cap">
-                                    <div class="card-body">
-                                        <h6 class="card-title communityName">Clashing with Giants</h6>
-                                        <h6 class="card-text communityDescription">A community for fans of The Clash! |
-                                            46,000 fans
-                                        </h6>
-                                    </div>
-                                    <div class="card-footer row border-secondary align-items-center mx-0">
-                                        <div class="col-6 own">
-                                            <a role="button">
-                                                <i id="joinIcon" class="fas fa-user-plus fa-lg" data-toggle="popover"
-                                                    title="Join" data-content="Join this community"></i>
-                                            </a>
-                                        </div>
-                                        <div class="col-6 view">
-                                            <a href="#" class="btn">View</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                include("includes/community_card.php");
 
-                        </div>
-                        <div class="carousel-item">
+                                $community_card_count++;
+                                $inner_community_card_count++;
 
-                            <div class="col-2 community mx-4">
-                                <div class="card communityCard text-center bg-dark text-white border-secondary mb-3">
-                                    <img class="card-img-top communityArt" src="img/community_pic.jpg"
-                                        alt="Card image cap">
-                                    <div class="card-body">
-                                        <h6 class="card-title communityName">Clashing with Giants</h6>
-                                        <h6 class="card-text communityDescription">A community for fans of The Clash! |
-                                            46,000 fans
-                                        </h6>
-                                    </div>
-                                    <div class="card-footer row border-secondary align-items-center mx-0">
-                                        <div class="col-6 own">
-                                            <a role="button">
-                                                <i id="joinIcon" class="fas fa-user-plus fa-lg" data-toggle="popover"
-                                                    title="Join" data-content="Join this community"></i>
-                                            </a>
-                                        </div>
-                                        <div class="col-6 view">
-                                            <a href="#" class="btn">View</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
+                                if($inner_community_card_count == 4) {
+                                echo '</div>';
+                            }
+                            }
+                            ?>
 
-                            <div class="col-2 community mx-4">
-                                <div class="card communityCard text-center bg-dark text-white border-secondary mb-3">
-                                    <img class="card-img-top communityArt" src="img/community_pic.jpg"
-                                        alt="Card image cap">
-                                    <div class="card-body">
-                                        <h6 class="card-title communityName">Clashing with Giants</h6>
-                                        <h6 class="card-text communityDescription">A community for fans of The Clash! |
-                                            46,000 fans
-                                        </h6>
-                                    </div>
-                                    <div class="card-footer row border-secondary align-items-center mx-0">
-                                        <div class="col-6 own">
-                                            <a role="button">
-                                                <i id="joinIcon" class="fas fa-user-plus fa-lg" data-toggle="popover"
-                                                    title="Join" data-content="Join this community"></i>
-                                            </a>
-                                        </div>
-                                        <div class="col-6 view">
-                                            <a href="#" class="btn">View</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
                     </div>
                 </div>
 
@@ -386,6 +222,8 @@
 
 </body>
 
-<script type="text/javascript" src="js/card_functions.js"></script>
+<?php
+    include("js/card_functions.php");
+?>
 
 </html>
