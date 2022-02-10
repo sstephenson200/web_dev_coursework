@@ -1,6 +1,27 @@
 <?php
 
+    session_start();
+
     include("connections/dbconn.php");
+
+    $screen_width = $_SESSION['width'];
+
+    switch($screen_width) {
+        case ($screen_width<992):
+            $max_cards = 1;
+            break;
+        case ($screen_width<1200):
+            $max_cards = 2;
+            break;  
+        case ($screen_width<1600):
+            $max_cards = 3;
+            break; 
+        case ($screen_width>=1600):
+            $max_cards = 4;
+            break; 
+        default: 
+            $max_cards = 4;   
+    }
 
     $music_card_count=0;
     $community_card_count=0;
@@ -64,6 +85,23 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js">
     </script>
     <link rel="stylesheet" href="css/ui.css">
+
+    <script>
+
+        var screen_size = 0;
+
+        $(document).ready(function(){
+            screen_size = window.innerWidth;
+
+            $.ajax({
+                type: "POST",
+                url: "php/browser_width.php",
+                data: "width="+screen_size
+            });
+        });
+
+    </script>
+
 </head>
 
 <body>
@@ -110,10 +148,13 @@
                         <?php
                         $inner_music_card_count = 0;
 
+                        echo "<script>console.log($screen_width)</script>";
+                        echo "<script>console.log($max_cards)</script>";
+
                         while($row = $music_result -> fetch_assoc()){
 
-                            if($music_card_count % 4 == 0) {
-                                if($music_card_count < 4){
+                            if($music_card_count % $max_cards == 0) {
+                                if($music_card_count < $max_cards){
                                     echo '<div class="carousel-item active">';
                                 } else {
                                     echo '<div class="carousel-item">';
@@ -131,7 +172,7 @@
                             $music_card_count++;
                             $inner_music_card_count++;
 
-                            if($inner_music_card_count == 4) {
+                            if($inner_music_card_count == $max_cards) {
                                 echo '</div>';
                             }
                         }
