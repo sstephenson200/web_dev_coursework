@@ -61,6 +61,7 @@
 .musicCard, .communityCard {
     width: 18rem;
     padding: 5%;
+    height: 30rem;
 }
 
 .musicCard:hover, .communityCard:hover {
