@@ -1,4 +1,4 @@
-<div class="col-2 community mx-5">
+<div class="community mx-3">
     <div class="card communityCard text-center bg-dark text-white border-secondary mb-3">
         <img class="card-img-top communityArt" src="<?php echo $community_art_url ?>" alt="Card image cap">
             <div class="card-body">

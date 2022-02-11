@@ -43,18 +43,36 @@
 .carouselArrowLeft {
     width: 5%;
     height: 5%;
-    margin-top: 10%;
+    margin-top: 25vh;
     margin-left: 1%;
 }
 
 .carouselArrowRight {
     width: 5%;
     height: 5%;
-    margin-top: 10%;
+    margin-top: 25vh;
     margin-right: 1%;
 }
 
-.music, .community {
+.trendingAlbum {
+    padding: 5%;
+    background-size: cover;
+    background-position: center;
+    height: 50vh;
+    border-radius: 1.5%;
+}
+
+.albumLink {
+    text-decoration: none;
+    color: white;
+}
+
+.albumLink:hover {
+    opacity: 0.75;
+    color: white;
+}
+
+.community {
     float: left;
 }
 
@@ -94,14 +112,12 @@
 
 .footer {
     background-color: rgb(65, 26, 57);
+    padding-left: 5%;
+    padding-right: 5%;
 }
 
 .footer_title {
     font-weight: bold;
-}
-
-#emailSignUp {
-    padding-left: 2%;
 }
 
 .fab {

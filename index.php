@@ -1,27 +1,6 @@
 <?php
 
-    session_start();
-
     include("connections/dbconn.php");
-
-    $screen_width = $_SESSION['width'];
-
-    switch($screen_width) {
-        case ($screen_width<992):
-            $max_cards = 1;
-            break;
-        case ($screen_width<1200):
-            $max_cards = 2;
-            break;  
-        case ($screen_width<1600):
-            $max_cards = 3;
-            break; 
-        case ($screen_width>=1600):
-            $max_cards = 4;
-            break; 
-        default: 
-            $max_cards = 4;   
-    }
 
     $music_card_count=0;
     $community_card_count=0;
@@ -35,7 +14,7 @@
                             ON album.art_id = art.art_id
                             GROUP BY album.album_id 
                             ORDER BY AverageRating DESC
-                            LIMIT 12;";
+                            LIMIT 10;";
 
     
     $music_result = $conn -> query($trending_music_query);
@@ -51,7 +30,7 @@
                             ON community.community_id = joined_communities.community_id
                             GROUP BY community.community_id
                             ORDER BY COUNT(joined_communities.user_id) DESC
-                            LIMIT 12;";
+                            LIMIT 4;";
 
     $community_result = $conn -> query($top_communities_query);
 
@@ -85,22 +64,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js">
     </script>
     <link rel="stylesheet" href="css/ui.css">
-
-    <script>
-
-        var screen_size = 0;
-
-        $(document).ready(function(){
-            screen_size = window.innerWidth;
-
-            $.ajax({
-                type: "POST",
-                url: "php/browser_width.php",
-                data: "width="+screen_size
-            });
-        });
-
-    </script>
 
 </head>
 
@@ -146,35 +109,25 @@
                     <div class="carousel-inner">
 
                         <?php
-                        $inner_music_card_count = 0;
-
-                        echo "<script>console.log($screen_width)</script>";
-                        echo "<script>console.log($max_cards)</script>";
 
                         while($row = $music_result -> fetch_assoc()){
-
-                            if($music_card_count % $max_cards == 0) {
-                                if($music_card_count < $max_cards){
-                                    echo '<div class="carousel-item active">';
-                                } else {
-                                    echo '<div class="carousel-item">';
-                                }
-                                $inner_music_card_count = 0;
-                            }
 
                             $album_art_url = $row['art_url'];
                             $rating = $row['AverageRating'];
                             $album_title = $row['album_title'];
                             $album_artist = $row['artist_name'];
 
-                            include("includes/music_card.php");
+                            if($music_card_count == 0){
+                                echo '<div class="carousel-item active">';
+                            } else{
+                                echo '<div class="carousel-item">';
+                            }
+
+                            include("includes/trending_album.php");
+                            echo '</div>';
 
                             $music_card_count++;
-                            $inner_music_card_count++;
 
-                            if($inner_music_card_count == $max_cards) {
-                                echo '</div>';
-                            }
                         }
                         ?>
   
@@ -197,60 +150,27 @@
             <div class="row">
                 <h2>Top Communities</h2>
             </div>
-            <div id="communityCarousel" class="row carousel slide carousel-multi-item" data-bs-interval="false">
+            <div class="row">
+                <?php
 
-                <div class="col-1">
-                    <button class="carousel-control-prev carouselArrowLeft" data-bs-target="#communityCarousel" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </button>
-                </div>
+                while($row = $community_result -> fetch_assoc()){
 
-                <div class="col-10">
-                    <div class="carousel-inner ">
-                        
-                            <?php
-                            $inner_community_card_count = 0;
+                    echo "<div class='col-xs-12 col-sm-6 col-m-6 col-lg-6 col-xl-3 d-flex justify-content-center'>";
 
-                            while($row = $community_result -> fetch_assoc()){
+                    $community_art_url = $row['art_url'];
+                    $community_name = $row['community_name'];
+                    $community_description = $row['community_description'];
+                    $community_members = $row['COUNT(joined_communities.user_id)'];
 
-                                if($community_card_count % 4 == 0) {
-                                    if($community_card_count < 4){
-                                        echo '<div class="carousel-item active">';
-                                    } else {
-                                        echo '<div class="carousel-item">';
-                                }
-                                $inner_community_card_count = 0;
-                            }
+                    include("includes/community_card.php");
+                    $community_card_count++;
 
-                                $community_art_url = $row['art_url'];
-                                $community_name = $row['community_name'];
-                                $community_description = $row['community_description'];
-                                $community_members = $row['COUNT(joined_communities.user_id)'];
+                    echo "</div>";
 
-                                include("includes/community_card.php");
-
-                                $community_card_count++;
-                                $inner_community_card_count++;
-
-                                if($inner_community_card_count == 4) {
-                                echo '</div>';
-                            }
-                            }
-                            ?>
-
-                    </div>
-                </div>
-
-                <div class="col-1">
-                    <button class="carousel-control-next carouselArrowRight" data-bs-target="#communityCarousel" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </button>
-                </div>
-
+                }
+                ?>
+             
             </div>
-
         </div>
 
 

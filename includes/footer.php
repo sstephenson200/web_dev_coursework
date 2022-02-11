@@ -1,6 +1,6 @@
 <div class="footer">
             <div class="row">
-                <div class="col-12 col-md-9" id="emailSignUp">
+                <div class="col-12 col-md-9">
                     <div class="row my-2">
                         <h6 class="footer_title">Join The Revolution</h6>
                     </div>
