@@ -20,14 +20,29 @@
 		echo $conn -> error;
 	}
 
-    $artist_query = "SELECT DISTINCT(artist.artist_name) FROM artist";
+    $genre_query = "SELECT DISTINCT(genre.genre_title) FROM genre";
 
-    $artist_result = $conn -> query($artist_query);
+    $genre_result = $conn -> query($genre_query);
 
-    if(!$artist_result){
+    if(!$genre_result){
 		echo $conn -> error;
 	}
 
+    $subgenre_query = "SELECT DISTINCT(subgenre.subgenre_title) FROM subgenre";
+
+    $subgenre_result = $conn -> query($subgenre_query);
+
+    if(!$subgenre_result){
+		echo $conn -> error;
+	}
+
+    $year_query = "SELECT DISTINCT(floor(year_value/10)*10) AS decade FROM year_value";
+
+    $year_result = $conn -> query($year_query);
+
+    if(!$year_result){
+		echo $conn -> error;
+	}
 
 ?>
 
@@ -88,37 +103,63 @@
             <!-- Filter Sidebar -->
             <div class="col-3 sidebar">
                 <div class="row">
-                    <h5>Filters</h5>
+                    <h4>Filters</h4>
                 </div>
                 <div class="row">
-                    <h6>Artist</h6>
+                    <h5>Genre</h5>
                 </div>
                 <div class="row">
-
                     <ul>
                         <?php
-
-                        while($row = $artist_result -> fetch_assoc()){
-
-                        $artist = $row['artist_name'];
-
-                        echo "<li>$artist</li>";
-
+                        while($row = $genre_result -> fetch_assoc()){
+                        $genre_title = $row['genre_title'];
+                        echo "<li>$genre_title</li>";
                         }
                         ?>
                     </ul>
                 </div>
                 <div class="row">
-                    <h6>Genre</h6>
+                    <h5>Subgenre</h5>
                 </div>
                 <div class="row">
-                    <h6>Subgenre</h6>
+                    <ul>
+                        <?php
+                        while($row = $subgenre_result -> fetch_assoc()){
+                        $subgenre_title = $row['subgenre_title'];
+                        echo "<li>$subgenre_title</li>";
+                        }
+                        ?>
+                    </ul>
                 </div>
                 <div class="row">
-                    <h6>User Rating</h6>
+                    <h5>User Rating</h5>
                 </div>
                 <div class="row">
-                    <h6>Year</h6>
+                    <ul>
+                        <?php
+                            for($i=0; $i<5; $i++){
+                                echo "<li>";
+                                for($j=5; $j>$i; $j--){
+                                    echo "<i class='fas fa-star'></i>";
+                                }
+                                echo "</li>";
+                            }
+                        ?>
+                    </ul>
+                </div>
+                <div class="row">
+                    <h5>Year</h5>
+                </div>
+                <div class="row">
+                    <ul>
+                        <?php
+                        while($row = $year_result -> fetch_assoc()){
+                        $decade = $row['decade'];
+                        $decade = "'".substr($decade, 2)."s";
+                        echo "<li>$decade</li>";
+                        }
+                        ?>
+                    </ul>
                 </div>
                 <div class="row">
                     <ul class='nav justify-content-center'>
@@ -129,23 +170,34 @@
             </div>
             <!-- Album Grid -->
             <div class="col-9">
-                    <?php
 
-                    while($row = $album_result -> fetch_assoc()){
+                <nav aria-label="albumPagination">
+                    <ul class="pagination">
+                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    </ul>
+                </nav>
 
-                    $album_art_url = $row['art_url'];
-                    $rating = $row['AverageRating'];
-                    $album_title = $row['album_title'];
-                    $album_artist = $row['artist_name'];
+                <?php
 
-                    include("includes/music_card.php");
-                    $music_card_count++;
+                while($row = $album_result -> fetch_assoc()){
 
-                    }
-                    ?>
+                $album_art_url = $row['art_url'];
+                $rating = $row['AverageRating'];
+                $album_title = $row['album_title'];
+                $album_artist = $row['artist_name'];
 
-                </div>
+                include("includes/music_card.php");
+                $music_card_count++;
+
+                }
+                ?>
+
             </div>
+
         </div>
 
         <!-- Footer -->
