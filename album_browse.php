@@ -4,6 +4,22 @@
 
     $music_card_count=0;
 
+    $album_query = "SELECT album.album_rating, album.album_title, artist.artist_name, art.art_url, AVG(review.review_rating) AS AverageRating FROM album
+                    LEFT JOIN review 
+                    ON album.album_id = review.album_id 
+                    INNER JOIN artist
+                    ON album.artist_id = artist.artist_id
+                    INNER JOIN art 
+                    ON album.art_id = art.art_id
+                    GROUP BY album.album_id 
+                    ORDER BY album.album_rating;";
+
+    $album_result = $conn -> query($album_query);
+
+    if(!$album_result){
+		echo $conn -> error;
+	}
+
 ?>
 
 <!DOCTYPE html>
@@ -41,22 +57,69 @@
         include("includes/navbar.php");
         ?>
 
+        <!-- Title and Sorting Selector -->
         <div class="row musicBrowseTitle">
-            <div class="col-11 ">
+            <div class="col-10">
                 <h2>Music</h2>
             </div>
-            <div class="col-1 d-flex justify-content-end">
-                <div class="dropdown">
-                    <button id="musicSortFilter" type="button" class="btn btn-lg dropdown-toggle p-1 styled_button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Sort By:
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="musicSortFilter">
-                        <li><a class="dropdown-item">Album Title</a></li>
-                        <li><a class="dropdown-item">Artist</a></li>
-                        <li><a class="dropdown-item">Genre</a></li>
-                        <li><a class="dropdown-item">User Rating</a></li>
-                        <li><a class="dropdown-item">Year</a></li>
+            <div class="col-2 d-flex justify-content-end dropdown">
+                <button id="musicSortFilter" type="button" class="btn dropdown-toggle p-1 styled_button" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="musicSortFilter">
+                    <li><a class="dropdown-item">Album Title</a></li>
+                    <li><a class="dropdown-item">Artist</a></li>
+                    <li><a class="dropdown-item">Genre</a></li>
+                    <li><a class="dropdown-item" id="defaultMusicSort">Top 500 Albums</a></li>
+                    <li><a class="dropdown-item">User Rating</a></li>
+                    <li><a class="dropdown-item">Year</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Filter Sidebar -->
+            <div class="col-3 sidebar">
+                <div class="row">
+                    <h5>Filters</h5>
+                </div>
+                <div class="row">
+                    <h6>Artist</h6>
+                </div>
+                <div class="row">
+                    <h6>User Rating</h6>
+                </div>
+                <div class="row">
+                    <h6>Genre</h6>
+                </div>
+                <div class="row">
+                    <h6>Subgenre</h6>
+                </div>
+                <div class="row">
+                    <h6>Year</h6>
+                </div>
+                <div class="row">
+                    <ul class='nav justify-content-center'>
+                        <li class='nav-item px-2'><a type='button' class='btn clearButton' href='#'>Clear</a></li>
+                        <li class='nav-item px-2'><a type='button' class='btn applyButton' href='#'>Apply</a></li>
                     </ul>
+                </div>
+            </div>
+            <!-- Album Grid -->
+            <div class="col-9">
+                    <?php
+
+                    while($row = $album_result -> fetch_assoc()){
+
+                    $album_art_url = $row['art_url'];
+                    $rating = $row['AverageRating'];
+                    $album_title = $row['album_title'];
+                    $album_artist = $row['artist_name'];
+
+                    include("includes/music_card.php");
+                    $music_card_count++;
+
+                    }
+                    ?>
+
                 </div>
             </div>
         </div>
@@ -69,5 +132,10 @@
     </div>
 
 </body>
+
+<?php
+    include("js/browse_sort.php");
+    include("js/card_functions.php");
+?>
 
 </html>

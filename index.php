@@ -16,7 +16,6 @@
                             ORDER BY AverageRating DESC
                             LIMIT 10;";
 
-    
     $music_result = $conn -> query($trending_music_query);
 
     if(!$music_result){
@@ -96,7 +95,7 @@
             <div class="row">
                 <h2>Trending Music</h2>
             </div>
-            <div id="musicCarousel" class="row carousel slide carousel-multi-item" data-bs-interval="false">
+            <div id="musicCarousel" class="row carousel slide carousel-multi-item">
 
                 <div class="col-1">
                     <button class="carousel-control-prev carouselArrowLeft" data-bs-target="#musicCarousel" data-bs-slide="prev">

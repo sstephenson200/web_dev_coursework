@@ -1,4 +1,4 @@
-<div class='col-2 music mx-5'>
+<div class='music mx-3'>
     <div class='card musicCard text-center bg-dark text-white border-secondary mb-3'>
         <img class='card-img-top albumArt' src='<?php echo $album_art_url ?>' alt='Card image cap'>
         <div class='card-body'>
