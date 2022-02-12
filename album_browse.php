@@ -20,6 +20,15 @@
 		echo $conn -> error;
 	}
 
+    $artist_query = "SELECT DISTINCT(artist.artist_name) FROM artist";
+
+    $artist_result = $conn -> query($artist_query);
+
+    if(!$artist_result){
+		echo $conn -> error;
+	}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -85,13 +94,28 @@
                     <h6>Artist</h6>
                 </div>
                 <div class="row">
-                    <h6>User Rating</h6>
+
+                    <ul>
+                        <?php
+
+                        while($row = $artist_result -> fetch_assoc()){
+
+                        $artist = $row['artist_name'];
+
+                        echo "<li>$artist</li>";
+
+                        }
+                        ?>
+                    </ul>
                 </div>
                 <div class="row">
                     <h6>Genre</h6>
                 </div>
                 <div class="row">
                     <h6>Subgenre</h6>
+                </div>
+                <div class="row">
+                    <h6>User Rating</h6>
                 </div>
                 <div class="row">
                     <h6>Year</h6>
