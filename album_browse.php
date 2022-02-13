@@ -87,8 +87,8 @@
                 <h2>Music</h2>
             </div>
             <div class="col-2 d-flex justify-content-end dropdown">
-                <button id="musicSortFilter" type="button" class="btn dropdown-toggle p-1 styled_button" data-bs-toggle="dropdown" aria-expanded="false"></button>
-                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="musicSortFilter">
+                <button id="musicSortFilter" type="button" class="btn dropdown-toggle p-1" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                <ul class="dropdown-menu" aria-labelledby="musicSortFilter">
                     <li><a class="dropdown-item">Album Title</a></li>
                     <li><a class="dropdown-item">Artist</a></li>
                     <li><a class="dropdown-item">Genre</a></li>
@@ -102,61 +102,90 @@
         <div class="row">
             <!-- Filter Sidebar -->
             <div class="col-3 sidebar">
-                <div class="row">
+                <div class="row mb-2">
                     <h4>Filters</h4>
                 </div>
-                <div class="row">
+                <div class="row mb-1">
+                    <h5>Applied Filters</h5>
+                </div>
+                <div class="row d-flex justify-content-left mb-1">
+                    <div class="col-3">
+                        Option1
+                    </div>
+                    <div class="col-2">
+                        <i class="fas fa-times"></i>
+                    </div>
+                </div>
+                <div class="row mb-1">
                     <h5>Genre</h5>
                 </div>
-                <div class="row">
-                    <ul>
+                <div class="row mb-1">
+                    <select class="form-select" aria-label="genreSelector">
+                        <option selected>Select genre</option>
                         <?php
+                        $genreCount = 0;
                         while($row = $genre_result -> fetch_assoc()){
                         $genre_title = $row['genre_title'];
-                        echo "<li>$genre_title</li>";
+                        echo "<option value='$genreCount'>$genre_title</option>";
+                        $genreCount++;
                         }
                         ?>
-                    </ul>
+                    </select>
                 </div>
-                <div class="row">
+                <div class="row mb-1">
                     <h5>Subgenre</h5>
                 </div>
-                <div class="row">
-                    <ul>
+                <div class="row mb-1">
+                    <select class="form-select" aria-label="subgenreSelector">
+                        <option selected>Select subgenre</option>
                         <?php
+                        $subgenreCount = 0;
                         while($row = $subgenre_result -> fetch_assoc()){
                         $subgenre_title = $row['subgenre_title'];
-                        echo "<li>$subgenre_title</li>";
+                        echo "<option value='$subgenreCount'>$subgenre_title</option>";
+                        $subgenreCount++;
                         }
                         ?>
-                    </ul>
+                    </select>
                 </div>
-                <div class="row">
-                    <h5>User Rating</h5>
+                <div class="row mb-1">
+                    <a href="#ratingCollapse" class="text-decoration-none text-white" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="ratingCollapse">
+                        <h5>User Rating <i class="fas fa-angle-down"></i></h5>
+                    </a>
                 </div>
-                <div class="row">
-                    <ul>
-                        <?php
-                            for($i=0; $i<5; $i++){
-                                echo "<li>";
-                                for($j=5; $j>$i; $j--){
-                                    echo "<i class='fas fa-star'></i>";
-                                }
-                                echo "</li>";
+                <div class="row collapse mb-1" id="ratingCollapse">
+                    <?php
+                        for($i=0; $i<5; $i++){
+                            echo "<div class='form-check'>
+                                <input class='form-check-input' type='checkbox' value='' id='ratingCheckbox'>
+                                <label class='form-check-label' for='ratingCheckbox'>";
+                            for($j=5; $j>$i; $j--) {
+                                echo "<i class='fas fa-star'></i>";  
                             }
-                        ?>
-                    </ul>
+                            echo "</label>
+                            </div>";
+                        }
+                        echo "<div class='form-check'>
+                                <input class='form-check-input' type='checkbox' value='' id='ratingCheckbox'>
+                                <label class='form-check-label' for='ratingCheckbox'>No rating</label>
+                                </div>";
+                    ?>
                 </div>
-                <div class="row">
-                    <h5>Year</h5>
+                <div class="row mb-1">
+                    <a href="#yearCollapse" class="text-decoration-none text-white" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="yearCollapse">
+                        <h5>Year <i class="fas fa-angle-down"></i></h5>
+                    </a>
                 </div>
-                <div class="row">
+                <div class="row collapse mb-1" id="yearCollapse">
                     <ul>
                         <?php
                         while($row = $year_result -> fetch_assoc()){
                         $decade = $row['decade'];
                         $decade = "'".substr($decade, 2)."s";
-                        echo "<li>$decade</li>";
+                        echo "<div class='form-check'>
+                                <input class='form-check-input' type='checkbox' value='' id='ratingCheckbox'>
+                                <label class='form-check-label' for='ratingCheckbox'>$decade</label>
+                                </div>";
                         }
                         ?>
                     </ul>
