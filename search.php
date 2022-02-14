@@ -1,5 +1,7 @@
 <?php
-    include("connections/dbconn.php");  
+
+    include("connections/dbconn.php");
+
 ?>
 
 <!DOCTYPE html>
@@ -8,7 +10,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Search</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
@@ -37,37 +39,10 @@
         include("includes/navbar.php");
         ?>
 
-        <div class="row signup d-flex justify-content-center py-2">
-            <div class="col-10 col-sm-6 col-md-5 col-lg-4 col-xl-3 signupForm border px-3">
-                <div class="text-center mt-3">
-                    <h3>Login</h3>
-                    <p>Don't have an account?<a type="button" class="btn loginLink" href="signup.php">Sign Up</a></p>
-                </div>
-                <div class="form-group mb-3">
-                    <i class="fas fa-envelope"></i>
-                    <label for="emailLogin">Email Address</label>
-                    <input type="email" class="form-control" id="emailLogin" placeholder="name@example.com" required="required">
-                </div>
-                <div class="form-group mb-3">
-                    <i class="fas fa-lock"></i>
-                    <label for="passwordLogin">Password</label>
-                    <input type="text" class="form-control" id="passwordLogin" placeholder="Password" required="required">
-                </div>
-                <div class="row mb-3">
-                    <div class="col-12 col-sm-6">
-                        <div class='form-check'>
-                            <input class='form-check-input' type='checkbox' value='' id='loginCheckbox'>
-                            <label class='form-check-label' for='loginCheckbox'>Remember me</label>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-6">
-                        <a type="button" class="btn loginLink" href="#">Forgot your password?</a>
-                    </div>
-                </div>
-                <div class="text-center mb-3">
-                    <button type="submit" class="btn styled_button">Login</button>
-                </div>
-                
+        <!-- Title and Sorting Selector -->
+        <div class="row browseTitle">
+            <div class="col-4">
+                <h2>Search Results For "The Beatles"</h2>
             </div>
         </div>
 

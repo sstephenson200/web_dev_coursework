@@ -23,6 +23,14 @@
 		echo $conn -> error;
 	}
 
+    $artist_query = "SELECT DISTINCT(artist.artist_name) FROM artist";
+
+    $artist_result = $conn -> query($artist_query);
+
+    if(!$artist_result){
+		echo $conn -> error;
+	}
+
     $genre_query = "SELECT DISTINCT(genre.genre_title) FROM genre";
 
     $genre_result = $conn -> query($genre_query);
@@ -85,12 +93,12 @@
         ?>
 
         <!-- Title and Sorting Selector -->
-        <div class="row musicBrowseTitle">
+        <div class="row browseTitle">
             <div class="col-2 ">
                 <h2>Music</h2>
             </div>
             <div class="col-10 d-flex justify-content-end">
-                <nav aria-label="albumPagination">
+                <nav aria-label="pagination">
                     <ul class="pagination">
                         <li class="page-item <?php if($pageNumber <= 1){ echo 'disabled'; } ?>"><a class="page-link" href="<?php if($pageNumber <= 1){ echo '#'; } else { echo "?pageNumber=".($pageNumber - 1); } ?>">Previous</a></li>
                         <li class="page-item disabled"><a class="page-link" href="<?php echo "?pageNumber=".($pageNumber); ?>"><?php echo $pageNumber ?></a></li>
@@ -130,6 +138,22 @@
                 </div>
                 <div class="row d-flex justify-content-left mb-1">
                     <p>Option1 <i class="fas fa-times"></i></p>
+                </div>
+                <div class="row mb-1">
+                    <h5>Artist</h5>
+                </div>
+                <div class="row mb-1">
+                    <select class="form-select" aria-label="artistSelector">
+                        <option selected>Select artist</option>
+                        <?php
+                        $artistCount = 0;
+                        while($row = $artist_result -> fetch_assoc()){
+                        $artist_name = $row['artist_name'];
+                        echo "<option value='$artistCount'>$artist_name</option>";
+                        $artistCount++;
+                        }
+                        ?>
+                    </select>
                 </div>
                 <div class="row mb-1">
                     <h5>Genre</h5>
