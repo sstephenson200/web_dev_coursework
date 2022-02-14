@@ -146,6 +146,24 @@
     color: black;
 }
 
+.signup {
+    background-color: #bf3a30;
+    background-image: linear-gradient(315deg, #bf3a30 0%, #864ba2 74%);
+}
+
+.signupForm {
+    border-radius: 5%;
+    background-color: black;
+}
+
+.loginLink {
+    color: #904FBB;
+}
+
+.loginLink:hover {
+    color: white;
+}
+
 .fa-star-half, .fa-star {
     color: gold;
 }
