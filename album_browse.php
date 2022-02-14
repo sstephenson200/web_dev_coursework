@@ -2,6 +2,8 @@
 
     include("connections/dbconn.php");
 
+    include ("php/pagination.php");
+
     $music_card_count=0;
 
     $album_query = "SELECT album.album_rating, album.album_title, artist.artist_name, art.art_url, AVG(review.review_rating) AS AverageRating FROM album
@@ -12,7 +14,8 @@
                     INNER JOIN art 
                     ON album.art_id = art.art_id
                     GROUP BY album.album_id 
-                    ORDER BY album.album_rating;";
+                    ORDER BY album.album_rating
+                    LIMIT $offset, $cardsPerPage;";
 
     $album_result = $conn -> query($album_query);
 
@@ -83,10 +86,29 @@
 
         <!-- Title and Sorting Selector -->
         <div class="row musicBrowseTitle">
-            <div class="col-10">
+            <div class="col-2 ">
                 <h2>Music</h2>
             </div>
-            <div class="col-2 d-flex justify-content-end dropdown">
+            <div class="col-10 d-flex justify-content-end">
+                <nav aria-label="albumPagination">
+                    <ul class="pagination">
+                        <li class="page-item <?php if($pageNumber <= 1){ echo 'disabled'; } ?>"><a class="page-link" href="<?php if($pageNumber <= 1){ echo '#'; } else { echo "?pageNumber=".($pageNumber - 1); } ?>">Previous</a></li>
+                        <li class="page-item <?php if($pageNumber <= 1){ echo 'disabled'; } ?>"><a class="page-link" href="<?php if($pageNumber <= 1){ echo '#'; } else { echo "?pageNumber=".($pageNumber - 1); } ?>"><?php echo $prev_page ?></a></li>
+                        <li class="page-item"><a class="page-link" href="<?php echo "?pageNumber=".($pageNumber); ?>"><?php echo $pageNumber ?></a></li>
+                        <li class="page-item <?php if($pageNumber >= $totalPages){ echo 'disabled'; } ?>"><a class="page-link" href="<?php if($pageNumber >= $totalPages){ echo '#'; } else { echo "?pageNumber=".($pageNumber + 1); } ?>"><?php echo $next_page ?></a></li>
+                        <li class="page-item <?php if($pageNumber >= $totalPages){ echo 'disabled'; } ?>"><a class="page-link" href="<?php if($pageNumber >= $totalPages){ echo '#'; } else { echo "?pageNumber=".($pageNumber + 1); } ?>">Next</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+        <div class="row sortFilterOptions p-3">
+            <div class="col-6 col-sm-1">
+                <button type="button" id="sidebarCollapse" class="btn filterButton">
+                    <span>Toggle Filter <i class="fas fa-filter"></i></span>
+                </button>
+            </div>
+            <div class="col-6 col-sm-11 d-flex justify-content-end dropdown">
                 <button id="musicSortFilter" type="button" class="btn dropdown-toggle p-1" data-bs-toggle="dropdown" aria-expanded="false"></button>
                 <ul class="dropdown-menu" aria-labelledby="musicSortFilter">
                     <li><a class="dropdown-item">Album Title</a></li>
@@ -101,7 +123,7 @@
 
         <div class="row">
             <!-- Filter Sidebar -->
-            <div class="col-3 sidebar">
+            <div class="col-12 col-md-3 sidebar" id="musicSidebar">
                 <div class="row mb-2">
                     <h4>Filters</h4>
                 </div>
@@ -109,12 +131,7 @@
                     <h5>Applied Filters</h5>
                 </div>
                 <div class="row d-flex justify-content-left mb-1">
-                    <div class="col-3">
-                        Option1
-                    </div>
-                    <div class="col-2">
-                        <i class="fas fa-times"></i>
-                    </div>
+                    <p>Option1 <i class="fas fa-times"></i></p>
                 </div>
                 <div class="row mb-1">
                     <h5>Genre</h5>
@@ -198,17 +215,7 @@
                 </div>
             </div>
             <!-- Album Grid -->
-            <div class="col-9">
-
-                <nav aria-label="albumPagination">
-                    <ul class="pagination">
-                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                    </ul>
-                </nav>
+            <div class="col py-3">
 
                 <?php
 
@@ -241,6 +248,7 @@
 <?php
     include("js/browse_sort.php");
     include("js/card_functions.php");
+    include("js/show_filter.php");
 ?>
 
 </html>
