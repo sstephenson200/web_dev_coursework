@@ -93,9 +93,7 @@
                 <nav aria-label="albumPagination">
                     <ul class="pagination">
                         <li class="page-item <?php if($pageNumber <= 1){ echo 'disabled'; } ?>"><a class="page-link" href="<?php if($pageNumber <= 1){ echo '#'; } else { echo "?pageNumber=".($pageNumber - 1); } ?>">Previous</a></li>
-                        <li class="page-item <?php if($pageNumber <= 1){ echo 'disabled'; } ?>"><a class="page-link" href="<?php if($pageNumber <= 1){ echo '#'; } else { echo "?pageNumber=".($pageNumber - 1); } ?>"><?php echo $prev_page ?></a></li>
-                        <li class="page-item"><a class="page-link" href="<?php echo "?pageNumber=".($pageNumber); ?>"><?php echo $pageNumber ?></a></li>
-                        <li class="page-item <?php if($pageNumber >= $totalPages){ echo 'disabled'; } ?>"><a class="page-link" href="<?php if($pageNumber >= $totalPages){ echo '#'; } else { echo "?pageNumber=".($pageNumber + 1); } ?>"><?php echo $next_page ?></a></li>
+                        <li class="page-item disabled"><a class="page-link" href="<?php echo "?pageNumber=".($pageNumber); ?>"><?php echo $pageNumber ?></a></li>
                         <li class="page-item <?php if($pageNumber >= $totalPages){ echo 'disabled'; } ?>"><a class="page-link" href="<?php if($pageNumber >= $totalPages){ echo '#'; } else { echo "?pageNumber=".($pageNumber + 1); } ?>">Next</a></li>
                     </ul>
                 </nav>

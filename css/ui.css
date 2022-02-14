@@ -103,6 +103,7 @@
 .sortFilterOptions {
     background-color: rgb(65, 26, 57);
     align-items: center;
+    box-sizing: border-box;
 }
 
 .filterButton {
@@ -163,8 +164,8 @@
 
 .footer {
     background-color: rgb(65, 26, 57);
-    padding-left: 5%;
-    padding-right: 5%;
+    padding-left: 3%;
+    padding-right: 3%;
 }
 
 .footer_title {
