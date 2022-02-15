@@ -1,6 +1,7 @@
 <?php
 
     include("connections/dbconn.php");
+    include ("php/pagination.php");
 
     $music_card_count=0;
     $community_card_count=0;
@@ -15,7 +16,8 @@
                     WHERE artist_name LIKE '%Beach Boys%'
                     OR album.album_title LIKE '%Beach Boys%'
                     GROUP BY album.album_id 
-                    ORDER BY album.album_rating";
+                    ORDER BY album.album_rating
+                    LIMIT $offset, $cardsPerPage;";
 
     $album_result = $conn -> query($album_query);
 
@@ -64,7 +66,8 @@
                         ON community.artist_id = artist.artist_id
                         WHERE community.community_name LIKE '%Beach Boys%'
                         OR artist.artist_name LIKE '%Beach Boys%'
-                        GROUP BY community.community_id";
+                        GROUP BY community.community_id
+                        LIMIT $offset, $cardsPerPage;";
 
     $community_result = $conn -> query($community_query);
 
@@ -111,8 +114,17 @@
 
         <!-- Title and Sorting Selector -->
         <div class="row browseTitle">
-            <div class="col-12 ">
+            <div class="col-4">
                 <h2>Search Results For "Beach Boys"</h2>
+            </div>
+            <div class="col-8 d-flex justify-content-end <?php if($total_album_pages<=1){ echo 'd-none';} ?>">
+                <nav aria-label="pagination">
+                    <ul class="pagination">
+                        <li class="page-item <?php if($pageNumber <= 1){ echo 'disabled'; } ?>"><a class="page-link" href="<?php if($pageNumber <= 1){ echo '#'; } else { echo "?pageNumber=".($pageNumber - 1); } ?>">Previous</a></li>
+                        <li class="page-item disabled"><a class="page-link" href="<?php echo "?pageNumber=".($pageNumber); ?>"><?php echo $pageNumber ?></a></li>
+                        <li class="page-item <?php if($pageNumber >= $total_album_pages){ echo 'disabled'; } ?>"><a class="page-link" href="<?php if($pageNumber >= $total_album_pages){ echo '#'; } else { echo "?pageNumber=".($pageNumber + 1); } ?>">Next</a></li>
+                    </ul>
+                </nav>
             </div>
         </div>
 
@@ -125,11 +137,11 @@
             <div class="col-6 col-sm-11 d-flex justify-content-end dropdown">
                 <button id="musicSortFilter" type="button" class="btn dropdown-toggle p-1" data-bs-toggle="dropdown" aria-expanded="false"></button>
                 <ul class="dropdown-menu" aria-labelledby="musicSortFilter">
-                    <li><a class="dropdown-item">Title</a></li>
                     <li><a class="dropdown-item">Artist</a></li>
                     <li><a class="dropdown-item">Community Size</a></li>
                     <li><a class="dropdown-item">Genre</a></li>
                     <li><a class="dropdown-item">Subgenre</a></li>
+                    <li><a class="dropdown-item">Title</a></li>
                     <li><a class="dropdown-item" id="defaultMusicSort">Top 500 Albums</a></li>
                     <li><a class="dropdown-item">User Rating</a></li>
                     <li><a class="dropdown-item">Year</a></li>

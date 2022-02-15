@@ -13,8 +13,6 @@
         $('#'+target).toggleClass("fas fa-heart fa-lg");
 });
 
-    
-
     $('.own').click(function () {
         var target = $(this).attr('data-target');
         $('#'+target).toggleClass("fas fa-plus fa-lg");

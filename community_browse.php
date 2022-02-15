@@ -4,24 +4,21 @@
 
     include ("php/pagination.php");
 
-    $music_card_count=0;
+    $community_card_count=0;
 
-    $album_query = "SELECT album.album_rating, album.album_title, artist.artist_name, art.art_url, AVG(review.review_rating) AS AverageRating FROM album
-                    LEFT JOIN review 
-                    ON album.album_id = review.album_id 
-                    INNER JOIN artist
-                    ON album.artist_id = artist.artist_id
-                    INNER JOIN art 
-                    ON album.art_id = art.art_id
-                    GROUP BY album.album_id 
-                    ORDER BY album.album_rating
-                    LIMIT $offset, $cardsPerPage;";
+    $community_query = "SELECT community.community_name, community.community_description, art.art_url, COUNT(joined_communities.user_id) FROM community
+                        INNER JOIN art
+                        ON community.art_id = art.art_id
+                        INNER JOIN joined_communities
+                        ON community.community_id = joined_communities.community_id
+                        GROUP BY community.community_id
+                        LIMIT $offset, $cardsPerPage;";
 
-    $album_result = $conn -> query($album_query);
+    $community_result = $conn -> query($community_query);
 
-    if(!$album_result){
-		echo $conn -> error;
-	}
+    if(!$community_result){
+        echo $conn -> error;
+    }
 
     $artist_query = "SELECT DISTINCT(artist.artist_name) FROM artist";
 
@@ -47,13 +44,6 @@
 		echo $conn -> error;
 	}
 
-    $year_query = "SELECT DISTINCT(floor(year_value/10)*10) AS decade FROM year_value";
-
-    $year_result = $conn -> query($year_query);
-
-    if(!$year_result){
-		echo $conn -> error;
-	}
 
 ?>
 
@@ -63,7 +53,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Browse Music</title>
+    <title>Browse Communities</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
@@ -95,9 +85,9 @@
         <!-- Title and Sorting Selector -->
         <div class="row browseTitle">
             <div class="col-2 ">
-                <h2>Music</h2>
+                <h2>Communities</h2>
             </div>
-            <div class="col-10 d-flex justify-content-end <?php if($total_album_pages<=1){ echo 'd-none';} ?>">
+            <div class="col-10 d-flex justify-content-end <?php if($total_community_pages<=1){ echo 'd-none';} ?>">
                 <nav aria-label="pagination">
                     <ul class="pagination">
                         <li class="page-item <?php if($pageNumber <= 1){ echo 'disabled'; } ?>"><a class="page-link" href="<?php if($pageNumber <= 1){ echo '#'; } else { echo "?pageNumber=".($pageNumber - 1); } ?>">Previous</a></li>
@@ -118,12 +108,10 @@
                 <button id="musicSortFilter" type="button" class="btn dropdown-toggle p-1" data-bs-toggle="dropdown" aria-expanded="false"></button>
                 <ul class="dropdown-menu" aria-labelledby="musicSortFilter">
                     <li><a class="dropdown-item">Artist</a></li>
+                    <li><a class="dropdown-item">Community Size</a></li>
                     <li><a class="dropdown-item">Genre</a></li>
                     <li><a class="dropdown-item">Subgenre</a></li>
-                    <li><a class="dropdown-item">Title</a></li>
-                    <li><a class="dropdown-item" id="defaultMusicSort">Top 500 Albums</a></li>
-                    <li><a class="dropdown-item">User Rating</a></li>
-                    <li><a class="dropdown-item">Year</a></li>
+                    <li><a class="dropdown-item" id="defaultMusicSort">Title</a></li>
                 </ul>
             </div>
         </div>
@@ -175,7 +163,7 @@
                 <div class="row mb-1">
                     <h5>Subgenre</h5>
                 </div>
-                <div class="row mb-1">
+                <div class="row mb-3">
                     <select class="form-select" aria-label="subgenreSelector">
                         <option selected>Select subgenre</option>
                         <?php
@@ -188,48 +176,6 @@
                         ?>
                     </select>
                 </div>
-                <div class="row mb-1">
-                    <a href="#ratingCollapse" class="text-decoration-none text-white" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="ratingCollapse">
-                        <h5>User Rating <i class="fas fa-angle-down"></i></h5>
-                    </a>
-                </div>
-                <div class="row collapse mb-1" id="ratingCollapse">
-                    <?php
-                        for($i=0; $i<5; $i++){
-                            echo "<div class='form-check'>
-                                <input class='form-check-input' type='checkbox' value='' id='ratingCheckbox'>
-                                <label class='form-check-label' for='ratingCheckbox'>";
-                            for($j=5; $j>$i; $j--) {
-                                echo "<i class='fas fa-star'></i>";  
-                            }
-                            echo "</label>
-                            </div>";
-                        }
-                        echo "<div class='form-check'>
-                                <input class='form-check-input' type='checkbox' value='' id='ratingCheckbox'>
-                                <label class='form-check-label' for='ratingCheckbox'>No rating</label>
-                                </div>";
-                    ?>
-                </div>
-                <div class="row mb-1">
-                    <a href="#yearCollapse" class="text-decoration-none text-white" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="yearCollapse">
-                        <h5>Year <i class="fas fa-angle-down"></i></h5>
-                    </a>
-                </div>
-                <div class="row collapse mb-1" id="yearCollapse">
-                    <ul>
-                        <?php
-                        while($row = $year_result -> fetch_assoc()){
-                        $decade = $row['decade'];
-                        $decade = "'".substr($decade, 2)."s";
-                        echo "<div class='form-check'>
-                                <input class='form-check-input' type='checkbox' value='' id='ratingCheckbox'>
-                                <label class='form-check-label' for='ratingCheckbox'>$decade</label>
-                                </div>";
-                        }
-                        ?>
-                    </ul>
-                </div>
                 <div class="row">
                     <ul class='nav justify-content-center'>
                         <li class='nav-item px-2'><a type='button' class='btn clearButton' href='#'>Clear</a></li>
@@ -240,20 +186,20 @@
             <!-- Album Grid -->
             <div class="col py-3">
 
-                <?php
+            <?php
 
-                while($row = $album_result -> fetch_assoc()){
+            while($row = $community_result -> fetch_assoc()){
 
-                $album_art_url = $row['art_url'];
-                $rating = $row['AverageRating'];
-                $album_title = $row['album_title'];
-                $album_artist = $row['artist_name'];
+            $community_art_url = $row['art_url'];
+            $community_name = $row['community_name'];
+            $community_description = $row['community_description'];
+            $community_members = $row['COUNT(joined_communities.user_id)'];
 
-                include("includes/music_card.php");
-                $music_card_count++;
+                include("includes/community_card.php");
+                $community_card_count++;
 
-                }
-                ?>
+            }
+            ?>
 
             </div>
 
