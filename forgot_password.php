@@ -8,7 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
+    <title>Reset Password</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
@@ -35,31 +35,16 @@
         <div class="row signup d-flex justify-content-center py-2">
             <div class="col-10 col-sm-6 col-md-5 col-lg-4 col-xl-3 signupForm border px-3">
                 <div class="text-center mt-3">
-                    <h3>Create An Account</h3>
-                    <p>Have an account?<a type="button" class="btn loginLink" href="login.php">Login</a></p>
+                    <h3>Reset Password</h3>
+                    <p>Forgot your password? No worries.</p>
                 </div>
                 <div class="form-group mb-3">
                     <i class="fas fa-envelope"></i>
-                    <label for="emailSignup">Email Address</label>
-                    <input type="email" class="form-control" id="emailSignup" placeholder="name@example.com" required="required">
-                </div>
-                <div class="form-group mb-3">
-                    <i class="fas fa-user"></i>
-                    <label for="usernameSignup">Username</label>
-                    <input type="text" class="form-control" id="usernameSignup" placeholder="Username" required="required">
-                </div>
-                <div class="form-group mb-3">
-                    <i class="fas fa-lock"></i>
-                    <label for="password1Signup">Password</label>
-                    <input type="text" class="form-control" id="password1Signup" placeholder="Password" required="required">
-                </div>
-                <div class="form-group mb-3">
-                    <i class="fas fa-key"></i>
-                    <label for="password2Signup">Confirm Password</label>
-                    <input type="text" class="form-control" id="password2Signup" placeholder="Password" required="required">
+                    <label for="emailLogin">Email Address</label>
+                    <input type="email" class="form-control" id="emailReset" placeholder="name@example.com" required="required">
                 </div>
                 <div class="text-center mb-3">
-                    <button type="submit" class="btn styled_button">Submit</button>
+                    <button type="submit" class="btn styled_button">Reset Password</button>
                 </div>
                 
             </div>
