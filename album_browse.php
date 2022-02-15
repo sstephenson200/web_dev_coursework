@@ -117,9 +117,10 @@
             <div class="col-6 col-sm-11 d-flex justify-content-end dropdown">
                 <button id="musicSortFilter" type="button" class="btn dropdown-toggle p-1" data-bs-toggle="dropdown" aria-expanded="false"></button>
                 <ul class="dropdown-menu" aria-labelledby="musicSortFilter">
-                    <li><a class="dropdown-item">Album Title</a></li>
+                    <li><a class="dropdown-item">Title</a></li>
                     <li><a class="dropdown-item">Artist</a></li>
                     <li><a class="dropdown-item">Genre</a></li>
+                    <li><a class="dropdown-item">Subgenre</a></li>
                     <li><a class="dropdown-item" id="defaultMusicSort">Top 500 Albums</a></li>
                     <li><a class="dropdown-item">User Rating</a></li>
                     <li><a class="dropdown-item">Year</a></li>
