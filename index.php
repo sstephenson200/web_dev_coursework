@@ -5,7 +5,7 @@
     $music_card_count=0;
     $community_card_count=0;
 
-    $trending_music_query = "SELECT album.album_title, artist.artist_name, art.art_url, AVG(review.review_rating) AS AverageRating FROM album 
+    $trending_music_query = "SELECT album.album_id, album.album_title, artist.artist_name, art.art_url, AVG(review.review_rating) AS AverageRating FROM album 
                             INNER JOIN review 
                             ON album.album_id = review.album_id 
                             INNER JOIN artist
@@ -115,6 +115,7 @@
                             $rating = $row['AverageRating'];
                             $album_title = $row['album_title'];
                             $album_artist = $row['artist_name'];
+                            $album_id = $row['album_id'];
 
                             if($music_card_count == 0){
                                 echo '<div class="carousel-item active">';
@@ -143,7 +144,7 @@
             </div>
         </div>
 
-        <!-- Communities Carousel -->
+        <!-- Top Communities -->
 
         <div class="topCommunities p-2">
             <div class="row">

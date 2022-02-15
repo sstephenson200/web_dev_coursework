@@ -6,7 +6,7 @@
     $music_card_count=0;
     $community_card_count=0;
 
-    $album_query = "SELECT album.album_rating, album.album_title, artist.artist_name, art.art_url, AVG(review.review_rating) AS AverageRating FROM album
+    $album_query = "SELECT album.album_id, album.album_rating, album.album_title, artist.artist_name, art.art_url, AVG(review.review_rating) AS AverageRating FROM album
                     LEFT JOIN review 
                     ON album.album_id = review.album_id 
                     INNER JOIN artist
@@ -277,6 +277,7 @@
                 $rating = $row['AverageRating'];
                 $album_title = $row['album_title'];
                 $album_artist = $row['artist_name'];
+                $album_id = $row['album_id'];
 
                 if(isset($_POST['$hideAlbumsCheckbox'])){
                     continue;

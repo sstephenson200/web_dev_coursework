@@ -32,7 +32,7 @@
                 </a>
             </div>
             <div class='col-4'>
-                <a href='#' class='btn styled_button'>View</a>
+                <a href='album.php?album_id=<?php echo $album_id ?>' class='btn styled_button'>View</a>
             </div>
         </div>
     </div>

@@ -1,6 +1,6 @@
     <div class="jumbotron jumbotron-fluid trendingAlbum text-center bg-dark text-white" style = "background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('<?php echo $album_art_url ?>');">
         <div class="row">
-            <h1><a role="button" href="album.php" class="albumLink"><?php echo $album_title ?></a></h1>
+            <h1><a role="button" href="album.php?album_id=<?php echo $album_id ?>" class="albumLink"><?php echo $album_title ?></a></h1>
         </div>
         <div class="row">
             <h2 class="artist"><?php echo $album_artist ?></h2>
