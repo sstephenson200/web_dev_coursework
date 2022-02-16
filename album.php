@@ -43,6 +43,28 @@
         echo $conn -> error;
     }
 
+    $song_query = "SELECT song.song_title, song.song_length FROM song
+                    WHERE song.album_id = $album_id";
+
+    $song_result = $conn -> query($song_query);
+
+    if(!$song_result){
+        echo $conn -> error;
+    }
+
+    $review_query = "SELECT review_title, review_text, review_rating, review_date, user.user_name, art.art_url FROM review
+                    INNER JOIN user
+                    ON review.user_id = user.user_id
+                    INNER JOIN art
+                    ON user.art_id = art.art_id
+                    WHERE review.album_id = $album_id";
+
+    $review_result = $conn -> query($review_query);
+
+    if(!$review_result){
+        echo $conn -> error;
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -99,15 +121,21 @@
                     <h1 class="display-2 p-0"><?php echo $album_title?></h1>
                     <h1 class="display-4 mb-2">
                         <?php
-                        $rating_rounded = floor($rating);
-                        for($i=0; $i<$rating_rounded; $i++){
-                            echo "<i class='fas fa-star fa-xs'></i>";
-                        }
-                        $rating_remainder = ($rating - $rating_rounded);
 
-                        if($rating_remainder>=0.5){
-                            echo "<i class='fas fa-star-half fa-xs'></i>";
+                        if($rating != null){
+                            $rating_rounded = floor($rating);
+                            for($i=0; $i<$rating_rounded; $i++){
+                                echo "<i class='fas fa-star fa-xs'></i>";
+                            }
+                            $rating_remainder = ($rating - $rating_rounded);
+
+                            if($rating_remainder>=0.5){
+                                echo "<i class='fas fa-star-half fa-xs'></i>";
+                            }
+                            echo "      ";
+                            echo number_format($rating,2);
                         }
+
                         ?>
                     </h1>
                 </div>
@@ -163,7 +191,7 @@
                         </h4>
                     </div>
                 </div>
-                <div class="row d-flex justify-content-center">
+                <div class="row d-flex justify-content-center mb-2">
                     <div class="col-12 col-sm-6">
                         <?php if($spotify_id) {
                             echo "<iframe src='https://open.spotify.com/embed/album/$spotify_id' width='300' height='80' frameborder='0' allowtransparency='true' allow='encrypted-media'></iframe>";
@@ -171,6 +199,69 @@
                         ?>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="row m-2">
+            <div class="col-2">
+                <h2>Tracks</h2>
+            </div>
+        </div>
+
+        <div class="row d-flex justify-content-center">
+            <div class="col-10">
+                <table class="table table-sm table-bordered table-striped table-dark">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Song Title</th>
+                            <th scope="col">Duration</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $song_count = 1;
+                        while($row = $song_result -> fetch_assoc()) { 
+                            $song_title = $row['song_title'];
+                            $duration = $row['song_length'];
+
+                            echo "<tr>
+                            <th scope='row'>$song_count</th>
+                            <td>$song_title</td>";
+
+                            if($duration == null){
+                                echo "<td></td>";
+                            } else {
+                                echo "<td>$duration</td>";
+                            }
+                            
+                            echo "</tr>";
+                            $song_count++;
+                        
+                        }
+                        
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row m-2">
+            <div class="col-2">
+                <h2>Reviews</h2>
+            </div>
+        </div>
+
+        <div class="row m-2">
+            <div class="col">
+                <?php 
+
+                if(mysqli_num_rows($review_result) == 0) {
+                    echo "<h4>No reviews!</h4>
+                            <p>Be the first, you trendsetter.</p>";
+                }
+                
+                ?>
             </div>
         </div>
 
