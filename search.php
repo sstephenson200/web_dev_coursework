@@ -112,11 +112,12 @@
         include("includes/navbar.php");
         ?>
 
-        <!-- Title and Sorting Selector -->
+        <!-- Title -->
         <div class="row browseTitle">
             <div class="col-4">
                 <h2>Search Results For "Beach Boys"</h2>
             </div>
+            <!-- Pagination Controls -->
             <div class="col-8 d-flex justify-content-end <?php if($total_album_pages<=1){ echo 'd-none';} ?>">
                 <nav aria-label="pagination">
                     <ul class="pagination">
@@ -128,12 +129,14 @@
             </div>
         </div>
 
+        <!-- Filter Toggle -->
         <div class="row sortFilterOptions p-3">
             <div class="col-6 col-sm-1">
                 <button type="button" id="sidebarCollapse" class="btn filterButton">
                     <span>Toggle Filter <i class="fas fa-filter"></i></span>
                 </button>
             </div>
+            <!-- Sorting Selector -->
             <div class="col-6 col-sm-11 d-flex justify-content-end dropdown">
                 <button id="musicSortFilter" type="button" class="btn dropdown-toggle p-1" data-bs-toggle="dropdown" aria-expanded="false"></button>
                 <ul class="dropdown-menu" aria-labelledby="musicSortFilter">
@@ -259,14 +262,14 @@
                         ?>
                     </ul>
                 </div>
-                <div class="row">
+                <div class="row mb-5">
                     <ul class='nav justify-content-center'>
                         <li class='nav-item px-2'><a type='button' class='btn clearButton' href='#'>Clear</a></li>
                         <li class='nav-item px-2'><a type='button' class='btn applyButton' href='#'>Apply</a></li>
                     </ul>
                 </div>
             </div>
-            <!-- Album Grid -->
+            <!-- Results Grid -->
             <div class="col py-3">
 
                 <?php
