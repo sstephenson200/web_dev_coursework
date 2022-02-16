@@ -1,6 +1,6 @@
 <div class='music mx-3'>
     <div class='card musicCard text-center bg-dark text-white border-secondary mb-3'>
-        <img class='card-img-top albumArt h-50' src='<?php echo $album_art_url ?>' alt='Card image cap'>
+        <img class='card-img-top img-thumbnail albumArt h-50' src='<?php echo $album_art_url ?>' alt='Card image cap'>
         <div class='card-body'>
             <p>
                 <?php

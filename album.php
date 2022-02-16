@@ -21,6 +21,28 @@
         echo $conn -> error;
     }
 
+    $genre_query = "SELECT genre.genre_title FROM genre
+                    INNER JOIN album_genre 
+                    ON album_genre.genre_id = genre.genre_id
+                    WHERE album_genre.album_id = $album_id";
+
+    $genre_result = $conn -> query($genre_query);
+
+    if(!$genre_result){
+        echo $conn -> error;
+    }
+
+    $subgenre_query = "SELECT subgenre.subgenre_title FROM subgenre
+                    INNER JOIN album_subgenre 
+                    ON album_subgenre.subgenre_id = subgenre.subgenre_id
+                    WHERE album_subgenre.album_id = $album_id";
+
+    $subgenre_result = $conn -> query($subgenre_query);
+
+    if(!$subgenre_result){
+        echo $conn -> error;
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -58,6 +80,8 @@
         $album_title = $row['album_title'];
         $album_artist = $row['artist_name'];
         $rating = $row['AverageRating'];
+        $spotify_id = $row['spotify_id'];
+        $year = $row['year_value'];
     ?>
 
     <div class="container-fluid p-0 content">
@@ -67,29 +91,89 @@
         ?>
 
         <div class="row d-flex justify-content-center py-2">
-            <div class="col-3">
-                <img class='albumArt h-50' src='<?php echo $album_art_url ?>'>
+            <div class="col-12 col-md-4">
+                <img class='albumArt img-thumbnail mx-auto d-block h-75 w-auto' src='<?php echo $album_art_url ?>'>    
             </div>
-            <div class="col-6">
-                <h2><?php echo $album_title ?></h2>
-                <h3 class="artist"><?php echo $album_artist ?></h3>
-            </div>
-            <div class="col-3">
-            <?php
+            <div class="col-12 col-md-8 text-center">
+                <div class="row">
+                    <h1 class="display-2 p-0"><?php echo $album_title?></h1>
+                    <h1 class="display-4 mb-2">
+                        <?php
+                        $rating_rounded = floor($rating);
+                        for($i=0; $i<$rating_rounded; $i++){
+                            echo "<i class='fas fa-star fa-xs'></i>";
+                        }
+                        $rating_remainder = ($rating - $rating_rounded);
 
-            $rating_rounded = floor($rating);
-            for($i=0; $i<$rating_rounded; $i++){
-                echo "<i class='fas fa-star'></i>";
-            }
-            $rating_remainder = ($rating - $rating_rounded);
-
-            if($rating_remainder>=0.5){
-                echo "<i class='fas fa-star-half'></i>";
-            }
-
-            ?>
+                        if($rating_remainder>=0.5){
+                            echo "<i class='fas fa-star-half fa-xs'></i>";
+                        }
+                        ?>
+                    </h1>
+                </div>
+                <div class="row d-flex justify-content-center">
+                    <div class="col-4 col-md-3 col-lg-2 col-xl-2">
+                        <h4>Artist:</h4>
+                    </div>
+                    <div class="col-8 col-md-6 col-lg-5 col-xl-5">
+                        <h4 class="artist"><?php echo $album_artist?></h4>
+                    </div>
+                </div>
+                <div class="row d-flex justify-content-center">
+                    <div class="col-4 col-md-3 col-lg-2 col-xl-2">
+                        <h4>Year:</h4>
+                    </div>
+                    <div class="col-8 col-md-6 col-lg-5 col-xl-5">
+                        <h4><?php echo $year?></h4>
+                    </div>
+                </div>
+                <div class="row d-flex justify-content-center">
+                    <div class="col-4 col-md-3 col-lg-2 col-xl-2">
+                        <h4>Genre:</h4>
+                    </div>
+                    <div class="col-8 col-md-6 col-lg-5 col-xl-5">
+                        <h4>
+                            <?php 
+                                $genreList = "";
+                                while($row = $genre_result -> fetch_assoc()) {
+                                    $genre = $row['genre_title'];
+                                    $genreList .= "$genre, ";
+                                }
+                                $genreList = rtrim($genreList, ", ");
+                                echo $genreList;
+                            ?>
+                        </h4>
+                    </div>
+                </div>
+                <div class="row d-flex justify-content-center mb-4">
+                    <div class="col-4 col-md-3 col-lg-2 col-xl-2">
+                        <h4>Subgenre:</h4>
+                    </div>
+                    <div class="col-8 col-md-6 col-lg-5 col-xl-5">
+                        <h4>
+                            <?php 
+                                $subgenreList = "";
+                                while($row = $subgenre_result -> fetch_assoc()) {
+                                    $subgenre = $row['subgenre_title'];
+                                    $subgenreList .= "$subgenre, ";
+                                }
+                                $subgenreList = rtrim($subgenreList, ", ");
+                                echo $subgenreList;
+                            ?>
+                        </h4>
+                    </div>
+                </div>
+                <div class="row d-flex justify-content-center">
+                    <div class="col-12 col-sm-6">
+                        <?php if($spotify_id) {
+                            echo "<iframe src='https://open.spotify.com/embed/album/$spotify_id' width='300' height='80' frameborder='0' allowtransparency='true' allow='encrypted-media'></iframe>";
+                        }
+                        ?>
+                    </div>
+                </div>
             </div>
         </div>
+
 
         <!-- Footer -->
         <?php

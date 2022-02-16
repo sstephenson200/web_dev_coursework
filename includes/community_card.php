@@ -1,6 +1,6 @@
 <div class="community mx-3">
     <div class="card communityCard text-center bg-dark text-white border-secondary mb-3">
-        <img class="card-img-top communityArt h-50" src="<?php echo $community_art_url ?>" alt="Card image cap">
+        <img class="card-img-top img-thumbnail communityArt h-50" src="<?php echo $community_art_url ?>" alt="Card image cap">
             <div class="card-body">
                 <h6 class="card-title communityName"><?php echo $community_name ?></h6>
                 <h6 class="card-text communityDescription"><?php echo $community_description ?> | <?php echo $community_members ?> fans </h6>
