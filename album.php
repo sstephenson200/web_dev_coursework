@@ -65,6 +65,16 @@
         echo $conn -> error;
     }
 
+    $total_ratings_query = "SELECT review.review_rating, COUNT(review.review_rating) FROM review
+                            WHERE review.album_id = $album_id
+                            GROUP BY review.review_rating";
+
+    $total_ratings_result = $conn -> query($total_ratings_query);
+
+    if(!$total_ratings_result){
+        echo $conn -> error;
+    }   
+
 ?>
 
 <!DOCTYPE html>
@@ -114,7 +124,19 @@
 
         <div class="row d-flex justify-content-center py-2">
             <div class="col-12 col-md-4">
-                <img class='albumArt img-thumbnail mx-auto d-block h-75 w-auto' src='<?php echo $album_art_url ?>'>    
+                <img class='albumArt img-thumbnail mx-auto d-block h-75 w-auto' src='<?php echo $album_art_url ?>'>
+                <div class="row d-flex justify-content-center mt-4 pl-2">
+                    <div class='col-2 col-xl-1 own text-center'>
+                    <a role='button'>
+                        <i id='ownIcon' class='fas fa-plus fa-2x own' data-toggle='popover' title='Own' data-content='Owned music' data-target='ownIcon'></i>
+                    </a>
+                    </div>
+                    <div class='col-2 col-xl-1 favourite'>
+                        <a role='button'>
+                            <i id='favouriteIcon' class='far fa-heart fa-2x favourite' data-toggle='popover' title='Favourite' data-content='Favourited Music' data-target='favouriteIcon'></i>
+                        </a>
+                    </div> 
+                </div>   
             </div>
             <div class="col-12 col-md-8 text-center">
                 <div class="row">
@@ -132,8 +154,6 @@
                             if($rating_remainder>=0.5){
                                 echo "<i class='fas fa-star-half fa-xs'></i>";
                             }
-                            echo "      ";
-                            echo number_format($rating,2);
                         }
 
                         ?>
@@ -252,18 +272,92 @@
             </div>
         </div>
 
-        <div class="row m-2">
-            <div class="col">
-                <?php 
+        <div class="row d-flex justify-content-center p-2">
+        <?php 
+        if(mysqli_num_rows($review_result) == 0) {
+            echo "<div class='col-4'>
+                    <h4>No reviews!</h4>
+                    <p>Be the first, you trendsetter.</p>
+                </div>";
+        } else {
 
-                if(mysqli_num_rows($review_result) == 0) {
-                    echo "<h4>No reviews!</h4>
-                            <p>Be the first, you trendsetter.</p>";
-                }
-                
-                ?>
-            </div>
+            $rating_2dp = number_format($rating,2);
+            $reviews_5_star = 10;
+            $reviews_4_star = 6;
+            $reviews_3_star = 11;
+            $reviews_2_star = 3;
+            $reviews_1_star = 0;
+            $total_reviews = $reviews_5_star + $reviews_4_star + $reviews_3_star + $reviews_2_star + $reviews_1_star;            
+
+            echo "<div class='col-4'>
+                    <div class='row'>
+                        <h2>Average Rating</h2>
+                        <h2>$rating_2dp</h2>
+                    </div>
+                    <div class='row'>
+                        <h4>Review Scores</h4>
+                        <h5>Total reviews: $total_reviews</h5>
+                    </div>
+                    <div class='row'>
+                        <div class='col-2'>";
+
+                    for ($i=5; $i>0; $i--) {
+                        echo "<p>$i</p>";
+                    }
+
+                    echo "</div>
+                    <div class='col-2'>
+                        <p>$reviews_5_star</p>
+                        <p>$reviews_4_star</p> 
+                        <p>$reviews_3_star</p> 
+                        <p>$reviews_2_star</p> 
+                        <p>$reviews_1_star</p>         
+                    </div>
+                </div>
+                </div>";
+        }
+        ?>
+
+            <div class="col-6 border bg-dark p-2">
+                <div class="row">
+                    <h2>Your Review</h2>
+                </div> 
+                <div class="row d-flex justify-content-center">
+                    <div class="col-8">
+                        <div class="form-group mb-3">
+                        <label for="reviewTitle">Title</label>
+                        <input type="text" class="form-control" id="reviewTitle" placeholder="Review Title" required="required">
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <label for="reviewRating">Rating</label>
+                        <select class="form-select" aria-label="ratingSelector" id="reviewRating">
+                            <option value="5">5</option>
+                            <option value="4">4</option>
+                            <option value="3">3</option>
+                            <option value="2">2</option>
+                            <option value="1">1</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row d-flex justify-content-center">
+                    <div class="col-10">
+                        <div class="form-group">
+                            <label for="reviewText">Your Review</label>
+                            <textarea class="form-control" id="reviewText" rows="3" placeholder="Please enter your review..."></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row d-flex justify-content-center mt-2">
+                    <div class="col-2">
+                        <button type="submit" class="btn styled_button">Submit</button>
+                    </div>
+                </div> 
+            </div>  
         </div>
+
+        
+          
 
 
         <!-- Footer -->
@@ -274,5 +368,9 @@
     </div>
 
 </body>
+
+<?php
+include("js/card_functions.php");
+?>
 
 </html>
