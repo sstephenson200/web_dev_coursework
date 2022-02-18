@@ -62,7 +62,8 @@
                     ON review.user_id = user.user_id
                     INNER JOIN art
                     ON user.art_id = art.art_id
-                    WHERE review.album_id = $album_id";
+                    WHERE review.album_id = $album_id
+                    LIMIT $offset, $cardsPerPage";
 
     $review_result = $conn -> query($review_query);
 
@@ -409,9 +410,9 @@
             <div class="col-2 offset-10 d-flex justify-content-center <?php if($total_review_pages<=1){ echo 'd-none';} ?>">
                 <nav aria-label="pagination">
                     <ul class="pagination">
-                        <li class="page-item <?php if($pageNumber <= 1){ echo 'disabled'; } ?>"><a class="page-link" href="<?php if($pageNumber <= 1){ echo '#'; } else { echo "?pageNumber=".($pageNumber - 1); } ?>">Previous</a></li>
+                        <li class="page-item <?php if($pageNumber <= 1){ echo 'disabled'; } ?>"><a class="page-link" href="<?php if($pageNumber <= 1){ echo '#'; } else { echo "?album_id={$album_id}&pageNumber=".($pageNumber - 1); } ?>">Previous</a></li>
                         <li class="page-item disabled"><a class="page-link" href="<?php echo "?pageNumber=".($pageNumber); ?>"><?php echo $pageNumber ?></a></li>
-                        <li class="page-item <?php if($pageNumber >= $total_review_pages){ echo 'disabled'; } ?>"><a class="page-link" href="<?php if($pageNumber >= $total_review_pages){ echo '#'; } else { echo "?pageNumber=".($pageNumber + 1); } ?>">Next</a></li>
+                        <li class="page-item <?php if($pageNumber >= $total_review_pages){ echo 'disabled'; } ?>"><a class="page-link" href="<?php if($pageNumber >= $total_review_pages){ echo '#'; } else { echo "?album_id={$album_id}&pageNumber=".($pageNumber + 1); } ?>">Next</a></li>
                     </ul>
                 </nav>
             </div>
@@ -439,15 +440,15 @@
             <div class="col-2 offset-10 d-flex justify-content-center <?php if($total_review_pages<=1){ echo 'd-none';} ?>">
                 <nav aria-label="pagination">
                     <ul class="pagination">
-                        <li class="page-item <?php if($pageNumber <= 1){ echo 'disabled'; } ?>"><a class="page-link" href="<?php if($pageNumber <= 1){ echo '#'; } else { echo "?pageNumber=".($pageNumber - 1); } ?>">Previous</a></li>
+                        <li class="page-item <?php if($pageNumber <= 1){ echo 'disabled'; } ?>"><a class="page-link" href="<?php if($pageNumber <= 1){ echo '#'; } else { echo "?album_id={$album_id}&pageNumber=".($pageNumber - 1); } ?>">Previous</a></li>
                         <li class="page-item disabled"><a class="page-link" href="<?php echo "?pageNumber=".($pageNumber); ?>"><?php echo $pageNumber ?></a></li>
-                        <li class="page-item <?php if($pageNumber >= $total_review_pages){ echo 'disabled'; } ?>"><a class="page-link" href="<?php if($pageNumber >= $total_review_pages){ echo '#'; } else { echo "?pageNumber=".($pageNumber + 1); } ?>">Next</a></li>
+                        <li class="page-item <?php if($pageNumber >= $total_review_pages){ echo 'disabled'; } ?>"><a class="page-link" href="<?php if($pageNumber >= $total_review_pages){ echo '#'; } else { echo "?album_id={$album_id}&pageNumber=".($pageNumber + 1); } ?>">Next</a></li>
                     </ul>
                 </nav>
             </div>
         </div>
 
-        <div class="row  p-2
+        <div class="row m-3
             <?php if(mysqli_num_rows($related_album_result) == 0) { 
                 echo "d-none";
             }
@@ -457,7 +458,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row m-3">
             <div class="col py-3 px-2">
 
                 <?php
@@ -479,7 +480,7 @@
             </div>
         </div>
 
-        <div class="row  p-2
+        <div class="row m-3
             <?php if(mysqli_num_rows($related_community_result) == 0) { 
                 echo "d-none";
             }
@@ -489,7 +490,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row m-3">
             <div class="col py-3 px-2">
 
                 <?php
