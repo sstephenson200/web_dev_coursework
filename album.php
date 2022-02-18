@@ -4,6 +4,8 @@
 
     $album_id = $conn->real_escape_string($_GET['album_id']);
 
+    include ("php/pagination_reviews.php");
+
     $album_query = "SELECT album.album_title, album.spotify_id, art.art_url, artist.artist_name, year_value.year_value, AVG(review.review_rating) AS AverageRating from album
                     INNER JOIN art
                     ON album.art_id = art.art_id
@@ -74,6 +76,17 @@
     if(!$total_ratings_result){
         echo $conn -> error;
     }   
+
+    $related_album_query = "SELECT * FROM album
+                            INNER JOIN artist
+                            ON album.artist_id = artist.artist_id
+                            AND album.album_id!= $album_id";
+
+    $related_album_result = $conn -> query($related_album_query);
+
+    if(!$related_album_result){
+        echo $conn -> error;
+    }
 
 ?>
 
@@ -354,6 +367,18 @@
             ?>
         </div>
 
+        <div class="row p-2">
+            <div class="col-2 offset-10 d-flex justify-content-center <?php if($total_review_pages<=1){ echo 'd-none';} ?>">
+                <nav aria-label="pagination">
+                    <ul class="pagination">
+                        <li class="page-item <?php if($pageNumber <= 1){ echo 'disabled'; } ?>"><a class="page-link" href="<?php if($pageNumber <= 1){ echo '#'; } else { echo "?pageNumber=".($pageNumber - 1); } ?>">Previous</a></li>
+                        <li class="page-item disabled"><a class="page-link" href="<?php echo "?pageNumber=".($pageNumber); ?>"><?php echo $pageNumber ?></a></li>
+                        <li class="page-item <?php if($pageNumber >= $total_review_pages){ echo 'disabled'; } ?>"><a class="page-link" href="<?php if($pageNumber >= $total_review_pages){ echo '#'; } else { echo "?pageNumber=".($pageNumber + 1); } ?>">Next</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
         <div class="row d-flex justify-content-center mt-3">
             <?php
              while($row = $review_result -> fetch_assoc()) {
@@ -371,6 +396,24 @@
              }
             ?>
         </div>
+
+        <div class="row p-2">
+            <div class="col-2 offset-10 d-flex justify-content-center <?php if($total_review_pages<=1){ echo 'd-none';} ?>">
+                <nav aria-label="pagination">
+                    <ul class="pagination">
+                        <li class="page-item <?php if($pageNumber <= 1){ echo 'disabled'; } ?>"><a class="page-link" href="<?php if($pageNumber <= 1){ echo '#'; } else { echo "?pageNumber=".($pageNumber - 1); } ?>">Previous</a></li>
+                        <li class="page-item disabled"><a class="page-link" href="<?php echo "?pageNumber=".($pageNumber); ?>"><?php echo $pageNumber ?></a></li>
+                        <li class="page-item <?php if($pageNumber >= $total_review_pages){ echo 'disabled'; } ?>"><a class="page-link" href="<?php if($pageNumber >= $total_review_pages){ echo '#'; } else { echo "?pageNumber=".($pageNumber + 1); } ?>">Next</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+        <div class="row">
+            Hello!
+        </div>
+
+        
 
 
         <!-- Footer -->
