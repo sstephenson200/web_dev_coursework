@@ -1,5 +1,8 @@
 <?php
 
+    $music_card_count = 0;
+    $community_card_count = 0;
+
     include("connections/dbconn.php");
 
     $album_id = $conn->real_escape_string($_GET['album_id']);
@@ -77,14 +80,49 @@
         echo $conn -> error;
     }   
 
-    $related_album_query = "SELECT * FROM album
+    $artist_query = "SELECT artist_name FROM artist 
+                    INNER JOIN album
+                    ON artist.artist_id = album.artist_id
+                    WHERE album.album_id = $album_id";
+
+    $artist_result = $conn -> query($artist_query);
+
+    if(!$artist_result){
+        echo $conn -> error;
+    }   
+
+    $artist_name = ($artist_result -> fetch_assoc())['artist_name'];
+
+    $related_album_query = "SELECT album.album_id, album.album_title, artist.artist_name, art.art_url, AVG(review.review_rating) AS AverageRating FROM album
+                            LEFT JOIN review 
+                            ON album.album_id = review.album_id
                             INNER JOIN artist
                             ON album.artist_id = artist.artist_id
-                            AND album.album_id!= $album_id";
+                            INNER JOIN art 
+                            ON album.art_id = art.art_id
+                            WHERE artist.artist_name = '$artist_name'
+                            AND album.album_id!= '$album_id'
+                            GROUP BY album.album_id";
 
     $related_album_result = $conn -> query($related_album_query);
 
     if(!$related_album_result){
+        echo $conn -> error;
+    }
+
+    $related_community_query = "SELECT community.community_name, community.community_description, art.art_url, COUNT(joined_communities.user_id) FROM community
+                                INNER JOIN art
+                                ON community.art_id = art.art_id
+                                INNER JOIN joined_communities
+                                ON community.community_id = joined_communities.community_id
+                                INNER JOIN artist
+                                ON community.artist_id = artist.artist_id
+                                WHERE artist.artist_name = '$artist_name'
+                                GROUP BY community.community_id";
+
+    $related_community_result = $conn -> query($related_community_query);
+
+    if(!$related_community_result){
         echo $conn -> error;
     }
 
@@ -409,12 +447,68 @@
             </div>
         </div>
 
-        <div class="row">
-            Hello!
+        <div class="row  p-2
+            <?php if(mysqli_num_rows($related_album_result) == 0) { 
+                echo "d-none";
+            }
+            ?>">
+            <div class="col-12 col-sm-10 col-md-6">
+                <h2>More Music From <?php echo $artist_name?></h2>
+            </div>
         </div>
 
-        
+        <div class="row">
+            <div class="col py-3 px-2">
 
+                <?php
+
+                while($row = $related_album_result -> fetch_assoc()){
+
+                $album_art_url = $row['art_url'];
+                $rating = $row['AverageRating'];
+                $album_title = $row['album_title'];
+                $album_artist = $row['artist_name'];
+                $album_id = $row['album_id'];
+
+                include("includes/music_card.php");
+                $music_card_count++;
+
+                }
+                ?>
+
+            </div>
+        </div>
+
+        <div class="row  p-2
+            <?php if(mysqli_num_rows($related_community_result) == 0) { 
+                echo "d-none";
+            }
+            ?>">
+            <div class="col-12 col-sm-10 col-md-6">
+                <h2>Communities For <?php echo $artist_name?></h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col py-3 px-2">
+
+                <?php
+
+                while($row = $related_community_result -> fetch_assoc()){
+
+                    $community_art_url = $row['art_url'];
+                    $community_name = $row['community_name'];
+                    $community_description = $row['community_description'];
+                    $community_members = $row['COUNT(joined_communities.user_id)'];
+        
+                    include("includes/community_card.php");
+                    $community_card_count++;
+
+                }
+                ?>
+
+            </div>
+        </div>
 
         <!-- Footer -->
         <?php
