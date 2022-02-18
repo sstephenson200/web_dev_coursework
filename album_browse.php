@@ -263,6 +263,18 @@
 
         </div>
 
+        <div class="row controlLower p-2">
+            <div class="col-2 offset-10 d-flex justify-content-center <?php if($total_album_pages<=1){ echo 'd-none';} ?>">
+                <nav aria-label="pagination">
+                    <ul class="pagination">
+                        <li class="page-item <?php if($pageNumber <= 1){ echo 'disabled'; } ?>"><a class="page-link" href="<?php if($pageNumber <= 1){ echo '#'; } else { echo "?pageNumber=".($pageNumber - 1); } ?>">Previous</a></li>
+                        <li class="page-item disabled"><a class="page-link" href="<?php echo "?pageNumber=".($pageNumber); ?>"><?php echo $pageNumber ?></a></li>
+                        <li class="page-item <?php if($pageNumber >= $total_album_pages){ echo 'disabled'; } ?>"><a class="page-link" href="<?php if($pageNumber >= $total_album_pages){ echo '#'; } else { echo "?pageNumber=".($pageNumber + 1); } ?>">Next</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
         <!-- Footer -->
         <?php
         include("includes/footer.php");

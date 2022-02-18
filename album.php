@@ -272,64 +272,19 @@
             </div>
         </div>
 
-        <div class="row d-flex justify-content-center p-2">
-        <?php 
-        if(mysqli_num_rows($review_result) == 0) {
-            echo "<div class='col-4'>
-                    <h4>No reviews!</h4>
-                    <p>Be the first, you trendsetter.</p>
-                </div>";
-        } else {
-
-            $rating_2dp = number_format($rating,2);
-            $reviews_5_star = 10;
-            $reviews_4_star = 6;
-            $reviews_3_star = 11;
-            $reviews_2_star = 3;
-            $reviews_1_star = 0;
-            $total_reviews = $reviews_5_star + $reviews_4_star + $reviews_3_star + $reviews_2_star + $reviews_1_star;            
-
-            echo "<div class='col-4'>
-                    <div class='row'>
-                        <h2>Average Rating</h2>
-                        <h2>$rating_2dp</h2>
-                    </div>
-                    <div class='row'>
-                        <h4>Review Scores</h4>
-                        <h5>Total reviews: $total_reviews</h5>
-                    </div>
-                    <div class='row'>
-                        <div class='col-2'>";
-
-                    for ($i=5; $i>0; $i--) {
-                        echo "<p>$i</p>";
-                    }
-
-                    echo "</div>
-                    <div class='col-2'>
-                        <p>$reviews_5_star</p>
-                        <p>$reviews_4_star</p> 
-                        <p>$reviews_3_star</p> 
-                        <p>$reviews_2_star</p> 
-                        <p>$reviews_1_star</p>         
-                    </div>
-                </div>
-                </div>";
-        }
-        ?>
-
-            <div class="col-6 border bg-dark p-2">
+        <div class="row d-flex justify-content-center">
+            <div class="col-10 col-md-8 p-2 border bg-dark">
                 <div class="row">
                     <h2>Your Review</h2>
                 </div> 
                 <div class="row d-flex justify-content-center">
-                    <div class="col-8">
+                    <div class="col-6 col-sm-8">
                         <div class="form-group mb-3">
                         <label for="reviewTitle">Title</label>
                         <input type="text" class="form-control" id="reviewTitle" placeholder="Review Title" required="required">
                         </div>
                     </div>
-                    <div class="col-2">
+                    <div class="col-4 col-sm-2">
                         <label for="reviewRating">Rating</label>
                         <select class="form-select" aria-label="ratingSelector" id="reviewRating">
                             <option value="5">5</option>
@@ -349,15 +304,73 @@
                     </div>
                 </div>
                 <div class="row d-flex justify-content-center mt-2">
-                    <div class="col-2">
+                    <div class="col-2 mb-2">
                         <button type="submit" class="btn styled_button">Submit</button>
                     </div>
                 </div> 
             </div>  
         </div>
 
-        
-          
+        <div class="row d-flex justify-content-center m-4">
+            <?php 
+            if(mysqli_num_rows($review_result) == 0) {
+                echo "<div class='col-10 col-sm-8 col-md-2'>
+                        <h4>No reviews!</h4>
+                        <p>Be the first, you trendsetter.</p>
+                    </div>";
+            } else {
+
+                $rating_2dp = number_format($rating,2);
+                $reviews_5_star = 10;
+                $reviews_4_star = 6;
+                $reviews_3_star = 11;
+                $reviews_2_star = 3;
+                $reviews_1_star = 0;
+                $total_reviews = $reviews_5_star + $reviews_4_star + $reviews_3_star + $reviews_2_star + $reviews_1_star;            
+
+                echo "<div class='col'>
+                        <div class='row text-center'>
+                            <div class='col-5'>
+                                <h2>Average Rating: $rating_2dp</h2>
+                            </div>
+                            <div class='col-5'>
+                            <h2>Review Scores ($total_reviews)</h2>
+                            </div>
+                        </div>
+                        <div class='row d-flex justify-content-center'>";
+                            
+                        for ($i=5; $i>0; $i--) {
+                            echo "<div class='col-12 col-md-8 col-lg-1'>";
+                            for($j=0;$j<$i; $j++){
+                                echo "<i class='fas fa-star'></i>";
+                            }
+                            echo " (10)";
+                            echo "</div>";
+                        }
+
+                        echo "</div>
+                    </div>";
+            }
+            ?>
+        </div>
+
+        <div class="row d-flex justify-content-center mt-3">
+            <?php
+             while($row = $review_result -> fetch_assoc()) {
+                 $review_title = $row['review_title'];
+                 $review_body = $row['review_text'];
+                 $review_rating = $row['review_rating'];
+                 $review_date = $row['review_date'];
+                 $username = $row['user_name'];
+                 $user_art = $row['art_url'];
+
+                 echo "<div class='col-10 col-lg-5 mx-4 mb-3'>";
+                 include("includes/review.php");
+                 echo "</div>";
+                                    
+             }
+            ?>
+        </div>
 
 
         <!-- Footer -->

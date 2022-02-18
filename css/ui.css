@@ -147,6 +147,10 @@
     color: black;
 }
 
+.controlLower {
+    background-color: rgb(65, 26, 57);
+}
+
 .signup {
     background-color: #bf3a30;
     background-image: linear-gradient(315deg, #bf3a30 0%, #864ba2 74%);
@@ -163,6 +167,15 @@
 
 .loginLink:hover {
     color: white;
+}
+
+.reviewCard {
+    padding: 3.5%;
+}
+
+.reviewUserArt {
+    max-height: 75%;
+    width: auto;
 }
 
 .fa-star-half, .fa-star {
