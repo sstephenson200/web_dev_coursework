@@ -58,7 +58,7 @@
         echo $conn -> error;
     }
 
-    $review_query = "SELECT review_title, review_text, review_rating, review_date, user.user_name, art.art_url FROM review
+    $review_query = "SELECT review_title, review_text, review_rating, review_date, user.user_id, user.user_name, art.art_url FROM review
                     INNER JOIN user
                     ON review.user_id = user.user_id
                     INNER JOIN art
@@ -428,6 +428,7 @@
                  $review_date = $row['review_date'];
                  $username = $row['user_name'];
                  $user_art = $row['art_url'];
+                 $user_id = $row['user_id'];
 
                  echo "<div class='col-10 col-lg-5 mx-4 mb-3'>";
                  include("includes/review.php");

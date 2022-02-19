@@ -180,7 +180,7 @@
                     </select>
                 </div>
                 <div class="row mb-5">
-                    <ul class='nav justify-content-center'>
+                    <ul class='nav d-flex justify-content-center'>
                         <li class='nav-item px-2'><a type='button' class='btn clearButton' href='#'>Clear</a></li>
                         <li class='nav-item px-2'><a type='button' class='btn applyButton' href='#'>Apply</a></li>
                     </ul>

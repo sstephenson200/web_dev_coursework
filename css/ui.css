@@ -188,6 +188,14 @@
     margin: auto;
 }
 
+.profileTabs {
+    color: white;
+}
+
+.profileTabs:hover  {
+    color: #904FBB;
+}
+
 .fa-star-half, .fa-star {
     color: gold;
 }

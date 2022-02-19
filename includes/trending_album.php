@@ -22,7 +22,7 @@
                 ?>
             </p>
         </div>
-        <div class='row justify-content-center'>
+        <div class='row d-flex justify-content-center'>
             <div class='col-1 own'>
                 <a role='button'>
                     <i id='ownIcon<?php echo $music_card_count ?>' class='fas fa-plus fa-lg own' data-toggle='popover' title='Own' data-content='Owned music' data-target='ownIcon<?php echo $music_card_count ?>'></i>

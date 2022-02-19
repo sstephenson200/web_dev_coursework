@@ -46,8 +46,8 @@
         </div>
         <div class='col-9 col-md-4 d-flex justify-content-end'>
             <ul class='nav'>
-                <li class='nav-item px-2'><a type='button' class='btn styled_button' href='login.php'>Login</a></li>
                 <li class='nav-item px-2'><a type='button' class='btn styled_button' href='signup.php'>Sign Up</a></li>
+                <li class='nav-item px-2'><a type='button' class='btn styled_button' href='login.php'>Login</a></li>
             </ul>
         </div>
     </div>

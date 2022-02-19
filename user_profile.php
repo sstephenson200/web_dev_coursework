@@ -2,6 +2,8 @@
 
     include("connections/dbconn.php");
 
+    $user_id = $conn->real_escape_string($_GET['user_id']);
+
     $music_card_count=0;
     $community_card_count=0;
     $review_card_count = 0;
@@ -9,7 +11,7 @@
     $user_query = "SELECT user.user_name, art.art_url FROM user
                     INNER JOIN art 
                     ON user.art_id = art.art_id 
-                    WHERE user.user_id = 15";
+                    WHERE user.user_id = $user_id";
 
     $user_result = $conn -> query($user_query);
 
@@ -58,14 +60,14 @@
         include("includes/navbar.php");
         ?>
 
-        <div class="row justify-content-center">
+        <div class="row d-flex justify-content-center">
             <div class="col-12 col-sm-6 col-md-4 userSidebar">
-                <div class="row justify-content-center mb-3">
+                <div class="row d-flex justify-content-center mb-3">
                     <div class="col-10 align-self-center">
                         <img src="<?php echo $user_art ?>" class="rounded-circle profilePic"/>
                     </div>
                 </div>
-                <div class="row justify-content-center text-center mb-2">
+                <div class="row d-flex justify-content-center text-center mb-2">
                     <div class="col-12 col-lg-3">
                         <h3><?php echo $username ?></h3>
                     </div>
@@ -77,13 +79,52 @@
                     <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium.</p>
                 </div>
                 <div class="row text-center mb-2">
-                    <div clas="col-10">
-                        <button type="submit" class="btn styled_button"><i class="fas fa-cog"></i> Settings</button>
+                    <div class="col">
+                        <a type='button' class='btn styled_button' href='user_settings.php?user_id=<?php echo $user_id ?>'><i class="fas fa-cog"></i> Settings</a>
                     </div>
                 </div>
             </div>
             <div class="col-12 col-sm-6 col-md-8">
-                Tabbed Results
+                <div class="row py-1">
+                    <div class="col-3 offset-9 col-md-1 offset-md-11">
+                        <a role='button'>
+                            <i id='reportIcon<?php echo $review_card_count ?>' class='far fa-flag fa-lg report' data-toggle='popover' title='Report' data-content='Report Content' data-target='reportIcon<?php echo $review_card_count ?>'></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col mx-2">
+                        <ul class="nav nav-tabs nav-justified">
+                            <li class="nav-item">
+                                <a class="nav-link profileTabs active" href="#">Owned Music</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link profileTabs" href="#">Favourite Music</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link profileTabs" href="#">Communities</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link profileTabs" href="#">Reviews</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link profileTabs" href="#">Posts</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link profileTabs" href="#">Comments</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="tab-content">
+                            <div class="tab-pane" id="userOwned">
+                                <h5>User's owned music</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -95,5 +136,9 @@
     </div>
 
 </body>
+
+<?php 
+include("js/card_functions.php");
+?>
 
 </html>
