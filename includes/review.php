@@ -3,7 +3,7 @@
         <div class="row py-1">
             <div class="col-1 offset-11">
                 <a role='button'>
-                    <i id='reportIcon<?php echo $review_card_count ?>' class='far fa-flag fa-lg report' data-toggle='popover' title='Report' data-content='Report for Inappropriate Language' data-target='reportIcon<?php echo $review_card_count ?>'></i>
+                    <i id='reportIcon<?php echo $review_card_count ?>' class='far fa-flag fa-lg report' data-toggle='popover' title='Report' data-content='Report Content' data-target='reportIcon<?php echo $review_card_count ?>'></i>
                 </a>
             </div>
         </div>

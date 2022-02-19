@@ -178,6 +178,16 @@
     width: auto;
 }
 
+.userSidebar {
+    background-color: rgb(65, 26, 57);
+    padding: 1%;
+}
+
+.profilePic {
+    display: block;
+    margin: auto;
+}
+
 .fa-star-half, .fa-star {
     color: gold;
 }
