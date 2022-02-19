@@ -25,4 +25,10 @@
         $('#'+target).toggleClass("fas fa-users fa-lg");
 });
 
+    $('.report').click(function () {
+        var target = $(this).attr('data-target');
+        $('#'+target).toggleClass("far fa-flag fa-lg");
+        $('#'+target).toggleClass("fas fa-flag fa-lg");
+});
+
 </script>

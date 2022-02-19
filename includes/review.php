@@ -1,5 +1,12 @@
 <div class="card reviewCard text-center bg-dark text-white border-secondary h-100 mb-3">
 	<div class="card-body">
+        <div class="row py-1">
+            <div class="col-1 offset-11">
+                <a role='button'>
+                    <i id='reportIcon<?php echo $review_card_count ?>' class='far fa-flag fa-lg report' data-toggle='popover' title='Report' data-content='Report for Inappropriate Language' data-target='reportIcon<?php echo $review_card_count ?>'></i>
+                </a>
+            </div>
+        </div>
         <div class="row">
             <div class="col-12 col-md-5 col-lg-6 align-self-center">
                 <img src="<?php echo $user_art ?>?random=<?php echo rand() ?>" class="rounded-circle reviewUserArt"/>

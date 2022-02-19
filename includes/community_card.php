@@ -6,7 +6,7 @@
                 <h6 class="card-text communityDescription"><?php echo $community_description ?> | <?php echo $community_members ?> fans </h6>
             </div>
             <div class="card-footer row border-secondary align-items-center mx-0">
-                <div class="col-6 own">
+                <div class="col-6">
                     <a role="button">
                         <i id="joinIcon<?php echo $community_card_count ?>" class="fas fa-user-plus fa-lg join" data-toggle="popover" title="Join" data-content="Join this community" data-target='joinIcon<?php echo $community_card_count ?>'></i>
                     </a>

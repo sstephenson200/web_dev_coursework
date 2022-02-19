@@ -21,12 +21,12 @@
             <h6 class='card-subtitle artist'><?php echo $album_artist ?></h6>
         </div>
         <div class='card-footer row border-secondary align-items-center mx-0'>
-            <div class='col-4 own'>
+            <div class='col-4'>
                 <a role='button'>
                     <i id='ownIcon<?php echo $music_card_count ?>' class='fas fa-plus fa-lg own' data-toggle='popover' title='Own' data-content='Owned music' data-target='ownIcon<?php echo $music_card_count ?>'></i>
                 </a>
             </div>
-            <div class='col-4 favourite'>
+            <div class='col-4'>
                 <a role='button'>
                     <i id='favouriteIcon<?php echo $music_card_count ?>' class='far fa-heart fa-lg favourite' data-toggle='popover' title='Favourite' data-content='Favourited Music' data-target='favouriteIcon<?php echo $music_card_count ?>'></i>
                 </a>

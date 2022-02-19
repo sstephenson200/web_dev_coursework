@@ -2,6 +2,7 @@
 
     $music_card_count = 0;
     $community_card_count = 0;
+    $review_card_count = 0;
 
     include("connections/dbconn.php");
 
@@ -431,6 +432,7 @@
                  echo "<div class='col-10 col-lg-5 mx-4 mb-3'>";
                  include("includes/review.php");
                  echo "</div>";
+                 $review_card_count++;
                                     
              }
             ?>
