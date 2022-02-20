@@ -72,38 +72,48 @@
         </div>
 
         <div class="row px-5 mb-2">
-            <div class="col-2">
+            <div class="col-12 col-md-6">
                 <p>Update your profile information.</p>
             </div>
         </div>
 
-        <div class="row mb-2 d-flex justify-content-center">
-            <div class="col-10 text-center">
-                <div class="form-group mb-2">
-                    <i class="fas fa-camera"></i>
-                    <label for="updateProfilePic">Profile Picture URL</label>
-                    <input type="url" class="form-control" id="updateProfilePic" placeholder="image.com" value="<?php echo $user_art ?>">
-                </div>
-            </div>
-        </div>
+        <div class="row d-flex justify-content-center">
+            <div class="col-12 col-sm-10 col-md-10">
 
-        <div class="row mb-2 d-flex justify-content-center">
-            <div class="col-10 text-center">
-                <div class="form-group mb-2">
-                    <i class="fas fa-book"></i>
-                    <label for="updateBio">User Bio</label>
-                    <input type="text" class="form-control" id="updateBio" placeholder="What's your story?" value="bio value blahblahblah">
+                <div class="row mb-2 d-flex justify-content-center">
+                    <div class="col-12 col-md-4 align-self-center mb-4">
+                        <img src="<?php echo $user_art ?>" class="rounded-circle profilePic"/>
+                    </div>
+                    <div class="col-10 col-md-6 text-center">
+                        <div class="form-group mb-4">
+                            <i class="fas fa-camera"></i>
+                            <label for="updateProfilePic">Profile Picture URL</label>
+                            <input type="url" class="form-control" id="updateProfilePic" placeholder="image.com" value="<?php echo $user_art ?>">
+                        </div>
+                        <div class="form-group mb-2">
+                            <i class="fas fa-globe"></i>
+                            <label for="updateLocation">Location</label>
+                            <input type="text" class="form-control" id="updateLocation" placeholder="Where are you from?" value="UK">
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
 
-        <div class="row mb-2 d-flex justify-content-center">
-            <div class="col-10 text-center">
-                <div class="form-group mb-2">
-                    <i class="fas fa-globe"></i>
-                    <label for="updateLocation">Location</label>
-                    <input type="text" class="form-control" id="updateLocation" placeholder="Where are you from?" value="UK">
+                <div class="row mb-2 d-flex justify-content-center">
+                    <div class="col-10 text-center">
+                        <div class="form-group mb-2">
+                            <i class="fas fa-book"></i>
+                            <label for="updateBio">User Bio</label>
+                            <textarea class="form-control" id="updateBio" placeholder="What's your story?" rows="3">bio value blahblahblah</textarea>
+                        </div>
+                    </div>
                 </div>
+                
+                <div class="row text-center mb-2">
+                    <div class="col">
+                        <a type='submit' class='btn styled_button'>Save Profile</a>
+                    </div>
+                </div>
+
             </div>
         </div>
 
