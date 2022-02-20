@@ -81,7 +81,7 @@
                 <div class="row text-center mb-2">
                     <div class="col">
                         <a type='button' class='btn styled_button' href='user_settings.php?user_id=<?php echo $user_id ?>'><i class="fas fa-cog"></i> Settings</a>
-                        <a type='button' class='btn styled_button' href='admin.php?user_id=<?php echo $user_id ?>'><i class="fas fa-tools"></i> Admin</a>
+                        <a type='button' class='btn styled_button' href='admin.php?'><i class="fas fa-tools"></i> Admin</a>
                     </div>
                 </div>
             </div>
@@ -100,22 +100,22 @@
                     <div class="col mx-2">
                         <ul class="nav nav-tabs nav-justified">
                             <li class="nav-item">
-                                <a class="nav-link profileTabs active" href="#">Owned Music</a>
+                                <a class="nav-link profileTabs active" href="#userOwned" data-bs-toggle="tab">Owned Music</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link profileTabs" href="#">Favourite Music</a>
+                                <a class="nav-link profileTabs" href="#userFavourite" data-bs-toggle="tab">Favourite Music</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link profileTabs" href="#">Communities</a>
+                                <a class="nav-link profileTabs" href="#userCommunities" data-bs-toggle="tab">Communities</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link profileTabs" href="#">Reviews</a>
+                                <a class="nav-link profileTabs" href="#userReviews" data-bs-toggle="tab">Reviews</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link profileTabs" href="#">Posts</a>
+                                <a class="nav-link profileTabs" href="#userPosts" data-bs-toggle="tab">Posts</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link profileTabs" href="#">Comments</a>
+                                <a class="nav-link profileTabs" href="#userComments" data-bs-toggle="tab">Comments</a>
                             </li>
                         </ul>
                     </div>
@@ -123,8 +123,23 @@
                 <div class="row">
                     <div class="col">
                         <div class="tab-content">
-                            <div class="tab-pane" id="userOwned">
+                            <div class="tab-pane fade show active" id="userOwned">
                                 <h5>User's owned music</h5>
+                            </div>
+                            <div class="tab-pane fade show" id="userFavourite">
+                                <h5>User's favourite music</h5>
+                            </div>
+                            <div class="tab-pane fade show" id="userCommunities">
+                                <h5>User's communities</h5>
+                            </div>
+                            <div class="tab-pane fade show" id="userReviews">
+                                <h5>User's reviews</h5>
+                            </div>
+                            <div class="tab-pane fade show" id="userPosts">
+                                <h5>User's posts</h5>
+                            </div>
+                            <div class="tab-pane fade show" id="userComments">
+                                <h5>User's comments</h5>
                             </div>
                         </div>
                     </div>

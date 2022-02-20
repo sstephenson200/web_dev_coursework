@@ -2,8 +2,6 @@
 
     include("connections/dbconn.php");
 
-    $user_id = $conn->real_escape_string($_GET['user_id']);
-
 ?>
 
 <!DOCTYPE html>
@@ -41,7 +39,40 @@
         include("includes/navbar.php");
         ?>
 
-        ADMIN PAGE
+        <div class="row browseTitle mb-2">
+            <div class="col-2">
+                <h2>Pending Content</h2>
+            </div>
+        </div>
+
+        <div class="row d-flex justify-content-center">
+            <div class="col-10">
+                <div class="row">
+                    <div class="col mx-2">
+                        <ul class="nav nav-tabs nav-justified">
+                            <li class="nav-item">
+                                <a class="nav-link profileTabs active" href="#pendingReviews" data-bs-toggle="tab">Reviews</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link profileTabs" href="#pendingCommunities" data-bs-toggle="tab">Communities</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="pendingReviews">
+                                <h5>Pending Reviews</h5>
+                            </div>
+                            <div class="tab-pane fade" id="pendingCommunities">
+                                <h5>Pending Communities</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         
         <!-- Footer -->
