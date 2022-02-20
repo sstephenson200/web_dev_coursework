@@ -10,9 +10,11 @@
     $community_card_count=0;
     $review_card_count = 0;
 
-    $user_query = "SELECT user.user_name, art.art_url FROM user
+    $user_query = "SELECT user.user_name, user.user_bio, location.location_code, art.art_url FROM user
                     INNER JOIN art 
                     ON user.art_id = art.art_id 
+                    INNER JOIN location
+                    ON user.location_id = location.location_id
                     WHERE user.user_id = $user_id";
 
     $user_result = $conn -> query($user_query);
@@ -24,6 +26,8 @@
     $row = $user_result -> fetch_assoc();
     $username = $row['user_name'];
     $user_art = $row['art_url'];
+    $user_bio = $row['user_bio'];
+    $user_location = $row['location_code'];
 
     $owned_query = "SELECT album.album_id, album.album_rating, album.album_title, artist.artist_name, art.art_url, AVG(review.review_rating) AS AverageRating FROM album
                     LEFT JOIN review 
@@ -147,11 +151,11 @@
                         <h3><?php echo $username ?></h3>
                     </div>
                     <div class="col-12 col-lg-3">
-                        <h3>UK</h3>
+                        <h3><?php echo $user_location?></h3>
                     </div>
                 </div>
                 <div class="row text-center mb-2">
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium.</p>
+                    <p><?php echo $user_bio ?></p>
                 </div>
                 <div class="row text-center mb-2">
                     <div class="col">

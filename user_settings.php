@@ -4,20 +4,35 @@
 
     $user_id = $conn->real_escape_string($_GET['user_id']);
 
-    $user_query = "SELECT user.user_name, art.art_url FROM user
-                    INNER JOIN art 
-                    ON user.art_id = art.art_id 
-                    WHERE user.user_id = $user_id";
+    $user_query = "SELECT user.user_name, user.user_bio, user.user_contact_permissions, location.location_code, location.location_name, art.art_url FROM user
+    INNER JOIN art 
+    ON user.art_id = art.art_id 
+    INNER JOIN location
+    ON user.location_id = location.location_id
+    WHERE user.user_id = $user_id";
 
     $user_result = $conn -> query($user_query);
 
     if(!$user_result){
-        echo $conn -> error;
+    echo $conn -> error;
     }   
 
     $row = $user_result -> fetch_assoc();
     $username = $row['user_name'];
     $user_art = $row['art_url'];
+    $user_bio = $row['user_bio'];
+    $user_location = $row['location_code'];
+    $user_location_name = $row['location_name'];
+    $user_contact_permissions = $row['user_contact_permissions'];
+
+    $locations_query = "SELECT location.location_name FROM location";
+
+    $locations_result = $conn -> query($locations_query);
+
+    if(!$locations_result){
+    echo $conn -> error;
+    }   
+
 
 ?>
 
@@ -93,7 +108,20 @@
                         <div class="form-group mb-2">
                             <i class="fas fa-globe"></i>
                             <label for="updateLocation">Location</label>
-                            <input type="text" class="form-control" id="updateLocation" placeholder="Where are you from?" value="UK">
+                            <select class="form-select" aria-label="Default select example">
+                                <?php
+                                    while($row = $locations_result -> fetch_assoc()) {
+                                        $location = $row['location_name'];
+
+                                        if($location == $user_location_name){
+                                            echo "<option selected value='$location'>$location</option>";
+                                        } else {
+                                            echo "<option value='$location'>$location</option>";
+                                        }
+
+                                    }
+                                ?>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -103,7 +131,7 @@
                         <div class="form-group mb-2">
                             <i class="fas fa-book"></i>
                             <label for="updateBio">User Bio</label>
-                            <textarea class="form-control" id="updateBio" placeholder="What's your story?" rows="3">bio value blahblahblah</textarea>
+                            <textarea class="form-control" id="updateBio" placeholder="What's your story?" rows="3"><?php echo $user_bio?></textarea>
                         </div>
                     </div>
                 </div>
@@ -145,7 +173,7 @@
                         <div class="row mb-2">
                             <div class="col">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="emailOptIn">
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="emailOptIn" <?php if($user_contact_permissions=="1"){ echo "checked"; } ?>>
                                     <label class="form-check-label" for="emailOptIn">Receive All Emails</label>
                                 </div>
                             </div>
@@ -154,7 +182,7 @@
                         <div class="row mb-2">
                             <div class="col">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="emailOptOut">
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="emailOptOut" <?php if($user_contact_permissions=="0"){ echo "checked"; } ?>>
                                     <label class="form-check-label" for="emailOptOut">Account Related Emails Only</label>
                                 </div>
                             </div>
