@@ -108,7 +108,7 @@
                         <div class="form-group mb-2">
                             <i class="fas fa-globe"></i>
                             <label for="updateLocation">Location</label>
-                            <select class="form-select" aria-label="Default select example">
+                            <select class="form-select">
                                 <?php
                                     while($row = $locations_result -> fetch_assoc()) {
                                         $location = $row['location_name'];

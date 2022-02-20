@@ -2,6 +2,30 @@
 
     include("connections/dbconn.php");
 
+    $pending_review_query = "SELECT review.review_id, review.review_date, user.user_name, user.user_id, album.album_id, review.review_title, review.review_text, review.review_rating FROM review 
+                            INNER JOIN user 
+                            ON review.user_id = user.user_id
+                            INNER JOIN album
+                            ON review.album_id = album.album_id
+                            INNER JOIN status
+                            ON review.status_id = status.status_id
+                            WHERE status.status_title = 'Pending'
+                            ORDER BY review.review_date";
+
+    $pending_review_result = $conn -> query($pending_review_query);
+
+    if(!$pending_review_result){
+        echo $conn -> error;
+    }
+
+    $status_query = "SELECT status.status_title FROM status";
+
+    $status_result = $conn -> query($status_query);
+
+    if(!$status_result){
+        echo $conn -> error;
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -46,7 +70,7 @@
         </div>
 
         <div class="row d-flex justify-content-center">
-            <div class="col-10">
+            <div class="col-12">
                 <div class="row">
                     <div class="col mx-2">
                         <ul class="nav nav-tabs nav-justified">
@@ -59,11 +83,71 @@
                         </ul>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row mx-2 my-3">
                     <div class="col">
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="pendingReviews">
-                                <h5>Pending Reviews</h5>
+                                <table class="table table-sm table-bordered table-striped table-dark">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">ID</th>
+                                            <th scope="col">Date</th>
+                                            <th scope="col">User</th>
+                                            <th scope="col">Album</th>
+                                            <th scope="col">Title</th>
+                                            <th scope="col">Body</th>
+                                            <th scope="col">Rating</th>
+                                            <th scope="col">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>   
+
+                                    <?php
+                                    while($row = $pending_review_result -> fetch_assoc()) {
+                                        
+                                        $review_id = $row['review_id'];
+                                        $review_date = $row['review_date'];
+                                        $review_date = date("d/m/Y", strtotime($review_date));
+                                        $username = $row['user_name'];
+                                        $user_id = $row['user_id'];
+                                        $album_id = $row['album_id'];
+                                        $review_title = $row['review_title'];
+                                        $review_text = $row['review_text'];
+                                        $review_rating = $row['review_rating'];
+
+                                        echo "<tr>
+                                            <th scope='row'>$review_id</th>
+                                            <td>$review_date</td>
+                                            <td><a role='button' href='user_profile.php?user_id=$user_id'>$username</a></td>
+                                            <td><a role='button' href='album.php?album_id=$album_id'>$album_id</a></td>
+                                            <td>$review_title</td>
+                                            <td>$review_text</td>
+                                            <td>$review_rating</td>
+                                            <td>  
+                                                <select class='form-select'>";
+
+                                                while($row = $status_result -> fetch_assoc()) {
+                                                    $status = $row['status_title'];
+            
+                                                    if($status == "Pending"){
+                                                        echo "<option selected value='$status'>$status</option>";
+                                                    } else {
+                                                        echo "<option value='$status'>$status</option>";
+                                                    }
+            
+                                                }
+
+                                            echo "</select>
+                                                    </td>
+                                                </tr>";               
+                                    }
+                                    ?>
+
+                                    </tbody>
+                                </table>
+                                <div class="text-center mb-3">
+                                    <button type="submit" class="btn styled_button">Save</button>
+                                </div>
                             </div>
                             <div class="tab-pane fade" id="pendingCommunities">
                                 <h5>Pending Communities</h5>
@@ -71,6 +155,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
 
