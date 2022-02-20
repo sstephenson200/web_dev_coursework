@@ -78,7 +78,7 @@
         </div>
 
         <div class="row d-flex justify-content-center">
-            <div class="col-12 col-sm-10 col-md-10">
+            <div class="col-12 col-sm-10">
 
                 <div class="row mb-2 d-flex justify-content-center">
                     <div class="col-12 col-md-4 align-self-center mb-4">
@@ -123,11 +123,131 @@
             </div>
         </div>
 
-        <div class="row mb-2 d-flex justify-content-center">
-            <div class="col-10 text-center">
-                <p>Account Settings Options</p>
+        <div class="row px-5 mb-2">
+            <div class="col-12 col-md-6">
+                <p>Update your account settings.</p>
             </div>
         </div>
+
+        <div class="row d-flex justify-content-center px-2">
+            <div class="col-12 col-sm-10">
+
+                <div class="row">
+                    <div class="col">
+                        <h5>Email Preferences</h5>
+                        <p>If you'd like, we can send you updates on Pebble Revolution.</p>
+                    </div>
+                </div>
+
+                <div class="row d-flex justify-content-center">
+                    <div class="col-12 col-sm-10">
+                        
+                        <div class="row mb-2">
+                            <div class="col">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="emailOptIn">
+                                    <label class="form-check-label" for="emailOptIn">Receive All Emails</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="emailOptOut">
+                                    <label class="form-check-label" for="emailOptOut">Account Related Emails Only</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row text-center mb-2">
+                            <div class="col">
+                                <a type='submit' class='btn styled_button'>Save Email Preferences</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row d-flex justify-content-center px-2">
+            <div class="col-12 col-sm-10">
+
+                <div class="row">
+                    <div class="col">
+                        <h5>Change Your Password</h5>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-sm-6">
+                        <a type="button" class="btn loginLink" href="forgot_password.php">Forgot your password?</a>
+                    </div>
+                </div>
+
+                <div class="row d-flex justify-content-center">
+                    <div class="col-10 col-sm-8">
+                        
+                        <div class="form-group mb-3">
+                            <label for="passwordResetOld">Old Password</label>
+                            <input type="text" class="form-control" id="passwordResetOld" placeholder="Password" required="required">
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="passwordResetNew1">New Password</label>
+                            <input type="text" class="form-control" id="passwordResetNew1" placeholder="Password" required="required">
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="passwordResetNew2">Confirm New Password</label>
+                            <input type="text" class="form-control" id="passwordResetNew2" placeholder="Password" required="required">
+                        </div>
+
+                        <div class="row text-center mb-2">
+                            <div class="col">
+                                <a type='submit' class='btn styled_button'>Update Password</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row d-flex justify-content-center px-2">
+            <div class="col-12 col-sm-10">
+
+                <div class="row">
+                    <div class="col">
+                        <h5>Delete Your Account</h5>
+                    </div>
+                </div>
+
+                <div class="row">
+                            <div class="col">
+                                <p>Ready to leave the revolution? We'll be sorry to see you go.</p>
+                            </div>
+                        </div>
+
+                <div class="row d-flex justify-content-center">
+                    <div class="col-10 col-sm-8">
+
+                        <div class="row text-center mb-2">
+                            <div class="col">
+                                <a type='submit' class='btn styled_button'>Delete Account</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
 
         <!-- Footer -->
         <?php

@@ -1,18 +1,14 @@
 <div class="card reviewCard text-center bg-dark text-white border-secondary h-100 mb-3">
 	<div class="card-body">
         <div class="row py-2">
-            <div class="col-1 offset-9">
-                <a role='button'>
+            <div class="col-6 col-sm-4 offset-6 offset-sm-8">
+                <a role='button px-1'>
                     <i id='editIcon<?php echo $review_card_count ?>' class='fas fa-edit fa-lg edit' data-toggle='popover' title='Edit' data-content='Edit Content' data-target='editIcon<?php echo $review_card_count ?>'></i>
                 </a>
-            </div>
-            <div class="col-1">
-                <a role='button'>
+                <a role='button px-1'>
                     <i id='deleteIcon<?php echo $review_card_count ?>' class='far fa-trash-alt fa-lg delete' data-toggle='popover' title='Delete' data-content='Delete Content' data-target='deleteIcon<?php echo $review_card_count ?>'></i>
                 </a>
-            </div>
-            <div class="col-1">
-                <a role='button'>
+                <a role='button px-1'>
                     <i id='reportIcon<?php echo $review_card_count ?>' class='far fa-flag fa-lg report' data-toggle='popover' title='Report' data-content='Report Content' data-target='reportIcon<?php echo $review_card_count ?>'></i>
                 </a>
             </div>
