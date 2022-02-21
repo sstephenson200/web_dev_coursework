@@ -5,6 +5,10 @@
     $music_card_count=0;
     $community_card_count=0;
 
+    //$endpoint = "http://localhost/web_dev_coursework/api/album.php";
+    //$resource = file_get_contents($endpoint);
+    //$data = json_decode($resource, true);
+
     $trending_music_query = "SELECT album.album_id, album.album_title, artist.artist_name, art.art_url, AVG(review.review_rating) AS AverageRating FROM album 
                             INNER JOIN review 
                             ON album.album_id = review.album_id 
@@ -108,6 +112,10 @@
                     <div class="carousel-inner">
 
                         <?php
+
+                        //foreach ($data as $row) {
+                        //    echo 
+                        //}
 
                         while($row = $music_result -> fetch_assoc()){
 
