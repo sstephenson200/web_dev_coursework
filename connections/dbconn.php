@@ -6,20 +6,18 @@ class Database {
       private $pw = "password";
       private $db = "pebble_revolution";
 
-      public $conn;
-
       public function getConn() {
 
-            $this -> conn = null;
+            $conn = new mysqli($this -> host, $this -> user, $this -> pw, $this -> db);
 
-            try {
-                  $this -> conn = new mysqli($this -> host, $this -> user, $this -> pw, $this -> db);
-            } catch(Exception $exception) {
-                  echo "Connection failure: " . $exception -> getMessage();
+            if($conn -> connect_error) {
+                  echo "Connection failure: " .$conn -> connect_error;
+            } else {
+                  return $conn;
             }
 
-        return $this -> conn;
       }
+
 }
  
  ?>

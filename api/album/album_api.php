@@ -13,13 +13,18 @@ class Album {
     public $artist_name;
     public $year_value;
     public $AverageRating;
+    public $genre_title;
+    public $subgenre_title;
+    public $song_title;
+    public $song_length;
 
     public function __construct($db) {
         $this -> conn = $db;
     }
 
-    //Function to get all albums
-    public function getAlbums() {
+    //Function to get trending albums
+    public function getTrendingAlbums() {
+        
         $query = "SELECT album.album_id, album.album_title, artist.artist_name, art.art_url, AVG(review.review_rating) AS AverageRating FROM album  
                     INNER JOIN review 
                     ON album.album_id = review.album_id 
@@ -27,13 +32,39 @@ class Album {
                     ON album.artist_id = artist.artist_id
                     INNER JOIN art 
                     ON album.art_id = art.art_id
-                    GROUP BY album.album_id";
-        $result = $this -> conn -> query($query);
-        return $result;
+                    GROUP BY album.album_id
+                    ORDER BY AverageRating DESC
+                    LIMIT 10";
+
+       
+        $statement = $this -> conn -> prepare($query);
+        //$sorting = htmlspecialchars(strip_tags($sorting));
+        //$statement -> bind_param("d", $sorting);
+        $statement -> execute();
+        //$result = $this -> conn -> query($query);
+        return $statement;
+    }
+
+    //Function to get all albums
+    public function getAllAlbums() {
+        $query = "SELECT album.album_id, album.album_rating, album.album_title, artist.artist_name, art.art_url, AVG(review.review_rating) AS AverageRating FROM album
+                    LEFT JOIN review 
+                    ON album.album_id = review.album_id 
+                    INNER JOIN artist
+                    ON album.artist_id = artist.artist_id
+                    INNER JOIN art 
+                    ON album.art_id = art.art_id
+                    GROUP BY album.album_id 
+                    ORDER BY album.album_rating";
+
+        $statement = $this -> conn -> prepare($query);
+        $statement -> execute();
+        return $statement;
     }
 
     //Function to get album by album_id
-    public function getAlbumByID() {
+    public function getAlbumByID($album_id) {
+
         $query = "SELECT album.album_title, album.spotify_id, art.art_url, artist.artist_name, year_value.year_value, AVG(review.review_rating) AS AverageRating from album
                     INNER JOIN art
                     ON album.art_id = art.art_id
@@ -44,16 +75,71 @@ class Album {
                     LEFT JOIN review 
                     ON album.album_id = review.album_id 
                     WHERE album.album_id = ?";
-         $result = $this -> conn -> query($query);
-         
-        $data = $result -> fetch_assoc();
-        $this -> album_title = $data['album_title'];
-        $this -> spotify_id = $data['spotify_id'];
-        $this -> art_url = $data['art_url'];
-        $this -> artist_name = $data['artist_name'];
-        $this -> year_value = $data['year_value'];
-        $this -> AverageRating = $data['AverageRating'];
 
+        $statement = $this -> conn -> prepare($query);
+        $album_id = htmlspecialchars(strip_tags($album_id));
+        $statement -> bind_param("s", $album_id);
+        $statement -> execute();
+        return $statement;
+    }
+
+    //Function to get album genres by album_id
+    public function getGenreByAlbumID($album_id){
+        $query = "SELECT genre.genre_title FROM genre
+                    INNER JOIN album_genre 
+                    ON album_genre.genre_id = genre.genre_id
+                    WHERE album_genre.album_id = ?";
+
+        $statement = $this -> conn -> prepare($query);
+        $album_id = htmlspecialchars(strip_tags($album_id));
+        $statement -> bind_param("s", $album_id);
+        $statement -> execute();
+        return $statement;
+    }
+
+    //Function to get album subgenres by album_id
+    public function getSubgenreByAlbumID($album_id){
+        $query = "SELECT subgenre.subgenre_title FROM subgenre
+                    INNER JOIN album_subgenre 
+                    ON album_subgenre.subgenre_id = subgenre.subgenre_id
+                    WHERE album_subgenre.album_id = ?";
+
+        $statement = $this -> conn -> prepare($query);
+        $album_id = htmlspecialchars(strip_tags($album_id));
+        $statement -> bind_param("s", $album_id);
+        $statement -> execute();
+        return $statement;
+    }
+
+    //Function to get songs by album_id
+    public function getSongsByAlbumID($album_id){
+        $query = "SELECT song.song_title, song.song_length FROM song
+                    WHERE song.album_id = ?";
+
+        $statement = $this -> conn -> prepare($query);
+        $album_id = htmlspecialchars(strip_tags($album_id));
+        $statement -> bind_param("s", $album_id);
+        $statement -> execute();
+        return $statement;
+    }
+
+    public function getAlbumsByArtistName($artist_name){
+
+        $query = "SELECT album.album_id, album.album_title, artist.artist_name, art.art_url, AVG(review.review_rating) AS AverageRating FROM album
+                    LEFT JOIN review 
+                    ON album.album_id = review.album_id
+                    INNER JOIN artist
+                    ON album.artist_id = artist.artist_id
+                    INNER JOIN art 
+                    ON album.art_id = art.art_id
+                    WHERE artist.artist_name = ?
+                    GROUP BY album.album_id";
+
+        $statement = $this -> conn -> prepare($query);
+        $artist_name = htmlspecialchars(strip_tags($artist_name));
+        $statement -> bind_param("s", $artist_name);
+        $statement -> execute();
+        return $statement;
     }
 
 }
