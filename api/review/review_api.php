@@ -1,81 +1,80 @@
 <?php 
 
-class Album {
+class Review {
 
     private $conn;
 
-    //album variables
-    public $album_id;
-    public $album_title;
-    public $album_rating;
-    public $spotify_id;
+    //review variables
+    public $review_id;
+    public $review_title;
+    public $review_text;
+    public $review_rating;
+    public $review_date;
+    public $user_id;
+    public $user_name;
     public $art_url;
+    public $album_title;
+    public $album_id;
     public $artist_name;
-    public $year_value;
-    public $AverageRating;
-    public $genre_title;
-    public $subgenre_title;
-    public $song_title;
-    public $song_length;
 
     public function __construct($db) {
         $this -> conn = $db;
     }
 
-    //Function to get trending albums
-    public function getTrendingAlbums() {
-        
-        $query = "SELECT album.album_id, album.album_title, artist.artist_name, art.art_url, AVG(review.review_rating) AS AverageRating FROM album  
-                    INNER JOIN review 
-                    ON album.album_id = review.album_id 
-                    INNER JOIN artist
-                    ON album.artist_id = artist.artist_id
-                    INNER JOIN art 
-                    ON album.art_id = art.art_id
-                    GROUP BY album.album_id
-                    ORDER BY AverageRating DESC
-                    LIMIT 10";
+    //Function to get all reviews by album_id
+    public function getReviewsByAlbumID($album_id) {
 
-       
-        $statement = $this -> conn -> prepare($query);
-        $statement -> execute();
-        return $statement;
-    }
-
-    //Function to get all albums
-    public function getAllAlbums() {
-        $query = "SELECT album.album_id, album.album_rating, album.album_title, artist.artist_name, art.art_url, AVG(review.review_rating) AS AverageRating FROM album
-                    LEFT JOIN review 
-                    ON album.album_id = review.album_id 
-                    INNER JOIN artist
-                    ON album.artist_id = artist.artist_id
-                    INNER JOIN art 
-                    ON album.art_id = art.art_id
-                    GROUP BY album.album_id 
-                    ORDER BY album.album_rating";
-
-        $statement = $this -> conn -> prepare($query);
-        $statement -> execute();
-        return $statement;
-    }
-
-    //Function to get album by album_id
-    public function getAlbumByID($album_id) {
-
-        $query = "SELECT album.album_title, album.spotify_id, art.art_url, artist.artist_name, year_value.year_value, AVG(review.review_rating) AS AverageRating from album
+        $query = "SELECT review_id, review_title, review_text, review_rating, review_date, user.user_id, user.user_name, art.art_url FROM review
+                    INNER JOIN user
+                    ON review.user_id = user.user_id
                     INNER JOIN art
-                    ON album.art_id = art.art_id
-                    INNER JOIN artist 
-                    ON album.artist_id = artist.artist_id
-                    INNER JOIN year_value
-                    ON album.year_id = year_value.year_value_id
-                    LEFT JOIN review 
-                    ON album.album_id = review.album_id 
-                    WHERE album.album_id = ?";
+                    ON user.art_id = art.art_id
+                    WHERE review.album_id = ?";
 
         $statement = $this -> conn -> prepare($query);
         $album_id = htmlspecialchars(strip_tags($album_id));
         $statement -> bind_param("s", $album_id);
+        $statement -> execute();
+        return $statement;
+    }
+
+    //Function to get all reviews by user_id
+    public function getReviewsByUserID($user_id) {
+
+        $query = "SELECT album.album_title, album.album_id, artist.artist_name, review_id, review_title, review_text, review_rating, review_date, user.user_id, user.user_name, art.art_url FROM review
+                    INNER JOIN user
+                    ON review.user_id = user.user_id
+                    INNER JOIN art
+                    ON user.art_id = art.art_id
+                    INNER JOIN album
+                    ON review.album_id = album.album_id
+                    INNER JOIN artist
+                    ON album.artist_id = artist.artist_id
+                    WHERE review.user_id = ?";
+
+        $statement = $this -> conn -> prepare($query);
+        $user_id = htmlspecialchars(strip_tags($user_id));
+        $statement -> bind_param("s", $user_id);
+        $statement -> execute();
+        return $statement;
+    }
+
+    //Function to get all reviews by status
+    public function getReviewsByStatus($status_title) {
+
+        $query = "SELECT review.review_id, review.review_date, user.user_name, user.user_id, album.album_id, review.review_title, review.review_text, review.review_rating FROM review 
+                    INNER JOIN user 
+                    ON review.user_id = user.user_id
+                    INNER JOIN album
+                    ON review.album_id = album.album_id
+                    INNER JOIN status
+                    ON review.status_id = status.status_id
+                    WHERE status.status_title = ?
+                    ORDER BY review.review_date";
+
+        $statement = $this -> conn -> prepare($query);
+        $status_title = htmlspecialchars(strip_tags($status_title));
+        $statement -> bind_param("s", $status_title);
         $statement -> execute();
         return $statement;
     }
