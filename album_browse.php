@@ -1,59 +1,19 @@
 <?php
 
-    include("connections/dbconn.php");
-
-    include ("php/pagination.php");
-
+    //Card count variables
     $music_card_count=0;
 
-    $album_query = "SELECT album.album_id, album.album_rating, album.album_title, artist.artist_name, art.art_url, AVG(review.review_rating) AS AverageRating FROM album
-                    LEFT JOIN review 
-                    ON album.album_id = review.album_id 
-                    INNER JOIN artist
-                    ON album.artist_id = artist.artist_id
-                    INNER JOIN art 
-                    ON album.art_id = art.art_id
-                    GROUP BY album.album_id 
-                    ORDER BY album.album_rating
-                    LIMIT $offset, $cardsPerPage;";
+    $base_url = "http://localhost/web_dev_coursework/api/";
 
-    $album_result = $conn -> query($album_query);
+    //get all album data
+    $album_endpoint = $base_url . "album/getAllAlbums.php";
+    $album_resource = file_get_contents($album_endpoint);
+    $album_data = json_decode($album_resource, true);
 
-    if(!$album_result){
-		echo $conn -> error;
-	}
+    $album_count = count($album_data);
 
-    $artist_query = "SELECT DISTINCT(artist.artist_name) FROM artist";
-
-    $artist_result = $conn -> query($artist_query);
-
-    if(!$artist_result){
-		echo $conn -> error;
-	}
-
-    $genre_query = "SELECT DISTINCT(genre.genre_title) FROM genre";
-
-    $genre_result = $conn -> query($genre_query);
-
-    if(!$genre_result){
-		echo $conn -> error;
-	}
-
-    $subgenre_query = "SELECT DISTINCT(subgenre.subgenre_title) FROM subgenre";
-
-    $subgenre_result = $conn -> query($subgenre_query);
-
-    if(!$subgenre_result){
-		echo $conn -> error;
-	}
-
-    $year_query = "SELECT DISTINCT(floor(year_value/10)*10) AS decade FROM year_value";
-
-    $year_result = $conn -> query($year_query);
-
-    if(!$year_result){
-		echo $conn -> error;
-	}
+    include ("php/pagination/pagination_albums.php");
+    include("php/filter/album_filter.php");
 
 ?>
 
@@ -151,11 +111,8 @@
                         <option selected>Select artist</option>
                         <?php
                         $artistCount = 0;
-                        while($row = $artist_result -> fetch_assoc()){
-                        $artist_name = $row['artist_name'];
-                        echo "<option value='$artistCount'>$artist_name</option>";
+                        echo "<option value='$artistCount'>ABBA</option>";
                         $artistCount++;
-                        }
                         ?>
                     </select>
                 </div>
@@ -166,12 +123,12 @@
                     <select class="form-select" aria-label="genreSelector">
                         <option selected>Select genre</option>
                         <?php
-                        $genreCount = 0;
-                        while($row = $genre_result -> fetch_assoc()){
-                        $genre_title = $row['genre_title'];
-                        echo "<option value='$genreCount'>$genre_title</option>";
-                        $genreCount++;
+                        foreach($genre_array as $genre){
+                            $genreCount = 0;
+                            echo "<option value='$genreCount'>$genre</option>";
+                            $genreCount++;
                         }
+                        
                         ?>
                     </select>
                 </div>
@@ -183,11 +140,8 @@
                         <option selected>Select subgenre</option>
                         <?php
                         $subgenreCount = 0;
-                        while($row = $subgenre_result -> fetch_assoc()){
-                        $subgenre_title = $row['subgenre_title'];
-                        echo "<option value='$subgenreCount'>$subgenre_title</option>";
+                        echo "<option value='$subgenreCount'>Blues</option>";
                         $subgenreCount++;
-                        }
                         ?>
                     </select>
                 </div>
@@ -222,14 +176,10 @@
                 <div class="row collapse mb-1" id="yearCollapse">
                     <ul>
                         <?php
-                        while($row = $year_result -> fetch_assoc()){
-                        $decade = $row['decade'];
-                        $decade = "'".substr($decade, 2)."s";
                         echo "<div class='form-check'>
                                 <input class='form-check-input' type='checkbox' value='' id='ratingCheckbox'>
-                                <label class='form-check-label' for='ratingCheckbox'>$decade</label>
+                                <label class='form-check-label' for='ratingCheckbox'>1970s</label>
                                 </div>";
-                        }
                         ?>
                     </ul>
                 </div>
@@ -245,18 +195,18 @@
 
                 <?php
 
-                while($row = $album_result -> fetch_assoc()){
+                foreach ($visible_album_data as $row) {
+                    $album_art_url = $row['art_url'];
+                    $rating = $row['AverageRating'];
+                    $album_title = $row['album_title'];
+                    $album_artist = $row['artist_name'];
+                    $album_id = $row['album_id'];
 
-                $album_art_url = $row['art_url'];
-                $rating = $row['AverageRating'];
-                $album_title = $row['album_title'];
-                $album_artist = $row['artist_name'];
-                $album_id = $row['album_id'];
+                    include("includes/music_card.php");
 
-                include("includes/music_card.php");
-                $music_card_count++;
-
+                    $music_card_count++;
                 }
+
                 ?>
 
             </div>

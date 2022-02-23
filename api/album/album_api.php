@@ -44,13 +44,15 @@ class Album {
 
     //Function to get all albums
     public function getAllAlbums() {
-        $query = "SELECT album.album_id, album.album_rating, album.album_title, artist.artist_name, art.art_url, AVG(review.review_rating) AS AverageRating FROM album
+        $query = "SELECT album.album_id, album.album_rating, album.album_title, artist.artist_name, art.art_url, year_value.year_value, AVG(review.review_rating) AS AverageRating FROM album
                     LEFT JOIN review 
                     ON album.album_id = review.album_id 
                     INNER JOIN artist
                     ON album.artist_id = artist.artist_id
                     INNER JOIN art 
                     ON album.art_id = art.art_id
+                    INNER JOIN year_value
+                    ON album.year_id = year_value.year_value_id
                     GROUP BY album.album_id 
                     ORDER BY album.album_rating";
 

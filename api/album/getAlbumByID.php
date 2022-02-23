@@ -30,6 +30,7 @@ if($album_count != 0) {
             "spotify_id" => $spotify_id,
             "artist_name" => $artist_name,
             "art_url" => $art_url,
+            "year_value" => $year_value,
             "AverageRating" => $AverageRating
         );
 

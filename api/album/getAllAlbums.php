@@ -25,6 +25,7 @@ if($album_count != 0) {
             "album_title" => $album_title,
             "artist_name" => $artist_name,
             "art_url" => $art_url,
+            "year_value" => $year_value,
             "AverageRating" => $AverageRating
         );
 
