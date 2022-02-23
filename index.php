@@ -1,45 +1,20 @@
 <?php
 
-    include("connections/dbconn.php");
-
+    //Card count variables
     $music_card_count=0;
     $community_card_count=0;
 
-    //$endpoint = "http://localhost/web_dev_coursework/api/album.php";
-    //$resource = file_get_contents($endpoint);
-    //$data = json_decode($resource, true);
+    $base_url = "http://localhost/web_dev_coursework/api/";
 
-    $trending_music_query = "SELECT album.album_id, album.album_title, artist.artist_name, art.art_url, AVG(review.review_rating) AS AverageRating FROM album 
-                            INNER JOIN review 
-                            ON album.album_id = review.album_id 
-                            INNER JOIN artist
-                            ON album.artist_id = artist.artist_id
-                            INNER JOIN art 
-                            ON album.art_id = art.art_id
-                            GROUP BY album.album_id 
-                            ORDER BY AverageRating DESC
-                            LIMIT 10;";
+    //get trending album data
+    $album_endpoint = $base_url . "album/getTrendingAlbums.php";
+    $album_resource = file_get_contents($album_endpoint);
+    $album_data = json_decode($album_resource, true);
 
-    $music_result = $conn -> query($trending_music_query);
-
-    if(!$music_result){
-		echo $conn -> error;
-	}
-
-    $top_communities_query = "SELECT community.community_name, community.community_description, art.art_url, COUNT(joined_communities.user_id) FROM community
-                            INNER JOIN art
-                            ON community.art_id = art.art_id
-                            INNER JOIN joined_communities
-                            ON community.community_id = joined_communities.community_id
-                            GROUP BY community.community_id
-                            ORDER BY COUNT(joined_communities.user_id) DESC
-                            LIMIT 4;";
-
-    $community_result = $conn -> query($top_communities_query);
-
-    if(!$community_result){
-        echo $conn -> error;
-    }
+    //get top community data
+    $community_endpoint = $base_url . "community/getTopCommunities.php";
+    $community_resource = file_get_contents($community_endpoint);
+    $community_data = json_decode($community_resource, true);
 
 ?>
 
@@ -113,12 +88,7 @@
 
                         <?php
 
-                        //foreach ($data as $row) {
-                        //    echo 
-                        //}
-
-                        while($row = $music_result -> fetch_assoc()){
-
+                        foreach ($album_data as $row) {
                             $album_art_url = $row['art_url'];
                             $rating = $row['AverageRating'];
                             $album_title = $row['album_title'];
@@ -135,8 +105,8 @@
                             echo '</div>';
 
                             $music_card_count++;
-
                         }
+
                         ?>
   
                     </div>
@@ -161,21 +131,20 @@
             <div class="row">
                 <?php
 
-                while($row = $community_result -> fetch_assoc()){
-
+                foreach ($community_data as $row) {
                     echo "<div class='col-xs-12 col-sm-6 col-m-6 col-lg-6 col-xl-3 d-flex justify-content-center'>";
 
                     $community_art_url = $row['art_url'];
                     $community_name = $row['community_name'];
                     $community_description = $row['community_description'];
-                    $community_members = $row['COUNT(joined_communities.user_id)'];
+                    $community_members = $row['MemberCount'];
 
                     include("includes/community_card.php");
                     $community_card_count++;
 
                     echo "</div>";
-
                 }
+
                 ?>
              
             </div>
