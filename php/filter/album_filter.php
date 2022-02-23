@@ -15,6 +15,8 @@ $subgenre_array = [];
 $decade_array = [];
 $artist_array = [];
 
+$filtered_data = "";
+
 if($filtered_data){
 
 } else {
@@ -25,17 +27,17 @@ if($filtered_data){
         //get genre titles
         $genre_endpoint = $base_url . "album/getGenreByAlbumID.php?album_id=$album_id";
         $genre_resource = file_get_contents($genre_endpoint);
-        $genre_data = json_decode($genre_resource, true);
+        if($genre_resource){
+            $genre_data = json_decode($genre_resource, true);
 
-        foreach($genre_data as $genre_row) {
-            if(!check_item_unique($genre_row['genre_title'],$genre_array)) {
-                $genre_array[] = $genre_row['genre_title'];
+            foreach($genre_data as $genre_row) {
+                if(!check_item_unique($genre_row['genre_title'],$genre_array)) {
+                    $genre_array[] = $genre_row['genre_title'];
+                }
             }
         }
-
+        
     }
 }
-
-
 
 ?>
