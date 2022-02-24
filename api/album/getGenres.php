@@ -10,13 +10,7 @@ $db = $database -> getConn();
 
 $albums = new Album($db);
 
-if (isset($_GET['album_id'])) {
-    $album_id = $_GET['album_id'];
-} else {
-    $album_id = null;
-}
-
-$result = $albums -> getGenreByAlbumID($album_id);
+$result = $albums -> getGenres();
 $result = $result -> get_result();
 $album_count = $result -> num_rows;
 
@@ -26,21 +20,15 @@ if($album_count != 0) {
     while($row = $result -> fetch_assoc()) {
         extract($row);
         $album = array (
-            "genre_title" => $genre_title
+            $Genres
         );
 
         array_push($array, $album);
     }
     
-    if($album_id){
-        http_response_code(200);
-        echo json_encode($array);
-    } else {
-        http_response_code(400);
-        echo json_encode(
-            array("message" => "Invalid album_id value.")
-        );
-    }
+    
+    http_response_code(200);
+    echo json_encode($array);
 
 } else {
     http_response_code(200);

@@ -13,7 +13,7 @@
     $album_count = count($album_data);
 
     include ("php/pagination/pagination_albums.php");
-    include("php/filter/album_filter.php");
+    //include("php/filter/album_filter.php");
 
 ?>
 
@@ -70,26 +70,30 @@
         </div>
 
         <!-- Filter Toggle -->
-        <div class="row sortFilterOptions p-3">
-            <div class="col-6 col-sm-1">
-                <button type="button" id="sidebarCollapse" class="btn filterButton">
-                    <span>Toggle Filter <i class="fas fa-filter"></i></span>
-                </button>
+        <form method="POST" action="php/sort/processMusicSort.php">
+            <div class="row sortFilterOptions p-3">
+                <div class="col-12 col-sm-6">
+                    <button type="button" id="sidebarCollapse" class="btn filterButton">
+                        <span>Toggle Filter <i class="fas fa-filter"></i></span>
+                    </button>
+                </div>
+                <!-- Sorting Selector -->
+                    <div class="col-12 col-sm-5 col-md-4 offset-md-1 col-lg-3 offset-lg-2 d-flex justify-content-end dropdown mt-2 form-group">
+                        <select name="musicSortFilter" class="form-control" aria-label="musicSortFilter">
+                            <option value='artist'>Sort By: Artist</option>
+                            <option value='genre'>Sort By: Genre</option>
+                            <option value='subgenre'>Sort By: Subgenre</option>
+                            <option value='title'>Sort By: Title</option>
+                            <option value='top500' selected>Sort By: Top 500 Albums</option>
+                            <option value='rating'>Sort By: User Rating</option>
+                            <option value='year'>Sort By: Year</option>
+                        </select>
+                </div>
+                <div class="col-12 col-sm-1 text-center form-group">
+                        <button type="submit" class="btn mt-2 styled_button">Sort</button>
+                </div>
             </div>
-            <!-- Sorting Selector -->
-            <div class="col-6 col-sm-11 d-flex justify-content-end dropdown">
-                <button id="musicSortFilter" type="button" class="btn dropdown-toggle p-1" data-bs-toggle="dropdown" aria-expanded="false"></button>
-                <ul class="dropdown-menu" aria-labelledby="musicSortFilter">
-                    <li><a class="dropdown-item">Artist</a></li>
-                    <li><a class="dropdown-item">Genre</a></li>
-                    <li><a class="dropdown-item">Subgenre</a></li>
-                    <li><a class="dropdown-item">Title</a></li>
-                    <li><a class="dropdown-item" id="defaultMusicSort">Top 500 Albums</a></li>
-                    <li><a class="dropdown-item">User Rating</a></li>
-                    <li><a class="dropdown-item">Year</a></li>
-                </ul>
-            </div>
-        </div>
+        </form>
 
         <div class="row">
             <!-- Filter Sidebar -->
@@ -123,12 +127,12 @@
                     <select class="form-select" aria-label="genreSelector">
                         <option selected>Select genre</option>
                         <?php
-                        foreach($genre_array as $genre){
-                            $genreCount = 0;
-                            echo "<option value='$genreCount'>$genre</option>";
-                            $genreCount++;
-                        }
-                        
+                        //foreach($genre_array as $genre){
+                         //   $genreCount = 0;
+                         //   echo "<option value='$genreCount'>$genre</option>";
+                        //   $genreCount++;
+                        //}                   
+                        echo "<option>test</option>"     
                         ?>
                     </select>
                 </div>
@@ -235,7 +239,7 @@
 </body>
 
 <?php
-    include("js/browse_sort.php");
+    include("music_sort.php");
     include("js/card_functions.php");
     include("js/show_filter.php");
 ?>

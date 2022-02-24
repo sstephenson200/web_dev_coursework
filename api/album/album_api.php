@@ -17,6 +17,10 @@ class Album {
     public $subgenre_title;
     public $song_title;
     public $song_length;
+    public $Genres;
+    public $Subgenres;
+    public $Artists;
+    public $Decades;
 
     public function __construct($db) {
         $this -> conn = $db;
@@ -44,7 +48,7 @@ class Album {
 
     //Function to get all albums
     public function getAllAlbums() {
-        $query = "SELECT album.album_id, album.album_rating, album.album_title, artist.artist_name, art.art_url, year_value.year_value, AVG(review.review_rating) AS AverageRating FROM album
+        $query = "SELECT album.album_id, album.album_rating, album.album_title, artist.artist_name, art.art_url, year_value.year_value, GROUP_CONCAT(DISTINCT genre.genre_title) AS Genres, GROUP_CONCAT(DISTINCT subgenre.subgenre_title) as Subgenres, AVG(review.review_rating) AS AverageRating FROM album
                     LEFT JOIN review 
                     ON album.album_id = review.album_id 
                     INNER JOIN artist
@@ -53,11 +57,19 @@ class Album {
                     ON album.art_id = art.art_id
                     INNER JOIN year_value
                     ON album.year_id = year_value.year_value_id
+                    INNER JOIN album_genre 
+                    ON album.album_id = album_genre.album_id 
+                    INNER JOIN genre
+                    ON album_genre.genre_id = genre.genre_id
+                    INNER JOIN album_subgenre 
+                    ON album.album_id = album_subgenre.album_id 
+                    INNER JOIN subgenre
+                    ON album_subgenre.subgenre_id = subgenre.subgenre_id
                     GROUP BY album.album_id 
                     ORDER BY album.album_rating";
 
         $statement = $this -> conn -> prepare($query);
-        $statement -> execute();
+        $statement -> execute(); 
         return $statement;
     }
 
@@ -160,6 +172,33 @@ class Album {
         $statement -> bind_param("ss", $search, $search);
         $statement -> execute();
         return $statement;        
+    }
+
+    //Function to return all distinct genre titles
+    public function getGenres(){
+        $query = "SELECT DISTINCT genre_title AS Genres FROM genre";
+
+        $statement = $this -> conn -> prepare($query);
+        $statement -> execute();
+        return $statement;  
+    }
+
+    //Function to return all distinct subgenre titles
+    public function getSubgenres(){
+        $query = "SELECT DISTINCT subgenre_title AS Subgenres FROM subgenre";
+
+        $statement = $this -> conn -> prepare($query);
+        $statement -> execute();
+        return $statement;  
+    }
+
+    //Function to return all distinc artist names
+    public function getArtists(){
+        $query = "SELECT DISTINCT artist_name AS Artists FROM artist";
+
+        $statement = $this -> conn -> prepare($query);
+        $statement -> execute();
+        return $statement;  
     }
 
 }

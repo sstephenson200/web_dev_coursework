@@ -9,7 +9,6 @@ $database = new Database();
 $db = $database -> getConn();
 
 $albums = new Album($db);
-
 $result = $albums -> getAllAlbums();
 $result = $result -> get_result();
 $album_count = $result -> num_rows;
@@ -26,7 +25,9 @@ if($album_count != 0) {
             "artist_name" => $artist_name,
             "art_url" => $art_url,
             "year_value" => $year_value,
-            "AverageRating" => $AverageRating
+            "AverageRating" => $AverageRating,
+            "Genres" => explode(',',$Genres),
+            "Subgenres" => explode(',',$Subgenres)
         );
 
         array_push($array, $album);
@@ -41,5 +42,4 @@ if($album_count != 0) {
         array("message" => "No record found.")
     );
 }
-
 ?>
