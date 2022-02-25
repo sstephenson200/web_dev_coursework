@@ -1,5 +1,7 @@
 <?php
 
+    session_start();
+
     //Card count variables
     $music_card_count=0;
 
@@ -12,8 +14,18 @@
 
     $album_count = count($album_data);
 
+    //set album_data as session variable for use in sorting
+    if(isset($_SESSION['album_data'])){
+        $album_data = $_SESSION['album_data'];
+    }
+    $_SESSION['album_data'] = $album_data;
+
+    //get all genre data
+    $genre_endpoint = $base_url . "album/getGenres.php";
+    $genre_resource = file_get_contents($genre_endpoint);
+    $genre_data = json_decode($genre_resource, true);
+
     include ("php/pagination/pagination_albums.php");
-    //include("php/filter/album_filter.php");
 
 ?>
 
@@ -70,7 +82,7 @@
         </div>
 
         <!-- Filter Toggle -->
-        <form method="POST" action="php/sort/processMusicSort.php">
+        <form action="php/sort/processMusicSort.php" method="POST">
             <div class="row sortFilterOptions p-3">
                 <div class="col-12 col-sm-6">
                     <button type="button" id="sidebarCollapse" class="btn filterButton">
@@ -79,14 +91,12 @@
                 </div>
                 <!-- Sorting Selector -->
                     <div class="col-12 col-sm-5 col-md-4 offset-md-1 col-lg-3 offset-lg-2 d-flex justify-content-end dropdown mt-2 form-group">
-                        <select name="musicSortFilter" class="form-control" aria-label="musicSortFilter">
-                            <option value='artist'>Sort By: Artist</option>
-                            <option value='genre'>Sort By: Genre</option>
-                            <option value='subgenre'>Sort By: Subgenre</option>
-                            <option value='title'>Sort By: Title</option>
-                            <option value='top500' selected>Sort By: Top 500 Albums</option>
-                            <option value='rating'>Sort By: User Rating</option>
-                            <option value='year'>Sort By: Year</option>
+                        <select name="musicSortFilter" id="musicSortFilter" class="form-control" aria-label="musicSortFilter">
+                            <option value='artist' <?php if($_SESSION['sort_type']=="artist"){ echo "selected"; } ?>>Sort By: Artist</option>
+                            <option value='title' <?php if($_SESSION['sort_type']=="title"){ echo "selected"; } ?>>Sort By: Album Title</option>
+                            <option value='top500' <?php if($_SESSION['sort_type']=="top500" or !isset($_SESSION['sort_type'])){ echo "selected"; } ?>>Sort By: Top 500 Albums</option>
+                            <option value='rating' <?php if($_SESSION['sort_type']=="rating"){ echo "selected"; } ?>>Sort By: User Rating</option>
+                            <option value='year' <?php if($_SESSION['sort_type']=="year"){ echo "selected"; } ?>>Sort By: Year</option>
                         </select>
                 </div>
                 <div class="col-12 col-sm-1 text-center form-group">
@@ -127,12 +137,11 @@
                     <select class="form-select" aria-label="genreSelector">
                         <option selected>Select genre</option>
                         <?php
-                        //foreach($genre_array as $genre){
-                         //   $genreCount = 0;
-                         //   echo "<option value='$genreCount'>$genre</option>";
-                        //   $genreCount++;
-                        //}                   
-                        echo "<option>test</option>"     
+                        foreach($genre_data as $genre){
+                            $genreCount = 0;
+                            echo "<option value='genre$genreCount'>$genre[0]</option>";
+                            $genreCount++;
+                        }                       
                         ?>
                     </select>
                 </div>
@@ -239,7 +248,6 @@
 </body>
 
 <?php
-    include("music_sort.php");
     include("js/card_functions.php");
     include("js/show_filter.php");
 ?>
