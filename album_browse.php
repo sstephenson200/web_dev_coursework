@@ -20,10 +20,25 @@
     }
     $_SESSION['album_data'] = $album_data;
 
+    //get all artist data
+    $artist_endpoint = $base_url . "album/getArtists.php";
+    $artist_resource = file_get_contents($artist_endpoint);
+    $artist_data = json_decode($artist_resource, true);
+
     //get all genre data
     $genre_endpoint = $base_url . "album/getGenres.php";
     $genre_resource = file_get_contents($genre_endpoint);
     $genre_data = json_decode($genre_resource, true);
+
+    //get all subgenre data
+    $subgenre_endpoint = $base_url . "album/getSubgenres.php";
+    $subgenre_resource = file_get_contents($subgenre_endpoint);
+    $subgenre_data = json_decode($subgenre_resource, true);
+
+    //get all year data
+    $year_endpoint = $base_url . "album/getDecades.php";
+    $year_resource = file_get_contents($year_endpoint);
+    $year_data = json_decode($year_resource, true);
 
     include ("php/pagination/pagination_albums.php");
 
@@ -91,7 +106,7 @@
                 </div>
                 <!-- Sorting Selector -->
                     <div class="col-12 col-sm-5 col-md-4 offset-md-1 col-lg-3 offset-lg-2 d-flex justify-content-end dropdown mt-2 form-group">
-                        <select name="musicSortFilter" id="musicSortFilter" class="form-control" aria-label="musicSortFilter">
+                        <select name="musicSortFilter" id="musicSortFilter" class="form-select" aria-label="musicSortFilter">
                             <option value='artist' <?php if($_SESSION['sort_type']=="artist"){ echo "selected"; } ?>>Sort By: Artist</option>
                             <option value='title' <?php if($_SESSION['sort_type']=="title"){ echo "selected"; } ?>>Sort By: Album Title</option>
                             <option value='top500' <?php if($_SESSION['sort_type']=="top500" or !isset($_SESSION['sort_type'])){ echo "selected"; } ?>>Sort By: Top 500 Albums</option>
@@ -124,9 +139,11 @@
                     <select class="form-select" aria-label="artistSelector">
                         <option selected>Select artist</option>
                         <?php
-                        $artistCount = 0;
-                        echo "<option value='$artistCount'>ABBA</option>";
-                        $artistCount++;
+                        foreach($artist_data as $artist){
+                            $artistCount = 0;
+                            echo "<option value='artist$artistCount'>$artist[0]</option>";
+                            $artistCount++;
+                        } 
                         ?>
                     </select>
                 </div>
@@ -152,9 +169,11 @@
                     <select class="form-select" aria-label="subgenreSelector">
                         <option selected>Select subgenre</option>
                         <?php
-                        $subgenreCount = 0;
-                        echo "<option value='$subgenreCount'>Blues</option>";
-                        $subgenreCount++;
+                        foreach($subgenre_data as $subgenre){
+                            $subgenreCount = 0;
+                            echo "<option value='subgenre$subgenreCount'>$subgenre[0]</option>";
+                            $subgenreCount++;
+                        } 
                         ?>
                     </select>
                 </div>
@@ -189,11 +208,15 @@
                 <div class="row collapse mb-1" id="yearCollapse">
                     <ul>
                         <?php
-                        echo "<div class='form-check'>
-                                <input class='form-check-input' type='checkbox' value='' id='ratingCheckbox'>
-                                <label class='form-check-label' for='ratingCheckbox'>1970s</label>
+                            foreach($year_data as $year){
+                                $yearCount = 0;
+                                echo "<div class='form-check'>
+                                <input class='form-check-input' type='checkbox' value='$year[0]' id='year$yearCount'>
+                                <label class='form-check-label' for='year$yearCount'>$year[0]</label>
                                 </div>";
-                        ?>
+                                $yearCount++;
+                            } 
+                            ?>
                     </ul>
                 </div>
                 <div class="row mb-5">

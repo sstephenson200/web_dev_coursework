@@ -192,9 +192,18 @@ class Album {
         return $statement;  
     }
 
-    //Function to return all distinc artist names
+    //Function to return all distinct artist names
     public function getArtists(){
         $query = "SELECT DISTINCT artist_name AS Artists FROM artist";
+
+        $statement = $this -> conn -> prepare($query);
+        $statement -> execute();
+        return $statement;  
+    }
+
+    //Function to return all distinct decades for album release
+    public function getDecades(){
+        $query = "SELECT DISTINCT(floor(year_value/10)*10) AS Decades FROM year_value";
 
         $statement = $this -> conn -> prepare($query);
         $statement -> execute();
