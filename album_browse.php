@@ -1,18 +1,54 @@
 <?php
 
+    $base_url = "http://localhost/web_dev_coursework/api/";
+
     session_start();
 
     //Card count variables
     $music_card_count=0;
 
-    $base_url = "http://localhost/web_dev_coursework/api/";
+    //filter variables
+    $filter_count = 0;
+    $artist_filter = ['ABBA','Elvis Presley'];
+    $genre_filter = [];
+    $subgenre_filter = [];
+    $rating_filter = ['5'];
+    $decade_filter = [];
+    $active_filters = array('artists' => $artist_filter, 'genres' => $genre_filter, 'subgenres' => $subgenre_filter, 'ratings' => $rating_filter, 'decades' => $decade_filter);
+
+    //get all artist data for filter menus
+    $artist_endpoint = $base_url . "album/getArtists.php";
+    $artist_resource = file_get_contents($artist_endpoint);
+    $artist_data = json_decode($artist_resource, true);
+
+    //get all genre data for filter menus
+    $genre_endpoint = $base_url . "album/getGenres.php";
+    $genre_resource = file_get_contents($genre_endpoint);
+    $genre_data = json_decode($genre_resource, true);
+
+    //get all subgenre data for filter menus
+    $subgenre_endpoint = $base_url . "album/getSubgenres.php";
+    $subgenre_resource = file_get_contents($subgenre_endpoint);
+    $subgenre_data = json_decode($subgenre_resource, true);
+
+    //get all year data for filter menus
+    $year_endpoint = $base_url . "album/getDecades.php";
+    $year_resource = file_get_contents($year_endpoint);
+    $year_data = json_decode($year_resource, true);
 
     //get all album data
     $album_endpoint = $base_url . "album/getAllAlbums.php";
     $album_resource = file_get_contents($album_endpoint);
     $album_data = json_decode($album_resource, true);
-
-    $album_count = count($album_data);
+    
+    //apply filters
+    $filtered_data = [];
+    include("php/filter/filterMusic.php");
+    if(!empty($filtered_data)){
+        $album_count = count($filtered_data);
+    } else{
+        $album_count = count($album_data);
+    }
 
     //set album_data as session variable for use in sorting
     if(isset($_SESSION['album_data'])){
@@ -20,26 +56,7 @@
     }
     $_SESSION['album_data'] = $album_data;
 
-    //get all artist data
-    $artist_endpoint = $base_url . "album/getArtists.php";
-    $artist_resource = file_get_contents($artist_endpoint);
-    $artist_data = json_decode($artist_resource, true);
-
-    //get all genre data
-    $genre_endpoint = $base_url . "album/getGenres.php";
-    $genre_resource = file_get_contents($genre_endpoint);
-    $genre_data = json_decode($genre_resource, true);
-
-    //get all subgenre data
-    $subgenre_endpoint = $base_url . "album/getSubgenres.php";
-    $subgenre_resource = file_get_contents($subgenre_endpoint);
-    $subgenre_data = json_decode($subgenre_resource, true);
-
-    //get all year data
-    $year_endpoint = $base_url . "album/getDecades.php";
-    $year_resource = file_get_contents($year_endpoint);
-    $year_data = json_decode($year_resource, true);
-
+    //include pagination
     include ("php/pagination/pagination_albums.php");
 
 ?>
@@ -129,9 +146,121 @@
                 <div class="row mb-1">
                     <h5>Applied Filters</h5>
                 </div>
-                <div class="row d-flex justify-content-left mb-1">
-                    <p>Option1 <i class="fas fa-times"></i></p>
-                </div>
+                <?php
+                    if(!empty($active_filters['artists'])) {
+
+                        echo "<div class='row mb-1'>
+                                <h6>Artist</h6>
+                            </div>
+                            <div class='row d-flex justify-content-left mb-1'>
+                                <ul>";
+
+                        foreach($active_filters['artists'] as $artist) {
+                            echo "<li>$artist 
+                                    <a role='button'>
+                                        <i id='deleteFilter$filter_count' class='fas fa-times fa-lg deleteFilter' data-toggle='popover' title='Remove' data-content='Remove Filter' data-target='deleteFilter$filter_count'></i>
+                                    </a>
+                                </li>";     
+
+                            $filter_count++;
+                        }
+
+                        echo "</ul>
+                                </div>";
+                    }
+                ?>
+                <?php
+                    if(!empty($active_filters['genres'])) {
+
+                        echo "<div class='row mb-1'>
+                                <h6>Genre</h6>
+                            </div>
+                            <div class='row d-flex justify-content-left mb-1'>
+                                <ul>";
+
+                        foreach($active_filters['genres'] as $genre) {
+                            echo "<li>$genre 
+                                    <a role='button'>
+                                        <i id='deleteFilter$filter_count' class='fas fa-times fa-lg deleteFilter' data-toggle='popover' title='Remove' data-content='Remove Filter' data-target='deleteFilter$filter_count'></i>
+                                    </a>
+                                </li>";   
+                                
+                                $filter_count++;
+                        }
+
+                        echo "</ul>
+                                </div>";
+                    }
+                ?>
+                <?php
+                    if(!empty($active_filters['subgenres'])) {
+
+                        echo "<div class='row mb-1'>
+                                <h6>Subgenre</h6>
+                            </div>
+                            <div class='row d-flex justify-content-left mb-1'>
+                                <ul>";
+
+                        foreach($active_filters['subgenres'] as $subgenre) {
+                            echo "<li>$subgenre 
+                                    <a role='button'>
+                                        <i id='deleteFilter$filter_count' class='fas fa-times fa-lg deleteFilter' data-toggle='popover' title='Remove' data-content='Remove Filter' data-target='deleteFilter$filter_count'></i>
+                                    </a>
+                                </li>";   
+                                
+                            $filter_count++;     
+                        }
+
+                        echo "</ul>
+                                </div>";
+                    }
+                ?>
+                <?php
+                    if(!empty($active_filters['ratings'])) {
+
+                        echo "<div class='row mb-1'>
+                                <h6>User Rating</h6>
+                            </div>
+                            <div class='row d-flex justify-content-left mb-1'>
+                                <ul>";
+
+                        foreach($active_filters['ratings'] as $rating) {
+                            echo "<li>$rating 
+                                    <a role='button'>
+                                        <i id='deleteFilter$filter_count' class='fas fa-times fa-lg deleteFilter' data-toggle='popover' title='Remove' data-content='Remove Filter' data-target='deleteFilter$filter_count'></i>
+                                    </a>
+                                </li>";   
+                    
+                            $filter_count++;     
+                        }
+
+                        echo "</ul>
+                                </div>";
+                    }
+                ?>
+                <?php
+                    if(!empty($active_filters['decades'])) {
+
+                        echo "<div class='row mb-1'>
+                                <h6>Year</h6>
+                            </div>
+                            <div class='row d-flex justify-content-left mb-1'>
+                                <ul>";
+
+                        foreach($active_filters['decades'] as $decade) {
+                            echo "<li>$decade 
+                                    <a role='button'>
+                                        <i id='deleteFilter$filter_count' class='fas fa-times fa-lg deleteFilter' data-toggle='popover' title='Remove' data-content='Remove Filter' data-target='deleteFilter$filter_count'></i>
+                                    </a>
+                                </li>";   
+                    
+                            $filter_count++;
+                        }
+
+                        echo "</ul>
+                                </div>";
+                    }
+                ?>
                 <div class="row mb-1">
                     <h5>Artist</h5>
                 </div>

@@ -2,12 +2,6 @@
 
 session_start();
 
-function console_log( $data ){
-    echo '<script>';
-    echo 'console.log('. json_encode( $data ) .')';
-    echo '</script>';
-}
-
 $musicSort = $_POST['musicSortFilter'];
 $album_data = $_SESSION["album_data"];
 

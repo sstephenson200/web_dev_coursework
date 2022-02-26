@@ -16,6 +16,10 @@ $total_album_pages = ceil($total_album_rows / $cardsPerPage);
 $prev_page = $pageNumber - 1;
 $next_page = $pageNumber + 1;
 
-$visible_album_data = array_slice($album_data,$offset,$cardsPerPage);
+if(!empty($filtered_data)){
+    $visible_album_data = array_slice($filtered_data,$offset,$cardsPerPage);
+} else{
+    $visible_album_data = array_slice($album_data,$offset,$cardsPerPage);
+}
 
 ?>
