@@ -107,11 +107,11 @@
                 <!-- Sorting Selector -->
                     <div class="col-12 col-sm-5 col-md-4 offset-md-1 col-lg-3 offset-lg-2 d-flex justify-content-end dropdown mt-2 form-group">
                         <select name="musicSortFilter" id="musicSortFilter" class="form-select" aria-label="musicSortFilter">
-                            <option value='artist' <?php if($_SESSION['sort_type']=="artist"){ echo "selected"; } ?>>Sort By: Artist</option>
-                            <option value='title' <?php if($_SESSION['sort_type']=="title"){ echo "selected"; } ?>>Sort By: Album Title</option>
-                            <option value='top500' <?php if($_SESSION['sort_type']=="top500" or !isset($_SESSION['sort_type'])){ echo "selected"; } ?>>Sort By: Top 500 Albums</option>
-                            <option value='rating' <?php if($_SESSION['sort_type']=="rating"){ echo "selected"; } ?>>Sort By: User Rating</option>
-                            <option value='year' <?php if($_SESSION['sort_type']=="year"){ echo "selected"; } ?>>Sort By: Year</option>
+                            <option value='artist' <?php if(isset($_SESSION['sort_type']) and $_SESSION['sort_type']=="artist"){ echo "selected"; } ?>>Sort By: Artist</option>
+                            <option value='title' <?php if(isset($_SESSION['sort_type']) and $_SESSION['sort_type']=="title"){ echo "selected"; } ?>>Sort By: Album Title</option>
+                            <option value='top500' <?php if(!isset($_SESSION['sort_type']) or $_SESSION['sort_type']=="top500"){ echo "selected"; } ?>>Sort By: Top 500 Albums</option>
+                            <option value='rating' <?php if(isset($_SESSION['sort_type']) and $_SESSION['sort_type']=="rating"){ echo "selected"; } ?>>Sort By: User Rating</option>
+                            <option value='year' <?php if(isset($_SESSION['sort_type']) and $_SESSION['sort_type']=="year"){ echo "selected"; } ?>>Sort By: Year</option>
                         </select>
                 </div>
                 <div class="col-12 col-sm-1 text-center form-group">
