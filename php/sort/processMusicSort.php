@@ -48,6 +48,6 @@ function year_value($a, $b) {
 $_SESSION['album_data'] = $album_data;
 $_SESSION['sort_type'] = $musicSort;
 
-echo '<script>window.location = "../../album_browse.php" </script>'
+echo '<script>window.location = "../../album_browse.php"</script>'
 
 ?>

@@ -65,6 +65,12 @@
     //include pagination
     include ("php/pagination/pagination_albums.php");
 
+    function clearFilters() {
+        if(isset($_SESSION['active_filters'])){
+            unset($_SESSION['active_filters']);
+        }
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -153,25 +159,25 @@
                     <h5>Applied Filters</h5>
                 </div>
                 <?php
-                    if(!empty($active_filters['artists'])) {
+                    if(isset($_SESSION['active_filters']['artists']) and !empty($_SESSION['active_filters']['artists'])) {
 
                         echo "<div class='row mb-1'>
                                 <h6>Artist</h6>
                             </div>
                             <div class='row d-flex justify-content-left mb-1'>
-                                <ul>";
+                                <ul>
+                                <form action='php/filter/processRemoveFilter.php' method='POST'>";
 
-                        foreach($active_filters['artists'] as $artist) {
-                            echo "<li>$artist 
-                                    <a role='button'>
-                                        <i id='deleteFilter$filter_count' class='fas fa-times fa-lg deleteFilter' data-toggle='popover' title='Remove' data-content='Remove Filter' data-target='deleteFilter$filter_count'></i>
+                        foreach($_SESSION['active_filters']['artists'] as $artist) {
+                            echo "<li class='form-group'>$artist 
+                                    <a role='button' type='submit' name='removeArtist' value='$artist'>
+                                        <i id='deleteFilter$artist' class='fas fa-times fa-lg' data-toggle='popover' title='Remove' data-content='Remove Filter'></i>
                                     </a>
                                 </li>";     
-
-                            $filter_count++;
                         }
 
-                        echo "</ul>
+                        echo "</form>
+                                </ul>
                                 </div>";
                     }
                 ?>
@@ -272,12 +278,12 @@
                         <h5>Artist</h5>
                     </div>
                     <div class="row mb-1">
-                        <select class="form-select" aria-label="artistSelector">
+                        <select name="artistSelector" id="artistSelector" class="form-select" aria-label="artistSelector">
                             <option selected>Select artist</option>
                             <?php
                             foreach($artist_data as $artist){
                                 $artistCount = 0;
-                                echo "<option value='artist$artistCount'>$artist[0]</option>";
+                                echo "<option value='$artist[0]'>$artist[0]</option>";
                                 $artistCount++;
                             } 
                             ?>
@@ -355,9 +361,11 @@
                                 ?>
                         </ul>
                     </div>
-                    <div class="row mb-5">
-                        <div class="col-12 col-sm-1 text-center form-group">
-                            <button type="submit" class="btn clearButton">Clear</button>
+                    <div class="row mb-5 d-flex justify-content-center form-group">
+                        <div class="col-12 col-sm-4 mb-2 text-center">
+                            <button type="button" class="btn clearButton" onclick="clearFilters()">Clear</button>
+                        </div>
+                        <div class="col-12 col-sm-4 mb-2 text-center">
                             <button type="submit" class="btn  applyButton">Apply</button>
                         </div>
                     </div>
