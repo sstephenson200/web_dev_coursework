@@ -9,12 +9,18 @@
 
     //filter variables
     $filter_count = 0;
-    $artist_filter = ['ABBA','Elvis Presley'];
+    $artist_filter = [];
     $genre_filter = [];
     $subgenre_filter = [];
-    $rating_filter = ['5'];
+    $rating_filter = [];
     $decade_filter = [];
     $active_filters = array('artists' => $artist_filter, 'genres' => $genre_filter, 'subgenres' => $subgenre_filter, 'ratings' => $rating_filter, 'decades' => $decade_filter);
+
+    //set active_filters as session variable for use in filtering
+    if(isset($_SESSION['active_filters'])){
+        $active_filters = $_SESSION['active_filters'];
+    }
+    $_SESSION['active_filters'] = $active_filters;
 
     //get all artist data for filter menus
     $artist_endpoint = $base_url . "album/getArtists.php";
@@ -261,99 +267,101 @@
                                 </div>";
                     }
                 ?>
-                <div class="row mb-1">
-                    <h5>Artist</h5>
-                </div>
-                <div class="row mb-1">
-                    <select class="form-select" aria-label="artistSelector">
-                        <option selected>Select artist</option>
-                        <?php
-                        foreach($artist_data as $artist){
-                            $artistCount = 0;
-                            echo "<option value='artist$artistCount'>$artist[0]</option>";
-                            $artistCount++;
-                        } 
-                        ?>
-                    </select>
-                </div>
-                <div class="row mb-1">
-                    <h5>Genre</h5>
-                </div>
-                <div class="row mb-1">
-                    <select class="form-select" aria-label="genreSelector">
-                        <option selected>Select genre</option>
-                        <?php
-                        foreach($genre_data as $genre){
-                            $genreCount = 0;
-                            echo "<option value='genre$genreCount'>$genre[0]</option>";
-                            $genreCount++;
-                        }                       
-                        ?>
-                    </select>
-                </div>
-                <div class="row mb-1">
-                    <h5>Subgenre</h5>
-                </div>
-                <div class="row mb-1">
-                    <select class="form-select" aria-label="subgenreSelector">
-                        <option selected>Select subgenre</option>
-                        <?php
-                        foreach($subgenre_data as $subgenre){
-                            $subgenreCount = 0;
-                            echo "<option value='subgenre$subgenreCount'>$subgenre[0]</option>";
-                            $subgenreCount++;
-                        } 
-                        ?>
-                    </select>
-                </div>
-                <div class="row mb-1">
-                    <a href="#ratingCollapse" class="text-decoration-none text-white" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="ratingCollapse">
-                        <h5>User Rating <i class="fas fa-angle-down"></i></h5>
-                    </a>
-                </div>
-                <div class="row collapse mb-1" id="ratingCollapse">
-                    <?php
-                        for($i=0; $i<5; $i++){
-                            echo "<div class='form-check'>
-                                <input class='form-check-input' type='checkbox' value='' id='ratingCheckbox'>
-                                <label class='form-check-label' for='ratingCheckbox'>";
-                            for($j=5; $j>$i; $j--) {
-                                echo "<i class='fas fa-star'></i>";  
-                            }
-                            echo "</label>
-                            </div>";
-                        }
-                        echo "<div class='form-check'>
-                                <input class='form-check-input' type='checkbox' value='' id='ratingCheckbox'>
-                                <label class='form-check-label' for='ratingCheckbox'>No rating</label>
-                                </div>";
-                    ?>
-                </div>
-                <div class="row mb-1">
-                    <a href="#yearCollapse" class="text-decoration-none text-white" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="yearCollapse">
-                        <h5>Year <i class="fas fa-angle-down"></i></h5>
-                    </a>
-                </div>
-                <div class="row collapse mb-1" id="yearCollapse">
-                    <ul>
-                        <?php
-                            foreach($year_data as $year){
-                                $yearCount = 0;
-                                echo "<div class='form-check'>
-                                <input class='form-check-input' type='checkbox' value='$year[0]' id='year$yearCount'>
-                                <label class='form-check-label' for='year$yearCount'>$year[0]</label>
-                                </div>";
-                                $yearCount++;
+                <form action="php/filter/processMusicFilter.php" method="POST">
+                    <div class="row mb-1">
+                        <h5>Artist</h5>
+                    </div>
+                    <div class="row mb-1">
+                        <select class="form-select" aria-label="artistSelector">
+                            <option selected>Select artist</option>
+                            <?php
+                            foreach($artist_data as $artist){
+                                $artistCount = 0;
+                                echo "<option value='artist$artistCount'>$artist[0]</option>";
+                                $artistCount++;
                             } 
                             ?>
-                    </ul>
-                </div>
-                <div class="row mb-5">
-                    <ul class='nav d-flex justify-content-center'>
-                        <li class='nav-item px-2'><a type='button' class='btn clearButton' href='#'>Clear</a></li>
-                        <li class='nav-item px-2'><a type='button' class='btn applyButton' href='#'>Apply</a></li>
-                    </ul>
-                </div>
+                        </select>
+                    </div>
+                    <div class="row mb-1">
+                        <h5>Genre</h5>
+                    </div>
+                    <div class="row mb-1">
+                        <select class="form-select" aria-label="genreSelector">
+                            <option selected>Select genre</option>
+                            <?php
+                            foreach($genre_data as $genre){
+                                $genreCount = 0;
+                                echo "<option value='genre$genreCount'>$genre[0]</option>";
+                                $genreCount++;
+                            }                       
+                            ?>
+                        </select>
+                    </div>
+                    <div class="row mb-1">
+                        <h5>Subgenre</h5>
+                    </div>
+                    <div class="row mb-1">
+                        <select class="form-select" aria-label="subgenreSelector">
+                            <option selected>Select subgenre</option>
+                            <?php
+                            foreach($subgenre_data as $subgenre){
+                                $subgenreCount = 0;
+                                echo "<option value='subgenre$subgenreCount'>$subgenre[0]</option>";
+                                $subgenreCount++;
+                            } 
+                            ?>
+                        </select>
+                    </div>
+                    <div class="row mb-1">
+                        <a href="#ratingCollapse" class="text-decoration-none text-white" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="ratingCollapse">
+                            <h5>User Rating <i class="fas fa-angle-down"></i></h5>
+                        </a>
+                    </div>
+                    <div class="row collapse mb-1" id="ratingCollapse">
+                        <?php
+                            for($i=0; $i<5; $i++){
+                                echo "<div class='form-check'>
+                                    <input class='form-check-input' type='checkbox' value='' id='ratingCheckbox'>
+                                    <label class='form-check-label' for='ratingCheckbox'>";
+                                for($j=5; $j>$i; $j--) {
+                                    echo "<i class='fas fa-star'></i>";  
+                                }
+                                echo "</label>
+                                </div>";
+                            }
+                            echo "<div class='form-check'>
+                                    <input class='form-check-input' type='checkbox' value='' id='ratingCheckbox'>
+                                    <label class='form-check-label' for='ratingCheckbox'>No rating</label>
+                                    </div>";
+                        ?>
+                    </div>
+                    <div class="row mb-1">
+                        <a href="#yearCollapse" class="text-decoration-none text-white" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="yearCollapse">
+                            <h5>Year <i class="fas fa-angle-down"></i></h5>
+                        </a>
+                    </div>
+                    <div class="row collapse mb-1" id="yearCollapse">
+                        <ul>
+                            <?php
+                                foreach($year_data as $year){
+                                    $yearCount = 0;
+                                    echo "<div class='form-check'>
+                                    <input class='form-check-input' type='checkbox' value='$year[0]' id='year$yearCount'>
+                                    <label class='form-check-label' for='year$yearCount'>$year[0]</label>
+                                    </div>";
+                                    $yearCount++;
+                                } 
+                                ?>
+                        </ul>
+                    </div>
+                    <div class="row mb-5">
+                        <div class="col-12 col-sm-1 text-center form-group">
+                            <button type="submit" class="btn clearButton">Clear</button>
+                            <button type="submit" class="btn  applyButton">Apply</button>
+                        </div>
+                    </div>
+                </form>
             </div>
             <!-- Album Grid -->
             <div class="col py-3">
