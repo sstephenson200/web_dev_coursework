@@ -2,27 +2,28 @@
 
 session_start();
 
-$musicSort = $_POST['musicSortFilter'];
-$album_data = $_SESSION["album_data"];
+function sortMusic($musicSort, $array){
+    switch($musicSort){
+        case 'artist':
+            usort($array, 'artist_name');
+            break;
+        case 'title':
+            usort($array, 'album_title');
+            break;
+        case 'top500':
+            usort($array, 'album_rating');
+            break;
+        case 'rating':
+            usort($array, 'AverageRating');
+            break;
+        case 'year':
+            usort($array, 'year_value');
+            break;
+        default:
+            break;
+    }
 
-switch($musicSort){
-    case 'artist':
-        usort($album_data, 'artist_name');
-        break;
-    case 'title':
-        usort($album_data, 'album_title');
-        break;
-    case 'top500':
-        usort($album_data, 'album_rating');
-        break;
-    case 'rating':
-        usort($album_data, 'AverageRating');
-        break;
-    case 'year':
-        usort($album_data, 'year_value');
-        break;
-    default:
-        break;
+    return $array;
 }
 
 function artist_name($a, $b) {
@@ -45,7 +46,28 @@ function year_value($a, $b) {
     return strcmp($a['year_value'], $b['year_value']);
 }
 
-$_SESSION['album_data'] = $album_data;
+$musicSort = $_POST['musicSortFilter'];
+
+if(!empty($_SESSION['filtered_data'])){
+    $filtered_data = $_SESSION['filtered_data'];
+    $filtered_data = sortMusic($musicSort, $filtered_data);
+    $_SESSION['filtered_data'] = $filtered_data;
+    console_log("Sorting");
+    console_log($filtered_data);
+} else {
+    console_log("Album Data");
+    $album_data = $_SESSION["album_data"];
+    $album_data = sortMusic($musicSort, $album_data);
+    $_SESSION['album_data'] = $album_data;
+}
+
+
+function console_log( $data ){
+    echo '<script>';
+    echo 'console.log('. json_encode( $data ) .')';
+    echo '</script>';
+}
+
 $_SESSION['sort_type'] = $musicSort;
 
 echo '<script>window.location = "../../album_browse.php"</script>'

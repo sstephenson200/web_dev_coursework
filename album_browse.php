@@ -46,21 +46,25 @@
     $album_endpoint = $base_url . "album/getAllAlbums.php";
     $album_resource = file_get_contents($album_endpoint);
     $album_data = json_decode($album_resource, true);
-    
+
     //apply filters
     $filtered_data = [];
-    include("php/filter/filterMusic.php");
     if(!empty($filtered_data)){
         $album_count = count($filtered_data);
     } else{
         $album_count = count($album_data);
     }
 
-    //set album_data as session variable for use in sorting
+    //set album_data and filtered_data as session variables for use in sorting
     if(isset($_SESSION['album_data'])){
         $album_data = $_SESSION['album_data'];
     }
     $_SESSION['album_data'] = $album_data;
+
+    if(isset($_SESSION['filtered_data'])){
+        $filtered_data = $_SESSION['filtered_data'];
+    }
+    $_SESSION['filtered_data'] = $filtered_data;
 
     //include pagination
     include ("php/pagination/pagination_albums.php");
@@ -162,6 +166,7 @@
                                 <ul>";
 
                         foreach($_SESSION['active_filters']['artists'] as $artist) {
+
                             echo "<li class='form-group'>$artist 
                                     <a role='button' href='php/filter/removeFilter.php?artist=$artist'>
                                         <i id='deleteFilter$artist' class='fas fa-times fa-lg' data-toggle='popover' title='Remove' data-content='Remove Filter'></i>

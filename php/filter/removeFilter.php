@@ -24,6 +24,6 @@ if($active_filters['artists']){
     }
 }
 
-echo '<script>window.location = "../../album_browse.php"</script>';
+echo '<script>window.location = "processMusicFilter.php"</script>';
 
 ?>
