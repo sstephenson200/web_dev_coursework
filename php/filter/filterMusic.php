@@ -4,8 +4,10 @@ function checkAlbumFiltering($album, $active_filters) {
 
     $flag = true;
 
-    if(!in_array($album['artist_name'], $active_filters['artists'])){
-        $flag = false;
+    if(isset($active_filters['artists'])){
+        if(!in_array($album['artist_name'], $active_filters['artists'])){
+            $flag = false;
+        }
     }
 
     return $flag;

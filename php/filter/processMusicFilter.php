@@ -16,6 +16,10 @@ $artist = $_POST['artistSelector'];
 
 $active_filters = $_SESSION["active_filters"];
 
+if(!isset($active_filters['artists'])) {
+    $active_filters['artists'] = [];
+}
+
 if(!check_item_unique($artist,$active_filters['artists'])) {
     array_push($active_filters['artists'], $artist);
 }

@@ -159,19 +159,17 @@
                                 <h6>Artist</h6>
                             </div>
                             <div class='row d-flex justify-content-left mb-1'>
-                                <ul>
-                                <form action='php/filter/processRemoveFilter.php' method='POST'>";
+                                <ul>";
 
                         foreach($_SESSION['active_filters']['artists'] as $artist) {
                             echo "<li class='form-group'>$artist 
-                                    <a role='button' type='submit' name='removeArtist' value='$artist'>
+                                    <a role='button' href='php/filter/removeFilter.php?artist=$artist'>
                                         <i id='deleteFilter$artist' class='fas fa-times fa-lg' data-toggle='popover' title='Remove' data-content='Remove Filter'></i>
                                     </a>
                                 </li>";     
                         }
 
-                        echo "</form>
-                                </ul>
+                        echo "</ul>
                                 </div>";
                     }
                 ?>
