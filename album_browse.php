@@ -65,12 +65,6 @@
     //include pagination
     include ("php/pagination/pagination_albums.php");
 
-    function clearFilters() {
-        if(isset($_SESSION['active_filters'])){
-            unset($_SESSION['active_filters']);
-        }
-    }
-
 ?>
 
 <!DOCTYPE html>
@@ -363,7 +357,7 @@
                     </div>
                     <div class="row mb-5 d-flex justify-content-center form-group">
                         <div class="col-12 col-sm-4 mb-2 text-center">
-                            <button type="button" class="btn clearButton" onclick="clearFilters()">Clear</button>
+                            <a type="button" class="btn clearButton" href="php/filter/clearAllFilters.php">Clear</a>
                         </div>
                         <div class="col-12 col-sm-4 mb-2 text-center">
                             <button type="submit" class="btn  applyButton">Apply</button>
