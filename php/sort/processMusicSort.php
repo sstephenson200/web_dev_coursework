@@ -52,20 +52,10 @@ if(!empty($_SESSION['filtered_data'])){
     $filtered_data = $_SESSION['filtered_data'];
     $filtered_data = sortMusic($musicSort, $filtered_data);
     $_SESSION['filtered_data'] = $filtered_data;
-    console_log("Sorting");
-    console_log($filtered_data);
 } else {
-    console_log("Album Data");
     $album_data = $_SESSION["album_data"];
     $album_data = sortMusic($musicSort, $album_data);
     $_SESSION['album_data'] = $album_data;
-}
-
-
-function console_log( $data ){
-    echo '<script>';
-    echo 'console.log('. json_encode( $data ) .')';
-    echo '</script>';
 }
 
 $_SESSION['sort_type'] = $musicSort;

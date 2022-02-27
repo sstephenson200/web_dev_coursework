@@ -12,8 +12,23 @@ function check_item_unique ($item, $array) {
     }
 }
 
+//Function to check if album data matches filter options
+function checkAlbumFiltering($album, $active_filters) {
+
+    $flag = true;
+
+    if(isset($active_filters['artists'])){
+        if(!in_array($album['artist_name'], $active_filters['artists'])){
+            $flag = false;
+        }
+    }
+
+    return $flag;
+}
+
 $active_filters = $_SESSION["active_filters"];
 
+//add artist to active_filters
 if(isset($_POST['artistSelector'])){
     $artist = $_POST['artistSelector'];
 
@@ -31,10 +46,9 @@ $album_data = $_SESSION["album_data"];
 $filtered_data= [];
 
 foreach($album_data as $album) { 
-    console_log($active_filters);
+
     if(empty($active_filters['artists'])){
         $_SESSION['filtered_data'] = [];
-        $_SESSION['sort_type'] = "top500";
         break;
     }
 
@@ -43,30 +57,8 @@ foreach($album_data as $album) {
     if($flag){
         array_push($filtered_data, $album);
         $_SESSION['filtered_data'] = $filtered_data;
-        $_SESSION['sort_type'] = "top500";
     }
 
-}
-
-
-function console_log( $data ){
-    echo '<script>';
-    echo 'console.log('. json_encode( $data ) .')';
-    echo '</script>';
-}
-
-//Function to check if album data matches filter options
-function checkAlbumFiltering($album, $active_filters) {
-
-    $flag = true;
-
-    if(isset($active_filters['artists'])){
-        if(!in_array($album['artist_name'], $active_filters['artists'])){
-            $flag = false;
-        }
-    }
-
-    return $flag;
 }
 
 echo '<script>window.location = "../../album_browse.php"</script>';
