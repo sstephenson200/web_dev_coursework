@@ -34,6 +34,7 @@ foreach($album_data as $album) {
     console_log($active_filters);
     if(empty($active_filters['artists'])){
         $_SESSION['filtered_data'] = [];
+        $_SESSION['sort_type'] = "top500";
         break;
     }
 
@@ -42,6 +43,7 @@ foreach($album_data as $album) {
     if($flag){
         array_push($filtered_data, $album);
         $_SESSION['filtered_data'] = $filtered_data;
+        $_SESSION['sort_type'] = "top500";
     }
 
 }
