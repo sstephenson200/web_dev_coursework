@@ -49,7 +49,7 @@ $filtered_data= [];
 
 foreach($album_data as $album) { 
 
-    if(empty($active_filters['artists'])){
+    if(empty($active_filters['artists']) and empty($active_filters['genres']) and empty($active_filters['subgenres']) and empty($active_filters['ratings']) and empty($active_filters['decades'])){
         $_SESSION['filtered_data'] = [];
         break;
     }

@@ -293,13 +293,11 @@
                         <h5>Subgenre</h5>
                     </div>
                     <div class="row mb-1">
-                        <select class="form-select" aria-label="subgenreSelector">
+                        <select name="subgenreSelector" id="subgenreSelector" class="form-select" aria-label="subgenreSelector">
                             <option selected>Select subgenre</option>
                             <?php
                             foreach($subgenre_data as $subgenre){
-                                $subgenreCount = 0;
-                                echo "<option value='subgenre$subgenreCount'>$subgenre[0]</option>";
-                                $subgenreCount++;
+                                echo "<option value='subgenre$subgenreCount[0]'>$subgenre[0]</option>";
                             } 
                             ?>
                         </select>
@@ -336,12 +334,10 @@
                         <ul>
                             <?php
                                 foreach($year_data as $year){
-                                    $yearCount = 0;
                                     echo "<div class='form-check'>
-                                    <input class='form-check-input' type='checkbox' value='$year[0]' id='year$yearCount'>
-                                    <label class='form-check-label' for='year$yearCount'>$year[0]</label>
+                                    <input class='form-check-input' type='checkbox' value='$year[0]' id='year$year[0]'>
+                                    <label class='form-check-label' for='year$year[0]'>$year[0]</label>
                                     </div>";
-                                    $yearCount++;
                                 } 
                                 ?>
                         </ul>
