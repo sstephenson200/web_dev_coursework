@@ -37,7 +37,9 @@ if(isset($_POST['artistSelector'])){
     }
     
     if(!check_item_unique($artist,$active_filters['artists'])) {
-        array_push($active_filters['artists'], $artist);
+        if($artist != "Select artist"){
+            array_push($active_filters['artists'], $artist);
+        }
     }    
 }
 

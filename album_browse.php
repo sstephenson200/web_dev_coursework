@@ -8,7 +8,6 @@
     $music_card_count=0;
 
     //filter variables
-    $filter_count = 0;
     $artist_filter = [];
     $genre_filter = [];
     $subgenre_filter = [];
@@ -47,13 +46,7 @@
     $album_resource = file_get_contents($album_endpoint);
     $album_data = json_decode($album_resource, true);
 
-    //apply filters
     $filtered_data = [];
-    if(!empty($filtered_data)){
-        $album_count = count($filtered_data);
-    } else{
-        $album_count = count($album_data);
-    }
 
     //set album_data and filtered_data as session variables for use in sorting
     if(isset($_SESSION['album_data'])){
@@ -65,6 +58,12 @@
         $filtered_data = $_SESSION['filtered_data'];
     }
     $_SESSION['filtered_data'] = $filtered_data;
+
+    if(!empty($_SESSION['filtered_data'])){
+        $album_count = count($_SESSION['filtered_data']);
+    } else{
+        $album_count = count($_SESSION['album_data']);
+    }
 
     //include pagination
     include ("php/pagination/pagination_albums.php");
@@ -179,7 +178,7 @@
                     }
                 ?>
                 <?php
-                    if(!empty($active_filters['genres'])) {
+                    if(isset($_SESSION['active_filters']['genres']) and !empty($_SESSION['active_filters']['genres'])) {
 
                         echo "<div class='row mb-1'>
                                 <h6>Genre</h6>
@@ -187,14 +186,13 @@
                             <div class='row d-flex justify-content-left mb-1'>
                                 <ul>";
 
-                        foreach($active_filters['genres'] as $genre) {
-                            echo "<li>$genre 
-                                    <a role='button'>
-                                        <i id='deleteFilter$filter_count' class='fas fa-times fa-lg deleteFilter' data-toggle='popover' title='Remove' data-content='Remove Filter' data-target='deleteFilter$filter_count'></i>
+                        foreach($_SESSION['active_filters']['genres'] as $genre) {
+                            echo "<li class='form-group'>$genre 
+                                    <a role='button' href='php/filter/removeFilter.php?genre=$genre'>
+                                        <i id='deleteFilter$genre' class='fas fa-times fa-lg' data-toggle='popover' title='Remove' data-content='Remove Filter'></i>
                                     </a>
-                                </li>";   
+                                </li>";     
                                 
-                                $filter_count++;
                         }
 
                         echo "</ul>
@@ -202,7 +200,7 @@
                     }
                 ?>
                 <?php
-                    if(!empty($active_filters['subgenres'])) {
+                    if(isset($_SESSION['active_filters']['subgenres']) and !empty($_SESSION['active_filters']['subgenres'])) {
 
                         echo "<div class='row mb-1'>
                                 <h6>Subgenre</h6>
@@ -210,14 +208,12 @@
                             <div class='row d-flex justify-content-left mb-1'>
                                 <ul>";
 
-                        foreach($active_filters['subgenres'] as $subgenre) {
-                            echo "<li>$subgenre 
-                                    <a role='button'>
-                                        <i id='deleteFilter$filter_count' class='fas fa-times fa-lg deleteFilter' data-toggle='popover' title='Remove' data-content='Remove Filter' data-target='deleteFilter$filter_count'></i>
+                        foreach($_SESSION['active_filters']['subgenres'] as $subgenre) {
+                            echo "<li class='form-group'>$subgenre 
+                                    <a role='button' href='php/filter/removeFilter.php?subgenre=$subgenre'>
+                                        <i id='deleteFilter$subgenre' class='fas fa-times fa-lg' data-toggle='popover' title='Remove' data-content='Remove Filter'></i>
                                     </a>
-                                </li>";   
-                                
-                            $filter_count++;     
+                                </li>";     
                         }
 
                         echo "</ul>
@@ -225,7 +221,7 @@
                     }
                 ?>
                 <?php
-                    if(!empty($active_filters['ratings'])) {
+                    if(isset($_SESSION['active_filters']['ratings']) and !empty($_SESSION['active_filters']['ratings'])) {
 
                         echo "<div class='row mb-1'>
                                 <h6>User Rating</h6>
@@ -233,14 +229,12 @@
                             <div class='row d-flex justify-content-left mb-1'>
                                 <ul>";
 
-                        foreach($active_filters['ratings'] as $rating) {
-                            echo "<li>$rating 
-                                    <a role='button'>
-                                        <i id='deleteFilter$filter_count' class='fas fa-times fa-lg deleteFilter' data-toggle='popover' title='Remove' data-content='Remove Filter' data-target='deleteFilter$filter_count'></i>
+                        foreach($_SESSION['active_filters']['ratings'] as $rating) {
+                            echo "<li class='form-group'>$rating 
+                                    <a role='button' href='php/filter/removeFilter.php?rating=$rating'>
+                                        <i id='deleteFilter$rating' class='fas fa-times fa-lg' data-toggle='popover' title='Remove' data-content='Remove Filter'></i>
                                     </a>
-                                </li>";   
-                    
-                            $filter_count++;     
+                                </li>";      
                         }
 
                         echo "</ul>
@@ -248,7 +242,7 @@
                     }
                 ?>
                 <?php
-                    if(!empty($active_filters['decades'])) {
+                    if(isset($_SESSION['active_filters']['decades']) and !empty($_SESSION['active_filters']['decades'])) {
 
                         echo "<div class='row mb-1'>
                                 <h6>Year</h6>
@@ -256,14 +250,12 @@
                             <div class='row d-flex justify-content-left mb-1'>
                                 <ul>";
 
-                        foreach($active_filters['decades'] as $decade) {
-                            echo "<li>$decade 
-                                    <a role='button'>
-                                        <i id='deleteFilter$filter_count' class='fas fa-times fa-lg deleteFilter' data-toggle='popover' title='Remove' data-content='Remove Filter' data-target='deleteFilter$filter_count'></i>
+                        foreach($_SESSION['active_filters']['decades'] as $decade) {
+                            echo "<li class='form-group'>$decade 
+                                    <a role='button' href='php/filter/removeFilter.php?decade=$decade'>
+                                        <i id='deleteFilter$decade' class='fas fa-times fa-lg' data-toggle='popover' title='Remove' data-content='Remove Filter'></i>
                                     </a>
-                                </li>";   
-                    
-                            $filter_count++;
+                                </li>"; 
                         }
 
                         echo "</ul>
@@ -279,9 +271,7 @@
                             <option selected>Select artist</option>
                             <?php
                             foreach($artist_data as $artist){
-                                $artistCount = 0;
                                 echo "<option value='$artist[0]'>$artist[0]</option>";
-                                $artistCount++;
                             } 
                             ?>
                         </select>
@@ -290,13 +280,11 @@
                         <h5>Genre</h5>
                     </div>
                     <div class="row mb-1">
-                        <select class="form-select" aria-label="genreSelector">
+                        <select name="genreSelector" id="genreSelector" class="form-select" aria-label="genreSelector">
                             <option selected>Select genre</option>
                             <?php
                             foreach($genre_data as $genre){
-                                $genreCount = 0;
-                                echo "<option value='genre$genreCount'>$genre[0]</option>";
-                                $genreCount++;
+                                echo "<option value='genre$genre[0]'>$genre[0]</option>";
                             }                       
                             ?>
                         </select>
