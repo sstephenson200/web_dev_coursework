@@ -1,132 +1,61 @@
 <?php
 
+    $base_url = "http://localhost/web_dev_coursework/api/";
+
+    session_start();
+
+    //Card count variables
     $music_card_count = 0;
     $community_card_count = 0;
     $review_card_count = 0;
 
-    include("connections/dbconn.php");
+    $album_id = $_GET['album_id'];
 
-    $album_id = $conn->real_escape_string($_GET['album_id']);
+    //get album data
+    $album_endpoint = $base_url . "album/getAlbumByID.php?album_id=$album_id";
+    $album_resource = file_get_contents($album_endpoint);
+    $album_data = json_decode($album_resource, true);
 
-    include ("php/pagination_reviews.php");
+    $album_art_url = $album_data[0]['art_url'];
+    $album_title = $album_data[0]['album_title'];
+    $album_artist = $album_data[0]['artist_name'];
+    $rating = $album_data[0]['AverageRating'];
+    $spotify_id = $album_data[0]['spotify_id'];
+    $year = $album_data[0]['year_value'];
+    
+    //get album genre
+    $genre_endpoint = $base_url . "album/getGenreByAlbumID.php?album_id=$album_id";
+    $genre_resource = file_get_contents($genre_endpoint);
+    $genre_data = json_decode($genre_resource, true);
 
-    $album_query = "SELECT album.album_title, album.spotify_id, art.art_url, artist.artist_name, year_value.year_value, AVG(review.review_rating) AS AverageRating from album
-                    INNER JOIN art
-                    ON album.art_id = art.art_id
-                    INNER JOIN artist 
-                    ON album.artist_id = artist.artist_id
-                    INNER JOIN year_value
-                    ON album.year_id = year_value.year_value_id
-                    LEFT JOIN review 
-                    ON album.album_id = review.album_id 
-                    WHERE album.album_id = $album_id";
+    //get album subgenre
+    $subgenre_endpoint = $base_url . "album/getSubgenreByAlbumID.php?album_id=$album_id";
+    $subgenre_resource = file_get_contents($subgenre_endpoint);
+    $subgenre_data = json_decode($subgenre_resource, true);
 
-    $album_result = $conn -> query($album_query);
+    //get album songs
+    $songs_endpoint = $base_url . "album/getSongsByAlbumID.php?album_id=$album_id";
+    $songs_resource = file_get_contents($songs_endpoint);
+    $songs_data = json_decode($songs_resource, true);
 
-    if(!$album_result){
-        echo $conn -> error;
-    }
+    //get album reviews
+    $reviews_endpoint = $base_url . "review/getReviewsByAlbumID.php?album_id=$album_id";
+    $reviews_resource = @file_get_contents($reviews_endpoint);
+    $reviews_data = json_decode($reviews_resource, true);
 
-    $genre_query = "SELECT genre.genre_title FROM genre
-                    INNER JOIN album_genre 
-                    ON album_genre.genre_id = genre.genre_id
-                    WHERE album_genre.album_id = $album_id";
+    //get related albums
+    $album_artist_edited = urlencode($album_artist);
+    $related_albums_endpoint = $base_url . "album/getAlbumsByArtistName.php?artist_name=$album_artist_edited";
+    $related_albums_resource = @file_get_contents($related_albums_endpoint);
+    $related_albums_data = json_decode($related_albums_resource, true);
 
-    $genre_result = $conn -> query($genre_query);
+    //get related communities
+    $related_communities_endpoint = $base_url . "community/getCommunitiesByArtistName.php?artist_name=$album_artist_edited";
+    $related_communities_resource = @file_get_contents($related_communities_endpoint);
+    $related_communities_data = json_decode($related_communities_resource, true);
+    
 
-    if(!$genre_result){
-        echo $conn -> error;
-    }
-
-    $subgenre_query = "SELECT subgenre.subgenre_title FROM subgenre
-                    INNER JOIN album_subgenre 
-                    ON album_subgenre.subgenre_id = subgenre.subgenre_id
-                    WHERE album_subgenre.album_id = $album_id";
-
-    $subgenre_result = $conn -> query($subgenre_query);
-
-    if(!$subgenre_result){
-        echo $conn -> error;
-    }
-
-    $song_query = "SELECT song.song_title, song.song_length FROM song
-                    WHERE song.album_id = $album_id";
-
-    $song_result = $conn -> query($song_query);
-
-    if(!$song_result){
-        echo $conn -> error;
-    }
-
-    $review_query = "SELECT review_title, review_text, review_rating, review_date, user.user_id, user.user_name, art.art_url FROM review
-                    INNER JOIN user
-                    ON review.user_id = user.user_id
-                    INNER JOIN art
-                    ON user.art_id = art.art_id
-                    WHERE review.album_id = $album_id
-                    LIMIT $offset, $cardsPerPage";
-
-    $review_result = $conn -> query($review_query);
-
-    if(!$review_result){
-        echo $conn -> error;
-    }
-
-    $total_ratings_query = "SELECT review.review_rating, COUNT(review.review_rating) FROM review
-                            WHERE review.album_id = $album_id
-                            GROUP BY review.review_rating";
-
-    $total_ratings_result = $conn -> query($total_ratings_query);
-
-    if(!$total_ratings_result){
-        echo $conn -> error;
-    }   
-
-    $artist_query = "SELECT artist_name FROM artist 
-                    INNER JOIN album
-                    ON artist.artist_id = album.artist_id
-                    WHERE album.album_id = $album_id";
-
-    $artist_result = $conn -> query($artist_query);
-
-    if(!$artist_result){
-        echo $conn -> error;
-    }   
-
-    $artist_name = ($artist_result -> fetch_assoc())['artist_name'];
-
-    $related_album_query = "SELECT album.album_id, album.album_title, artist.artist_name, art.art_url, AVG(review.review_rating) AS AverageRating FROM album
-                            LEFT JOIN review 
-                            ON album.album_id = review.album_id
-                            INNER JOIN artist
-                            ON album.artist_id = artist.artist_id
-                            INNER JOIN art 
-                            ON album.art_id = art.art_id
-                            WHERE artist.artist_name = '$artist_name'
-                            AND album.album_id!= '$album_id'
-                            GROUP BY album.album_id";
-
-    $related_album_result = $conn -> query($related_album_query);
-
-    if(!$related_album_result){
-        echo $conn -> error;
-    }
-
-    $related_community_query = "SELECT community.community_name, community.community_description, art.art_url, COUNT(joined_communities.user_id) FROM community
-                                INNER JOIN art
-                                ON community.art_id = art.art_id
-                                INNER JOIN joined_communities
-                                ON community.community_id = joined_communities.community_id
-                                INNER JOIN artist
-                                ON community.artist_id = artist.artist_id
-                                WHERE artist.artist_name = '$artist_name'
-                                GROUP BY community.community_id";
-
-    $related_community_result = $conn -> query($related_community_query);
-
-    if(!$related_community_result){
-        echo $conn -> error;
-    }
+    include ("php/pagination/pagination_reviews.php");
 
 ?>
 
@@ -158,16 +87,6 @@
 </head>
 
 <body>
-
-    <?php 
-        $row = $album_result -> fetch_assoc();
-        $album_art_url = $row['art_url'];
-        $album_title = $row['album_title'];
-        $album_artist = $row['artist_name'];
-        $rating = $row['AverageRating'];
-        $spotify_id = $row['spotify_id'];
-        $year = $row['year_value'];
-    ?>
 
     <div class="container-fluid p-0 content">
 
@@ -236,9 +155,9 @@
                         <h4>
                             <?php 
                                 $genreList = "";
-                                while($row = $genre_result -> fetch_assoc()) {
-                                    $genre = $row['genre_title'];
-                                    $genreList .= "$genre, ";
+                                foreach($genre_data as $genre){
+                                    $title = $genre['genre_title'];
+                                    $genreList .= "$title, ";
                                 }
                                 $genreList = rtrim($genreList, ", ");
                                 echo $genreList;
@@ -254,9 +173,9 @@
                         <h4>
                             <?php 
                                 $subgenreList = "";
-                                while($row = $subgenre_result -> fetch_assoc()) {
-                                    $subgenre = $row['subgenre_title'];
-                                    $subgenreList .= "$subgenre, ";
+                                foreach($subgenre_data as $subgenre){
+                                    $title = $subgenre['subgenre_title'];
+                                    $subgenreList .= "$title, ";
                                 }
                                 $subgenreList = rtrim($subgenreList, ", ");
                                 echo $subgenreList;
@@ -294,9 +213,9 @@
                     <tbody>
                         <?php
                         $song_count = 1;
-                        while($row = $song_result -> fetch_assoc()) { 
-                            $song_title = $row['song_title'];
-                            $duration = $row['song_length'];
+                        foreach($songs_data as $song){
+                            $song_title = $song['song_title'];
+                            $duration = $song['song_length'];
 
                             echo "<tr>
                             <th scope='row'>$song_count</th>
@@ -309,10 +228,8 @@
                             }
                             
                             echo "</tr>";
-                            $song_count++;
-                        
-                        }
-                        
+                            $song_count++; 
+                        }                        
                         ?>
                     </tbody>
                 </table>
@@ -366,7 +283,7 @@
 
         <div class="row d-flex justify-content-center m-4">
             <?php 
-            if(mysqli_num_rows($review_result) == 0) {
+            if(empty($reviews_data)) {
                 echo "<div class='col-10 col-sm-8 col-md-2'>
                         <h4>No reviews!</h4>
                         <p>Be the first, you trendsetter.</p>
@@ -374,12 +291,38 @@
             } else {
 
                 $rating_2dp = number_format($rating,2);
-                $reviews_5_star = 10;
-                $reviews_4_star = 6;
-                $reviews_3_star = 11;
-                $reviews_2_star = 3;
+
+                $reviews_5_star = 0;
+                $reviews_4_star = 0;
+                $reviews_3_star = 0;
+                $reviews_2_star = 0;
                 $reviews_1_star = 0;
-                $total_reviews = $reviews_5_star + $reviews_4_star + $reviews_3_star + $reviews_2_star + $reviews_1_star;            
+
+                foreach($reviews_data as $review){
+                    switch($review['review_rating']){
+                        case '5':
+                            $reviews_5_star++;
+                            break;
+                        case '4':
+                            $reviews_4_star++;
+                            break;
+                        case '3':
+                            $reviews_3_star++;
+                            break;
+                        case '2':
+                            $reviews_2_star++;
+                            break;
+                        case '1':
+                            $reviews_1_star++;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                $review_scores = [$reviews_1_star, $reviews_2_star, $reviews_3_star, $reviews_4_star, $reviews_5_star];
+
+                $total_reviews = count($reviews_data);            
 
                 echo "<div class='col'>
                         <div class='row text-center'>
@@ -397,7 +340,8 @@
                             for($j=0;$j<$i; $j++){
                                 echo "<i class='fas fa-star'></i>";
                             }
-                            echo " (10)";
+                            $index = $i - 1;
+                            echo " $review_scores[$index]";
                             echo "</div>";
                         }
 
@@ -421,21 +365,23 @@
 
         <div class="row d-flex justify-content-center mt-3">
             <?php
-             while($row = $review_result -> fetch_assoc()) {
-                 $review_title = $row['review_title'];
-                 $review_body = $row['review_text'];
-                 $review_rating = $row['review_rating'];
-                 $review_date = $row['review_date'];
-                 $username = $row['user_name'];
-                 $user_art = $row['art_url'];
-                 $user_id = $row['user_id'];
 
-                 echo "<div class='col-10 col-lg-5 mx-4 mb-3'>";
-                 include("includes/review.php");
-                 echo "</div>";
-                 $review_card_count++;
-                                    
-             }
+            if($reviews_data){
+                foreach($reviews_data as $review){
+                    $review_title = $review['review_title'];
+                    $review_body = $review['review_text'];
+                    $review_rating = $review['review_rating'];
+                    $review_date = $review['review_date'];
+                    $username = $review['user_name'];
+                    $user_art = $review['art_url'];
+                    $user_id = $review['user_id'];
+    
+                    echo "<div class='col-10 col-lg-5 mx-4 mb-3'>";
+                    include("includes/review.php");
+                    echo "</div>";
+                    $review_card_count++; 
+                }
+            }            
             ?>
         </div>
 
@@ -452,12 +398,12 @@
         </div>
 
         <div class="row m-3
-            <?php if(mysqli_num_rows($related_album_result) == 0) { 
+            <?php if(!$related_albums_data) { 
                 echo "d-none";
             }
             ?>">
             <div class="col-12 col-sm-10 col-md-6">
-                <h2>More Music From <?php echo $artist_name?></h2>
+                <h2>More Music From <?php echo $album_artist?></h2>
             </div>
         </div>
 
@@ -466,17 +412,20 @@
 
                 <?php
 
-                while($row = $related_album_result -> fetch_assoc()){
-
-                $album_art_url = $row['art_url'];
-                $rating = $row['AverageRating'];
-                $album_title = $row['album_title'];
-                $album_artist = $row['artist_name'];
-                $album_id = $row['album_id'];
-
-                include("includes/music_card.php");
-                $music_card_count++;
-
+                if($related_albums_data){
+                    foreach($related_albums_data as $related_album){
+                        $album_art_url = $related_album['art_url'];
+                        $rating = $related_album['AverageRating'];
+                        $album_title = $related_album['album_title'];
+                        $album_artist = $related_album['artist_name'];
+                        $album_id = $related_album['album_id'];
+    
+                        if($album_id != $_GET['album_id']){
+                            include("includes/music_card.php");
+                            $music_card_count++;
+                        }
+    
+                    }
                 }
                 ?>
 
@@ -484,12 +433,12 @@
         </div>
 
         <div class="row m-3
-            <?php if(mysqli_num_rows($related_community_result) == 0) { 
+            <?php if(!$related_communities_data) { 
                 echo "d-none";
             }
             ?>">
             <div class="col-12 col-sm-10 col-md-6">
-                <h2>Communities For <?php echo $artist_name?></h2>
+                <h2>Communities For <?php echo $album_artist?></h2>
             </div>
         </div>
 
@@ -498,16 +447,16 @@
 
                 <?php
 
-                while($row = $related_community_result -> fetch_assoc()){
-
-                    $community_art_url = $row['art_url'];
-                    $community_name = $row['community_name'];
-                    $community_description = $row['community_description'];
-                    $community_members = $row['COUNT(joined_communities.user_id)'];
-        
-                    include("includes/community_card.php");
-                    $community_card_count++;
-
+                if($related_communities_data){
+                    foreach($related_communities_data as $related_community){
+                        $community_art_url = $related_community['art_url'];
+                        $community_name = $related_community['community_name'];
+                        $community_description = $related_community['community_description'];
+                        $community_members = $related_community['MemberCount'];
+            
+                        include("includes/community_card.php");
+                        $community_card_count++;
+                    }
                 }
                 ?>
 

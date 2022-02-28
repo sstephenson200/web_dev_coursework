@@ -15,7 +15,7 @@ if($active_filters['artists']){
     if (in_array($artist, $active_filters['artists'])) {
 
         foreach($active_filters['artists'] as $key => $applied_artists){
-    
+
             if($applied_artists == $artist) {
                 unset($active_filters['artists'][$key]);
                 $_SESSION['active_filters'] = $active_filters;
@@ -49,7 +49,7 @@ if($active_filters['genres']){
 
 //remove subgenre filters
 if(isset($_GET['subgenre'])){
-    $genre = $_GET['subgenre'];
+    $subgenre = $_GET['subgenre'];
 }
 
 if($active_filters['subgenres']){
