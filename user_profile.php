@@ -1,106 +1,47 @@
 <?php
 
-    include("connections/dbconn.php");
+    $base_url = "http://localhost/web_dev_coursework/api/";
 
-    $user_id = $conn->real_escape_string($_GET['user_id']);
+    session_start();
 
-    include ("php/pagination.php");
-
-    $music_card_count=0;
-    $community_card_count=0;
+    //Card count variables
+    $music_card_count = 0;
+    $community_card_count = 0;
     $review_card_count = 0;
 
-    $user_query = "SELECT user.user_name, user.user_bio, location.location_code, art.art_url FROM user
-                    INNER JOIN art 
-                    ON user.art_id = art.art_id 
-                    INNER JOIN location
-                    ON user.location_id = location.location_id
-                    WHERE user.user_id = $user_id";
+    $user_id = $_GET['user_id'];
 
-    $user_result = $conn -> query($user_query);
+    //get user profile data
+    $profile_endpoint = $base_url . "user/getProfileDataByUserID.php?user_id=$user_id";
+    $profile_resource = file_get_contents($profile_endpoint);
+    $profile_data = json_decode($profile_resource, true);
 
-    if(!$user_result){
-        echo $conn -> error;
-    }   
+    $username = $profile_data[0]['user_name'];
+    $user_art = $profile_data[0]['art_url'];
+    $user_bio = $profile_data[0]['user_bio'];
+    $user_location = $profile_data[0]['location_code']; 
 
-    $row = $user_result -> fetch_assoc();
-    $username = $row['user_name'];
-    $user_art = $row['art_url'];
-    $user_bio = $row['user_bio'];
-    $user_location = $row['location_code'];
+    //get owned music
+    $owned_endpoint = $base_url . "user/getOwnedAlbumsByUserID.php?user_id=$user_id";
+    $owned_resource = file_get_contents($owned_endpoint);
+    $owned_data = json_decode($owned_resource, true);
 
-    $owned_query = "SELECT album.album_id, album.album_rating, album.album_title, artist.artist_name, art.art_url, AVG(review.review_rating) AS AverageRating FROM album
-                    LEFT JOIN review 
-                    ON album.album_id = review.album_id 
-                    INNER JOIN artist
-                    ON album.artist_id = artist.artist_id
-                    INNER JOIN art 
-                    ON album.art_id = art.art_id
-                    INNER JOIN owned_music
-                    ON album.album_id = owned_music.album_id
-                    WHERE owned_music.user_id = $user_id
-                    GROUP BY album.album_id 
-                    ORDER BY album.album_rating
-                    LIMIT $offset, $cardsPerPage;";
+    //get favourited music
+    $favourited_endpoint = $base_url . "user/getFavouriteAlbumsByUserID.php?user_id=$user_id";
+    $favourited_resource = file_get_contents($favourited_endpoint);
+    $favourited_data = json_decode($favourited_resource, true);
 
-    $owned_result = $conn -> query($owned_query);
+    //get joined communities
+    $community_endpoint = $base_url . "user/getJoinedCommunitiesByUserID.php?user_id=$user_id";
+    $community_resource = file_get_contents($community_endpoint);
+    $community_data = json_decode($community_resource, true);
 
-    if(!$owned_result){
-		echo $conn -> error;
-	}
-
-    $favourite_query = "SELECT album.album_id, album.album_rating, album.album_title, artist.artist_name, art.art_url, AVG(review.review_rating) AS AverageRating FROM album
-                    LEFT JOIN review 
-                    ON album.album_id = review.album_id 
-                    INNER JOIN artist
-                    ON album.artist_id = artist.artist_id
-                    INNER JOIN art 
-                    ON album.art_id = art.art_id
-                    INNER JOIN favourite_music
-                    ON album.album_id = favourite_music.album_id
-                    WHERE favourite_music.user_id = $user_id
-                    GROUP BY album.album_id 
-                    ORDER BY album.album_rating
-                    LIMIT $offset, $cardsPerPage;";
-
-    $favourite_result = $conn -> query($favourite_query);
-
-    if(!$favourite_result){
-        echo $conn -> error;
-    }
-
-    $community_query = "SELECT community.community_name, community.community_description, art.art_url, COUNT(joined_communities.user_id) FROM community
-                        INNER JOIN art
-                        ON community.art_id = art.art_id
-                        INNER JOIN joined_communities
-                        ON community.community_id = joined_communities.community_id
-                        WHERE joined_communities.user_id = 1
-                        GROUP BY community.community_id
-                        LIMIT $offset, $cardsPerPage;";
-
-    $community_result = $conn -> query($community_query);
-
-    if(!$community_result){
-        echo $conn -> error;
-    }
-
-    $review_query = "SELECT album.album_title, album.album_id, artist.artist_name, review_title, review_text, review_rating, review_date, user.user_id, user.user_name, art.art_url FROM review
-                    INNER JOIN user
-                    ON review.user_id = user.user_id
-                    INNER JOIN art
-                    ON user.art_id = art.art_id
-                    INNER JOIN album
-                    ON review.album_id = album.album_id
-                    INNER JOIN artist
-                    ON album.artist_id = artist.artist_id
-                    WHERE review.user_id = $user_id
-                    LIMIT $offset, $cardsPerPage";
-
-    $review_result = $conn -> query($review_query);
-
-    if(!$review_result){
-        echo $conn -> error;
-    }
+    //get user reviews
+    $review_endpoint = $base_url . "review/getReviewsByUserID.php?user_id=$user_id";
+    $review_resource = file_get_contents($review_endpoint);
+    $review_data = json_decode($review_resource, true);
+    
+    include ("php/pagination/pagination_albums.php");
 
 ?>
 
@@ -208,17 +149,15 @@
 
                                         <?php
 
-                                        while($row = $owned_result -> fetch_assoc()){
+                                        foreach($owned_data as $owned_album){
+                                            $album_art_url = $owned_album['art_url'];
+                                            $rating = $owned_album['AverageRating'];
+                                            $album_title = $owned_album['album_title'];
+                                            $album_artist = $owned_album['artist_name'];
+                                            $album_id = $owned_album['album_id'];
 
-                                        $album_art_url = $row['art_url'];
-                                        $rating = $row['AverageRating'];
-                                        $album_title = $row['album_title'];
-                                        $album_artist = $row['artist_name'];
-                                        $album_id = $row['album_id'];
-
-                                        include("includes/music_card.php");
-                                        $music_card_count++;
-
+                                            include("includes/music_card.php");
+                                            $music_card_count++;
                                         }
                                         ?>
 
@@ -243,17 +182,15 @@
 
                                         <?php
 
-                                        while($row = $favourite_result -> fetch_assoc()){
+                                        foreach($favourited_data as $favourited_album){
+                                            $album_art_url = $favourited_album['art_url'];
+                                            $rating = $favourited_album['AverageRating'];
+                                            $album_title = $favourited_album['album_title'];
+                                            $album_artist = $favourited_album['artist_name'];
+                                            $album_id = $favourited_album['album_id'];
 
-                                        $album_art_url = $row['art_url'];
-                                        $rating = $row['AverageRating'];
-                                        $album_title = $row['album_title'];
-                                        $album_artist = $row['artist_name'];
-                                        $album_id = $row['album_id'];
-
-                                        include("includes/music_card.php");
-                                        $music_card_count++;
-
+                                            include("includes/music_card.php");
+                                            $music_card_count++;
                                         }
                                         ?>
 
@@ -278,16 +215,21 @@
 
                                         <?php
 
-                                        while($row = $community_result -> fetch_assoc()){
+                                        foreach($community_data as $joined_community){
+                                            $community_id = $joined_community['community_id'];
+                                            $community_art_url = $joined_community['art_url'];
+                                            $community_name = $joined_community['community_name'];
+                                            $community_description = $joined_community['community_description'];
 
-                                        $community_art_url = $row['art_url'];
-                                        $community_name = $row['community_name'];
-                                        $community_description = $row['community_description'];
-                                        $community_members = $row['COUNT(joined_communities.user_id)'];
-                            
-                                        include("includes/community_card.php");
-                                        $community_card_count++;
+                                            //get community size
+                                            $community_size_endpoint = $base_url . "community/getCommunitySizeByCommunityID.php?community_id=$community_id";
+                                            $community_size_resource = file_get_contents($community_size_endpoint);
+                                            $community_size_data = json_decode($community_size_resource, true);
 
+                                            $community_members = $community_size_data[0]['MemberCount'];
+
+                                            include("includes/community_card.php");
+                                            $community_card_count++;
                                         }
                                         ?>
 
@@ -312,42 +254,40 @@
 
                                         <?php
 
-                                        while($row = $review_result -> fetch_assoc()){
+                                        foreach($review_data as $review){
+                                            $album_title = $review['album_title'];
+                                            $album_id = $review['album_id'];
+                                            $artist_name = $review['artist_name'];
+                                            $review_title = $review['review_title'];
+                                            $review_body = $review['review_text'];
+                                            $review_rating = $review['review_rating'];
+                                            $review_date = $review['review_date'];
+                                            $username = $review['user_name'];
+                                            $user_art = $review['art_url'];
+                                            $user_id = $review['user_id'];
 
-                                        $album_title = $row['album_title'];
-                                        $album_id = $row['album_id'];
-                                        $artist_name = $row['artist_name'];
-                                        $review_title = $row['review_title'];
-                                        $review_body = $row['review_text'];
-                                        $review_rating = $row['review_rating'];
-                                        $review_date = $row['review_date'];
-                                        $username = $row['user_name'];
-                                        $user_art = $row['art_url'];
-                                        $user_id = $row['user_id'];
-
-                                        echo "<div class='row d-flex justify-content-center mx-2'>
-                                                <div class='row text-center'>
-                                                    <div class='col-12 col-sm-6'>
-                                                        <h6>Album: $album_title</h6>
+                                            echo "<div class='row d-flex justify-content-center mx-2'>
+                                                    <div class='row text-center'>
+                                                        <div class='col-12 col-sm-6'>
+                                                            <h6>Album: $album_title</h6>
+                                                        </div>
+                                                        <div class='col-12 col-sm-6'>
+                                                            <h6>Artist: $artist_name</h6>
+                                                        </div>
                                                     </div>
-                                                    <div class='col-12 col-sm-6'>
-                                                        <h6>Artist: $artist_name</h6>
+                                                    <div class='row'>
+                                                        <div class='col text-center mb-2'>
+                                                            <a href='album.php?album_id=$album_id' class='btn styled_button'>View</a>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class='row'>
-                                                    <div class='col text-center mb-2'>
-                                                        <a href='album.php?album_id=$album_id' class='btn styled_button'>View</a>
-                                                    </div>
-                                                </div>
-                                            </div>";
-                        
-                                        echo "<div class='row d-flex justify-content-center'>";
-                                        echo "<div class='col-10 col-md-9 mx-4 mb-3'>";
-                                        include("includes/review.php");
-                                        echo "</div>";
-                                        echo "</div>";
-                                        $review_card_count++;
-
+                                                </div>";
+                            
+                                            echo "<div class='row d-flex justify-content-center'>";
+                                            echo "<div class='col-10 col-md-9 mx-4 mb-3'>";
+                                            include("includes/review.php");
+                                            echo "</div>";
+                                            echo "</div>";
+                                            $review_card_count++;
                                         }
                                         ?>
 
