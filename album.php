@@ -398,7 +398,7 @@
         </div>
 
         <div class="row m-3
-            <?php if(!$related_albums_data) { 
+            <?php if(!$related_albums_data or count($related_albums_data) == 1 ) { 
                 echo "d-none";
             }
             ?>">
