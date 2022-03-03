@@ -25,17 +25,17 @@
     
     //get album genre
     $genre_endpoint = $base_url . "album/getGenreByAlbumID.php?album_id=$album_id";
-    $genre_resource = file_get_contents($genre_endpoint);
+    $genre_resource = @file_get_contents($genre_endpoint);
     $genre_data = json_decode($genre_resource, true);
 
     //get album subgenre
     $subgenre_endpoint = $base_url . "album/getSubgenreByAlbumID.php?album_id=$album_id";
-    $subgenre_resource = file_get_contents($subgenre_endpoint);
+    $subgenre_resource = @file_get_contents($subgenre_endpoint);
     $subgenre_data = json_decode($subgenre_resource, true);
 
     //get album songs
     $songs_endpoint = $base_url . "album/getSongsByAlbumID.php?album_id=$album_id";
-    $songs_resource = file_get_contents($songs_endpoint);
+    $songs_resource = @file_get_contents($songs_endpoint);
     $songs_data = json_decode($songs_resource, true);
 
     //get album reviews
@@ -155,11 +155,13 @@
                         <h4>
                             <?php 
                                 $genreList = "";
-                                foreach($genre_data as $genre){
-                                    $title = $genre['genre_title'];
-                                    $genreList .= "$title, ";
+                                if($genre_data){
+                                    foreach($genre_data as $genre){
+                                        $title = $genre['genre_title'];
+                                        $genreList .= "$title, ";
+                                    }
+                                    $genreList = rtrim($genreList, ", ");
                                 }
-                                $genreList = rtrim($genreList, ", ");
                                 echo $genreList;
                             ?>
                         </h4>
@@ -173,11 +175,13 @@
                         <h4>
                             <?php 
                                 $subgenreList = "";
-                                foreach($subgenre_data as $subgenre){
-                                    $title = $subgenre['subgenre_title'];
-                                    $subgenreList .= "$title, ";
+                                if($subgenre_data){
+                                    foreach($subgenre_data as $subgenre){
+                                        $title = $subgenre['subgenre_title'];
+                                        $subgenreList .= "$title, ";
+                                    }
+                                    $subgenreList = rtrim($subgenreList, ", ");
                                 }
-                                $subgenreList = rtrim($subgenreList, ", ");
                                 echo $subgenreList;
                             ?>
                         </h4>
@@ -213,23 +217,25 @@
                     <tbody>
                         <?php
                         $song_count = 1;
-                        foreach($songs_data as $song){
-                            $song_title = $song['song_title'];
-                            $duration = $song['song_length'];
-
-                            echo "<tr>
-                            <th scope='row'>$song_count</th>
-                            <td>$song_title</td>";
-
-                            if($duration == null){
-                                echo "<td></td>";
-                            } else {
-                                echo "<td>$duration</td>";
-                            }
-                            
-                            echo "</tr>";
-                            $song_count++; 
-                        }                        
+                        if($songs_data){
+                            foreach($songs_data as $song){
+                                $song_title = $song['song_title'];
+                                $duration = $song['song_length'];
+    
+                                echo "<tr>
+                                <th scope='row'>$song_count</th>
+                                <td>$song_title</td>";
+    
+                                if($duration == null){
+                                    echo "<td></td>";
+                                } else {
+                                    echo "<td>$duration</td>";
+                                }
+                                
+                                echo "</tr>";
+                                $song_count++; 
+                            }    
+                        }           
                         ?>
                     </tbody>
                 </table>

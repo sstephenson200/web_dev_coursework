@@ -1,55 +1,23 @@
 <?php
 
-    include("connections/dbconn.php");
+    $base_url = "http://localhost/web_dev_coursework/api/";
 
-    $pending_review_query = "SELECT review.review_id, review.review_date, user.user_name, user.user_id, album.album_id, review.review_title, review.review_text, review.review_rating FROM review 
-                            INNER JOIN user 
-                            ON review.user_id = user.user_id
-                            INNER JOIN album
-                            ON review.album_id = album.album_id
-                            INNER JOIN status
-                            ON review.status_id = status.status_id
-                            WHERE status.status_title = 'Pending'
-                            ORDER BY review.review_date";
+    session_start();
 
-    $pending_review_result = $conn -> query($pending_review_query);
+    //get pending reviews
+    $pending_review_endpoint = $base_url . "review/getReviewsByStatus.php?status_title=Pending";
+    $pending_review_resource = @file_get_contents($pending_review_endpoint);
+    $pending_review_data = json_decode($pending_review_resource, true);
 
-    if(!$pending_review_result){
-        echo $conn -> error;
-    }
+    //get reported reviews
+    $reported_review_endpoint = $base_url . "review/getReviewsByStatus.php?status_title=Flagged";
+    $reported_review_resource = @file_get_contents($reported_review_endpoint);
+    $reported_review_data = json_decode($reported_review_resource, true);
 
-    $status_query = "SELECT status.status_title FROM status";
-
-    $status_result = $conn -> query($status_query);
-
-    if(!$status_result){
-        echo $conn -> error;
-    }
-
-    $reported_review_query = "SELECT review.review_id, review.review_date, user.user_name, user.user_id, album.album_id, review.review_title, review.review_text, review.review_rating FROM review 
-                            INNER JOIN user 
-                            ON review.user_id = user.user_id
-                            INNER JOIN album
-                            ON review.album_id = album.album_id
-                            INNER JOIN status
-                            ON review.status_id = status.status_id
-                            WHERE status.status_title = 'Flagged'
-                            ORDER BY review.review_date";
-
-    $reported_review_result = $conn -> query($reported_review_query);
-
-    if(!$reported_review_result){
-        echo $conn -> error;
-    }
-
-    $user_report_query = "SELECT * FROM user_report
-                         ORDER BY report_date";
-
-    $user_report_result = $conn -> query($user_report_query);
-
-    if(!$user_report_result){
-        echo $conn -> error;
-    }
+    //get reported users
+    $reported_users_endpoint = $base_url . "user/getReportedUsers.php";
+    $reported_users_resource = @file_get_contents($reported_users_endpoint);
+    $reported_users_data = json_decode($reported_users_resource, true);
 
 ?>
 
@@ -128,43 +96,35 @@
                                     <tbody>   
 
                                     <?php
-                                    while($row = $pending_review_result -> fetch_assoc()) {
-                                        
-                                        $review_id = $row['review_id'];
-                                        $review_date = $row['review_date'];
-                                        $review_date = date("d/m/Y", strtotime($review_date));
-                                        $username = $row['user_name'];
-                                        $user_id = $row['user_id'];
-                                        $album_id = $row['album_id'];
-                                        $review_title = $row['review_title'];
-                                        $review_text = $row['review_text'];
-                                        $review_rating = $row['review_rating'];
-
-                                        echo "<tr>
-                                            <th scope='row'>$review_id</th>
-                                            <td>$review_date</td>
-                                            <td><a role='button' href='user_profile.php?user_id=$user_id'>$username</a></td>
-                                            <td><a role='button' href='album.php?album_id=$album_id'>$album_id</a></td>
-                                            <td>$review_title</td>
-                                            <td>$review_text</td>
-                                            <td>$review_rating</td>
-                                            <td>  
-                                                <select class='form-select'>";
-
-                                                while($row = $status_result -> fetch_assoc()) {
-                                                    $status = $row['status_title'];
-            
-                                                    if($status == "Pending"){
-                                                        echo "<option selected value='$status'>$status</option>";
-                                                    } else {
-                                                        echo "<option value='$status'>$status</option>";
-                                                    }
-            
-                                                }
-
-                                            echo "</select>
+                                    if($pending_review_data){
+                                        foreach($pending_review_data as $review){
+                                            $review_id = $review['review_id'];
+                                            $review_date = $review['review_date'];
+                                            $review_date = date("d/m/Y", strtotime($review_date));
+                                            $username = $review['user_name'];
+                                            $user_id = $review['user_id'];
+                                            $album_id = $review['album_id'];
+                                            $review_title = $review['review_title'];
+                                            $review_text = $review['review_text'];
+                                            $review_rating = $review['review_rating'];
+    
+                                            echo "<tr>
+                                                <th scope='row'>$review_id</th>
+                                                <td>$review_date</td>
+                                                <td><a role='button' href='user_profile.php?user_id=$user_id'>$username</a></td>
+                                                <td><a role='button' href='album.php?album_id=$album_id'>$album_id</a></td>
+                                                <td>$review_title</td>
+                                                <td>$review_text</td>
+                                                <td>$review_rating</td>
+                                                <td>  
+                                                    <select class='form-select'>
+                                                        <option value='Approved'>Approved</option>
+                                                        <option selected value='Pending'>Pending</option>
+                                                        <option value='Rejected'>Rejected</option>
+                                                    </select>
                                                     </td>
-                                                </tr>";               
+                                                    </tr>";    
+                                        }
                                     }
                                     ?>
 
@@ -233,43 +193,35 @@
                                     <tbody>   
 
                                     <?php
-                                    while($row = $reported_review_result -> fetch_assoc()) {
-                                        
-                                        $review_id = $row['review_id'];
-                                        $review_date = $row['review_date'];
-                                        $review_date = date("d/m/Y", strtotime($review_date));
-                                        $username = $row['user_name'];
-                                        $user_id = $row['user_id'];
-                                        $album_id = $row['album_id'];
-                                        $review_title = $row['review_title'];
-                                        $review_text = $row['review_text'];
-                                        $review_rating = $row['review_rating'];
-
-                                        echo "<tr>
-                                            <th scope='row'>$review_id</th>
-                                            <td>$review_date</td>
-                                            <td><a role='button' href='user_profile.php?user_id=$user_id'>$username</a></td>
-                                            <td><a role='button' href='album.php?album_id=$album_id'>$album_id</a></td>
-                                            <td>$review_title</td>
-                                            <td>$review_text</td>
-                                            <td>$review_rating</td>
-                                            <td>  
-                                                <select class='form-select'>";
-
-                                                while($row = $status_result -> fetch_assoc()) {
-                                                    $status = $row['status_title'];
-            
-                                                    if($status == "Flagged"){
-                                                        echo "<option selected value='$status'>$status</option>";
-                                                    } else {
-                                                        echo "<option value='$status'>$status</option>";
-                                                    }
-            
-                                                }
-
-                                            echo "</select>
-                                                    </td>
+                                    if($reported_review_data){
+                                        foreach($reported_review_data as $review){
+                                            $review_id = $review['review_id'];
+                                            $review_date = $review['review_date'];
+                                            $review_date = date("d/m/Y", strtotime($review_date));
+                                            $username = $review['user_name'];
+                                            $user_id = $review['user_id'];
+                                            $album_id = $review['album_id'];
+                                            $review_title = $review['review_title'];
+                                            $review_text = $review['review_text'];
+                                            $review_rating = $review['review_rating'];
+    
+                                            echo "<tr>
+                                                <th scope='row'>$review_id</th>
+                                                <td>$review_date</td>
+                                                <td><a role='button' href='user_profile.php?user_id=$user_id'>$username</a></td>
+                                                <td><a role='button' href='album.php?album_id=$album_id'>$album_id</a></td>
+                                                <td>$review_title</td>
+                                                <td>$review_text</td>
+                                                <td>$review_rating</td>
+                                                <td>  
+                                                    <select class='form-select'>
+                                                        <option value='Approved'>Approved</option>
+                                                        <option selected value='Flagged'>Flagged</option>
+                                                        <option value='Rejected'>Rejected</option>
+                                                    </select>
+                                                </td>
                                                 </tr>";               
+                                        }
                                     }
                                     ?>
 
@@ -297,35 +249,38 @@
                                     <tbody>   
 
                                     <?php
-                                    while($row = $user_report_result -> fetch_assoc()) {
-                                        
-                                        $report_id = $row['user_report_id'];
-                                        $report_date = $row['report_date'];
-                                        $report_date = date("d/m/Y", strtotime($report_date));
-                                        $reporting_user = $row['reporting_user_id'];
-                                        $reported_user = $row['reported_user_id'];
-                                        $report_reasoning = $row['report_reasoning'];
-
-                                        $user_query_1 = "SELECT user_name FROM user WHERE user_id = $reporting_user";
-                                        $user_query_1_result = $conn -> query($user_query_1);
-                                        $user_query_1_result = $user_query_1_result -> fetch_assoc();
-                                        $reporting_user_name = $user_query_1_result['user_name'];
-
-                                        $user_query_2 = "SELECT user_name FROM user WHERE user_id = $reported_user";
-                                        $user_query_2_result = $conn -> query($user_query_2);
-                                        $user_query_2_result = $user_query_2_result -> fetch_assoc();
-                                        $reported_user_name = $user_query_2_result['user_name'];
-
-                                        echo "<tr>
-                                            <th scope='row'>$report_id</th>
-                                            <td>$report_date</td>
-                                            <td><a role='button' href='user_profile.php?user_id=$reporting_user'>$reporting_user_name</a></td>
-                                            <td><a role='button' href='user_profile.php?user_id=$reported_user'>$reported_user_name</a></td>
-                                            <td>$report_reasoning</td>
-                                            <td><button type='submit' class='btn styled_button'>Close Report</button>
-                                                <button type='submit' class='btn styled_button'>Ban User</button>
-                                            </td>
-                                            </tr>";               
+                                    if($reported_users_data){
+                                        foreach($reported_users_data as $report){
+                                            $report_id = $report['user_report_id'];
+                                            $report_date = $report['report_date'];
+                                            $report_date = date("d/m/Y", strtotime($report_date));
+                                            $reporting_user = $report['reporting_user_id'];
+                                            $reported_user = $report['reported_user_id'];
+                                            $report_reasoning = $report['report_reasoning'];
+    
+                                            //get reporting username
+                                            $reporting_user_endpoint = $base_url . "user/getProfileDataByUserID.php?user_id=$reporting_user";
+                                            $reporting_user_resource = file_get_contents($reporting_user_endpoint);
+                                            $reporting_user_data = json_decode($reporting_user_resource, true);
+                                            $reporting_user_name = $reporting_user_data[0]['user_name'];
+    
+                                            //get reported username
+                                            $reported_user_endpoint = $base_url . "user/getProfileDataByUserID.php?user_id=$reported_user";
+                                            $reported_user_resource = file_get_contents($reported_user_endpoint);
+                                            $reported_user_data = json_decode($reported_user_resource, true);
+                                            $reported_user_name = $reported_user_data[0]['user_name'];
+    
+                                            echo "<tr>
+                                                <th scope='row'>$report_id</th>
+                                                <td>$report_date</td>
+                                                <td><a role='button' href='user_profile.php?user_id=$reporting_user'>$reporting_user_name</a></td>
+                                                <td><a role='button' href='user_profile.php?user_id=$reported_user'>$reported_user_name</a></td>
+                                                <td>$report_reasoning</td>
+                                                <td><button type='submit' class='btn styled_button'>Close Report</button>
+                                                    <button type='submit' class='btn styled_button'>Ban User</button>
+                                                </td>
+                                                </tr>";      
+                                        }
                                     }
                                     ?>
 

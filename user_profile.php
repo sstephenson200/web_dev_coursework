@@ -23,22 +23,22 @@
 
     //get owned music
     $owned_endpoint = $base_url . "user/getOwnedAlbumsByUserID.php?user_id=$user_id";
-    $owned_resource = file_get_contents($owned_endpoint);
+    $owned_resource = @file_get_contents($owned_endpoint);
     $owned_data = json_decode($owned_resource, true);
 
     //get favourited music
     $favourited_endpoint = $base_url . "user/getFavouriteAlbumsByUserID.php?user_id=$user_id";
-    $favourited_resource = file_get_contents($favourited_endpoint);
+    $favourited_resource = @file_get_contents($favourited_endpoint);
     $favourited_data = json_decode($favourited_resource, true);
 
     //get joined communities
     $community_endpoint = $base_url . "user/getJoinedCommunitiesByUserID.php?user_id=$user_id";
-    $community_resource = file_get_contents($community_endpoint);
+    $community_resource = @file_get_contents($community_endpoint);
     $community_data = json_decode($community_resource, true);
 
     //get user reviews
     $review_endpoint = $base_url . "review/getReviewsByUserID.php?user_id=$user_id";
-    $review_resource = file_get_contents($review_endpoint);
+    $review_resource = @file_get_contents($review_endpoint);
     $review_data = json_decode($review_resource, true);
 
 ?>
@@ -146,16 +146,17 @@
                                     <div class="col py-3 px-2">
 
                                         <?php
-
-                                        foreach($owned_data as $owned_album){
-                                            $album_art_url = $owned_album['art_url'];
-                                            $rating = $owned_album['AverageRating'];
-                                            $album_title = $owned_album['album_title'];
-                                            $album_artist = $owned_album['artist_name'];
-                                            $album_id = $owned_album['album_id'];
-
-                                            include("includes/music_card.php");
-                                            $music_card_count++;
+                                        if($owned_data){
+                                            foreach($owned_data as $owned_album){
+                                                $album_art_url = $owned_album['art_url'];
+                                                $rating = $owned_album['AverageRating'];
+                                                $album_title = $owned_album['album_title'];
+                                                $album_artist = $owned_album['artist_name'];
+                                                $album_id = $owned_album['album_id'];
+    
+                                                include("includes/music_card.php");
+                                                $music_card_count++;
+                                            }
                                         }
                                         ?>
 
@@ -167,16 +168,17 @@
                                     <div class="col py-3 px-2">
 
                                         <?php
-
-                                        foreach($favourited_data as $favourited_album){
-                                            $album_art_url = $favourited_album['art_url'];
-                                            $rating = $favourited_album['AverageRating'];
-                                            $album_title = $favourited_album['album_title'];
-                                            $album_artist = $favourited_album['artist_name'];
-                                            $album_id = $favourited_album['album_id'];
-
-                                            include("includes/music_card.php");
-                                            $music_card_count++;
+                                        if($favourited_data){
+                                            foreach($favourited_data as $favourited_album){
+                                                $album_art_url = $favourited_album['art_url'];
+                                                $rating = $favourited_album['AverageRating'];
+                                                $album_title = $favourited_album['album_title'];
+                                                $album_artist = $favourited_album['artist_name'];
+                                                $album_id = $favourited_album['album_id'];
+    
+                                                include("includes/music_card.php");
+                                                $music_card_count++;
+                                            }
                                         }
                                         ?>
 
@@ -188,22 +190,23 @@
                                     <div class="col py-3 px-2">
 
                                         <?php
-
-                                        foreach($community_data as $joined_community){
-                                            $community_id = $joined_community['community_id'];
-                                            $community_art_url = $joined_community['art_url'];
-                                            $community_name = $joined_community['community_name'];
-                                            $community_description = $joined_community['community_description'];
-
-                                            //get community size
-                                            $community_size_endpoint = $base_url . "community/getCommunitySizeByCommunityID.php?community_id=$community_id";
-                                            $community_size_resource = file_get_contents($community_size_endpoint);
-                                            $community_size_data = json_decode($community_size_resource, true);
-
-                                            $community_members = $community_size_data[0]['MemberCount'];
-
-                                            include("includes/community_card.php");
-                                            $community_card_count++;
+                                        if($community_data){
+                                            foreach($community_data as $joined_community){
+                                                $community_id = $joined_community['community_id'];
+                                                $community_art_url = $joined_community['art_url'];
+                                                $community_name = $joined_community['community_name'];
+                                                $community_description = $joined_community['community_description'];
+    
+                                                //get community size
+                                                $community_size_endpoint = $base_url . "community/getCommunitySizeByCommunityID.php?community_id=$community_id";
+                                                $community_size_resource = file_get_contents($community_size_endpoint);
+                                                $community_size_data = json_decode($community_size_resource, true);
+    
+                                                $community_members = $community_size_data[0]['MemberCount'];
+    
+                                                include("includes/community_card.php");
+                                                $community_card_count++;
+                                            }
                                         }
                                         ?>
 
@@ -215,41 +218,42 @@
                                     <div class="col py-3 px-2">
 
                                         <?php
-
-                                        foreach($review_data as $review){
-                                            $album_title = $review['album_title'];
-                                            $album_id = $review['album_id'];
-                                            $artist_name = $review['artist_name'];
-                                            $review_title = $review['review_title'];
-                                            $review_body = $review['review_text'];
-                                            $review_rating = $review['review_rating'];
-                                            $review_date = $review['review_date'];
-                                            $username = $review['user_name'];
-                                            $user_art = $review['art_url'];
-                                            $user_id = $review['user_id'];
-
-                                            echo "<div class='row d-flex justify-content-center mx-2'>
-                                                    <div class='row text-center'>
-                                                        <div class='col-12 col-sm-6'>
-                                                            <h6>Album: $album_title</h6>
+                                        if($review_data){
+                                            foreach($review_data as $review){
+                                                $album_title = $review['album_title'];
+                                                $album_id = $review['album_id'];
+                                                $artist_name = $review['artist_name'];
+                                                $review_title = $review['review_title'];
+                                                $review_body = $review['review_text'];
+                                                $review_rating = $review['review_rating'];
+                                                $review_date = $review['review_date'];
+                                                $username = $review['user_name'];
+                                                $user_art = $review['art_url'];
+                                                $user_id = $review['user_id'];
+    
+                                                echo "<div class='row d-flex justify-content-center mx-2'>
+                                                        <div class='row text-center'>
+                                                            <div class='col-12 col-sm-6'>
+                                                                <h6>Album: $album_title</h6>
+                                                            </div>
+                                                            <div class='col-12 col-sm-6'>
+                                                                <h6>Artist: $artist_name</h6>
+                                                            </div>
                                                         </div>
-                                                        <div class='col-12 col-sm-6'>
-                                                            <h6>Artist: $artist_name</h6>
+                                                        <div class='row'>
+                                                            <div class='col text-center mb-2'>
+                                                                <a href='album.php?album_id=$album_id' class='btn styled_button'>View</a>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class='row'>
-                                                        <div class='col text-center mb-2'>
-                                                            <a href='album.php?album_id=$album_id' class='btn styled_button'>View</a>
-                                                        </div>
-                                                    </div>
-                                                </div>";
-                            
-                                            echo "<div class='row d-flex justify-content-center'>";
-                                            echo "<div class='col-10 col-md-9 mx-4 mb-3'>";
-                                            include("includes/review.php");
-                                            echo "</div>";
-                                            echo "</div>";
-                                            $review_card_count++;
+                                                    </div>";
+                                
+                                                echo "<div class='row d-flex justify-content-center'>";
+                                                echo "<div class='col-10 col-md-9 mx-4 mb-3'>";
+                                                include("includes/review.php");
+                                                echo "</div>";
+                                                echo "</div>";
+                                                $review_card_count++;
+                                            }
                                         }
                                         ?>
 
