@@ -1,38 +1,27 @@
 <?php
 
-    include("connections/dbconn.php");
+    $base_url = "http://localhost/web_dev_coursework/api/";
 
-    $user_id = $conn->real_escape_string($_GET['user_id']);
+    session_start();
 
-    $user_query = "SELECT user.user_name, user.user_bio, user.user_contact_permissions, location.location_code, location.location_name, art.art_url FROM user
-    INNER JOIN art 
-    ON user.art_id = art.art_id 
-    INNER JOIN location
-    ON user.location_id = location.location_id
-    WHERE user.user_id = $user_id";
+    $user_id = $_GET['user_id'];
 
-    $user_result = $conn -> query($user_query);
+    //get user data
+    $profile_endpoint = $base_url . "user/getProfileDataByUserID.php?user_id=$user_id";
+    $profile_resource = file_get_contents($profile_endpoint);
+    $profile_data = json_decode($profile_resource, true);
+    
+    $username = $profile_data[0]['user_name'];
+    $user_art = $profile_data[0]['art_url'];
+    $user_bio = $profile_data[0]['user_bio'];
+    $user_location = $profile_data[0]['location_code'];
+    $user_location_name = $profile_data[0]['location_name'];
+    $user_contact_permissions = $profile_data[0]['user_contact_permissions'];
 
-    if(!$user_result){
-    echo $conn -> error;
-    }   
-
-    $row = $user_result -> fetch_assoc();
-    $username = $row['user_name'];
-    $user_art = $row['art_url'];
-    $user_bio = $row['user_bio'];
-    $user_location = $row['location_code'];
-    $user_location_name = $row['location_name'];
-    $user_contact_permissions = $row['user_contact_permissions'];
-
-    $locations_query = "SELECT location.location_name FROM location";
-
-    $locations_result = $conn -> query($locations_query);
-
-    if(!$locations_result){
-    echo $conn -> error;
-    }   
-
+    //get all location options
+    $location_endpoint = $base_url . "user/getUserLocationName.php";
+    $location_resource = file_get_contents($location_endpoint);
+    $location_data = json_decode($location_resource, true);
 
 ?>
 
@@ -110,15 +99,14 @@
                             <label for="updateLocation">Location</label>
                             <select class="form-select">
                                 <?php
-                                    while($row = $locations_result -> fetch_assoc()) {
-                                        $location = $row['location_name'];
+                                    foreach($location_data as $location){
+                                        $location = $location['location_name'];
 
                                         if($location == $user_location_name){
                                             echo "<option selected value='$location'>$location</option>";
                                         } else {
                                             echo "<option value='$location'>$location</option>";
                                         }
-
                                     }
                                 ?>
                             </select>

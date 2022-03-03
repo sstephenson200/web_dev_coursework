@@ -40,8 +40,6 @@
     $review_endpoint = $base_url . "review/getReviewsByUserID.php?user_id=$user_id";
     $review_resource = file_get_contents($review_endpoint);
     $review_data = json_decode($review_resource, true);
-    
-    include ("php/pagination/pagination_albums.php");
 
 ?>
 
@@ -163,18 +161,6 @@
 
                                     </div>
                                 </div>
-
-                                <div class="row p-2">
-                                    <div class="col-2 offset-10 d-flex justify-content-center <?php if($total_album_pages<=1){ echo 'd-none';} ?>">
-                                        <nav aria-label="pagination">
-                                            <ul class="pagination">
-                                                <li class="page-item <?php if($pageNumber <= 1){ echo 'disabled'; } ?>"><a class="page-link" href="<?php if($pageNumber <= 1){ echo '#'; } else { echo "?user_id={$user_id}&pageNumber=".($pageNumber - 1); } ?>">Previous</a></li>
-                                                <li class="page-item disabled"><a class="page-link" href="<?php echo "?pageNumber=".($pageNumber); ?>"><?php echo $pageNumber ?></a></li>
-                                                <li class="page-item <?php if($pageNumber >= $total_album_pages){ echo 'disabled'; } ?>"><a class="page-link" href="<?php if($pageNumber >= $total_album_pages){ echo '#'; } else { echo "?user_id={$user_id}&pageNumber=".($pageNumber + 1); } ?>">Next</a></li>
-                                            </ul>
-                                        </nav>
-                                    </div>
-                                </div>
                             </div>
                             <div class="tab-pane fade show" id="userFavourite">
                                 <div class="row">
@@ -194,18 +180,6 @@
                                         }
                                         ?>
 
-                                    </div>
-                                </div>
-
-                                <div class="row p-2">
-                                    <div class="col-2 offset-10 d-flex justify-content-center <?php if($total_album_pages<=1){ echo 'd-none';} ?>">
-                                        <nav aria-label="pagination">
-                                            <ul class="pagination">
-                                                <li class="page-item <?php if($pageNumber <= 1){ echo 'disabled'; } ?>"><a class="page-link" href="<?php if($pageNumber <= 1){ echo '#'; } else { echo "?user_id={$user_id}&pageNumber=".($pageNumber - 1); } ?>">Previous</a></li>
-                                                <li class="page-item disabled"><a class="page-link" href="<?php echo "?pageNumber=".($pageNumber); ?>"><?php echo $pageNumber ?></a></li>
-                                                <li class="page-item <?php if($pageNumber >= $total_album_pages){ echo 'disabled'; } ?>"><a class="page-link" href="<?php if($pageNumber >= $total_album_pages){ echo '#'; } else { echo "?user_id={$user_id}&pageNumber=".($pageNumber + 1); } ?>">Next</a></li>
-                                            </ul>
-                                        </nav>
                                     </div>
                                 </div>
                             </div>
@@ -233,18 +207,6 @@
                                         }
                                         ?>
 
-                                    </div>
-                                </div>
-
-                                <div class="row p-2">
-                                    <div class="col-2 offset-10 d-flex justify-content-center <?php if($total_community_pages<=1){ echo 'd-none';} ?>">
-                                        <nav aria-label="pagination">
-                                            <ul class="pagination">
-                                                <li class="page-item <?php if($pageNumber <= 1){ echo 'disabled'; } ?>"><a class="page-link" href="<?php if($pageNumber <= 1){ echo '#'; } else { echo "?user_id={$user_id}&pageNumber=".($pageNumber - 1); } ?>">Previous</a></li>
-                                                <li class="page-item disabled"><a class="page-link" href="<?php echo "?pageNumber=".($pageNumber); ?>"><?php echo $pageNumber ?></a></li>
-                                                <li class="page-item <?php if($pageNumber >= $total_community_pages){ echo 'disabled'; } ?>"><a class="page-link" href="<?php if($pageNumber >= $total_community_pages){ echo '#'; } else { echo "?user_id={$user_id}&pageNumber=".($pageNumber + 1); } ?>">Next</a></li>
-                                            </ul>
-                                        </nav>
                                     </div>
                                 </div>
                             </div>
@@ -291,18 +253,6 @@
                                         }
                                         ?>
 
-                                    </div>
-                                </div>
-
-                                <div class="row p-2">
-                                    <div class="col-2 offset-10 d-flex justify-content-center <?php if($total_community_pages<=1){ echo 'd-none';} ?>">
-                                        <nav aria-label="pagination">
-                                            <ul class="pagination">
-                                                <li class="page-item <?php if($pageNumber <= 1){ echo 'disabled'; } ?>"><a class="page-link" href="<?php if($pageNumber <= 1){ echo '#'; } else { echo "?user_id={$user_id}&pageNumber=".($pageNumber - 1); } ?>">Previous</a></li>
-                                                <li class="page-item disabled"><a class="page-link" href="<?php echo "?pageNumber=".($pageNumber); ?>"><?php echo $pageNumber ?></a></li>
-                                                <li class="page-item <?php if($pageNumber >= $total_community_pages){ echo 'disabled'; } ?>"><a class="page-link" href="<?php if($pageNumber >= $total_community_pages){ echo '#'; } else { echo "?user_id={$user_id}&pageNumber=".($pageNumber + 1); } ?>">Next</a></li>
-                                            </ul>
-                                        </nav>
                                     </div>
                                 </div>
                             </div>

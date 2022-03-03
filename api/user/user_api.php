@@ -122,6 +122,15 @@ class User {
         return $statement;
     }
 
+    //Function to get all user location options
+    public function getUserLocationName(){
+        $query = "SELECT location_name FROM location";
+
+        $statement = $this -> conn -> prepare($query);
+        $statement -> execute();
+        return $statement;
+    }
+
 }
 
 ?>
