@@ -16,8 +16,9 @@ function check_item_unique ($item, $array) {
 function checkCommunityFiltering($community, $community_filters) {
 
     $flag = true;
+    $artist = $community['artist_name'];
 
-    if(isset($community_filters['artists'])){
+    if(isset($community_filters['artists']) and $artist){
         if(!in_array($community['artist_name'], $community_filters['artists'])){
             $flag = false;
         }
@@ -45,7 +46,7 @@ if(isset($_POST['communityArtistSelector'])){
 
 $_SESSION['community_filters'] = $community_filters;
 $community_data = $_SESSION["community_data"];
-$$filtered_community_data= [];
+$filtered_community_data= [];
 
 foreach($community_data as $community) { 
 
@@ -57,8 +58,8 @@ foreach($community_data as $community) {
     $flag = checkCommunityFiltering($community, $community_filters);
 
     if($flag){
-        array_push($$filtered_community_data, $community);
-        $_SESSION['$filtered_community_data'] = $$filtered_community_data;
+        array_push($filtered_community_data, $community);
+        $_SESSION['$filtered_community_data'] = $filtered_community_data;
     }
 
 }

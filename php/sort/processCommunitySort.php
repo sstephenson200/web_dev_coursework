@@ -3,7 +3,7 @@
 session_start();
 
 function sortCommunity($communitySort, $array){
-    switch($musicSort){
+    switch($communitySort){
         case 'title':
             usort($array, 'community_name');
             break;
@@ -22,7 +22,7 @@ function community_name($a, $b){
 }
 
 function MemberCount($a, $b){
-    return $a['MemberCount'] > $b['MemberCount'];
+    return $a['MemberCount'] < $b['MemberCount'];
 }
 
 $communitySort = $_POST['communitySortFilter'];

@@ -156,7 +156,7 @@
                         foreach($_SESSION['community_filters']['artists'] as $artist) {
 
                             echo "<li class='form-group'>$artist 
-                                    <a role='button' href='php/filter/removeFilter.php?artist=$artist'>
+                                    <a role='button' href='php/filter/removeCommunityFilter.php?artist=$artist'>
                                         <i id='deleteFilter$artist' class='fas fa-times fa-lg' data-toggle='popover' title='Remove' data-content='Remove Filter'></i>
                                     </a>
                                 </li>";     
@@ -177,7 +177,7 @@
 
                         foreach($_SESSION['community_filters']['genres'] as $genre) {
                             echo "<li class='form-group'>$genre 
-                                    <a role='button' href='php/filter/removeFilter.php?genre=$genre'>
+                                    <a role='button' href='php/filter/removeCommunityFilter.php?genre=$genre'>
                                         <i id='deleteFilter$genre' class='fas fa-times fa-lg' data-toggle='popover' title='Remove' data-content='Remove Filter'></i>
                                     </a>
                                 </li>";     
@@ -199,7 +199,7 @@
 
                         foreach($_SESSION['community_filters']['subgenres'] as $subgenre) {
                             echo "<li class='form-group'>$subgenre 
-                                    <a role='button' href='php/filter/removeFilter.php?subgenre=$subgenre'>
+                                    <a role='button' href='php/filter/removeCommunityFilter.php?subgenre=$subgenre'>
                                         <i id='deleteFilter$subgenre' class='fas fa-times fa-lg' data-toggle='popover' title='Remove' data-content='Remove Filter'></i>
                                     </a>
                                 </li>";     

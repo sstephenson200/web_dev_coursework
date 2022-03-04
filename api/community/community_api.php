@@ -37,11 +37,13 @@ class Community {
 
     //Function to get all communities
     public function getAllCommunities() {
-        $query = "SELECT community.community_id, community.community_name, community.community_description, art.art_url, COUNT(joined_communities.user_id) AS MemberCount FROM community
+        $query = "SELECT community.community_id, community.community_name, community.community_description, art.art_url, artist.artist_name, COUNT(joined_communities.user_id) AS MemberCount FROM community
                     INNER JOIN art
                     ON community.art_id = art.art_id
                     INNER JOIN joined_communities
                     ON community.community_id = joined_communities.community_id
+                    LEFT JOIN artist
+                    ON community.artist_id = artist.artist_id
                     GROUP BY community.community_id";
 
         $statement = $this -> conn -> prepare($query);
