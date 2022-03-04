@@ -28,8 +28,10 @@ if($album_count != 0) {
         $album = array (
             "album_id" => $album_id,
             "album_title" => $album_title,
+            "album_rating" => $album_rating,
             "artist_name" => $artist_name,
             "art_url" => $art_url,
+            "year_value" => $year_value,
             "AverageRating" => $AverageRating
         );
 
