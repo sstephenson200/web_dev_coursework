@@ -10,8 +10,8 @@
         </div>
         <div class='col-12 col-sm-4 col-md-3'>
             <div class='d-flex flex-row'>
-                <form class='col-12 col-lg-auto mb-3 mb-lg-0 input-group'>
-                    <input type='search' class='form-control' placeholder='Search...' aria-label='Search'> 
+                <form class='col-12 col-lg-auto mb-3 mb-lg-0 input-group' action='search.php' method='POST'>
+                    <input type='search' class='form-control' placeholder='Search...' aria-label='Search' name='search'> 
                     <button class='btn styled_button' type='submit'><i class='fa fa-search'></i></button>
                 </form>
             </div>

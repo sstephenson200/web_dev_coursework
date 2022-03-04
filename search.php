@@ -4,11 +4,13 @@
 
     session_start();
 
-    if(isset($_GET['search'])){
-        $search = $_GET['search'];
+    if(isset($_POST['search'])){
+        $search = urlencode($_POST['search']);
     } else {
         $search = "";
     }
+
+    $_SESSION['search_title'] = $search;
 
     //Card count variables
     $music_card_count=0;
@@ -114,7 +116,7 @@
         <!-- Title -->
         <div class="row browseTitle">
             <div class="col-4">
-                <h2>Search Results For "<?php echo $search ?>"</h2>
+                <h2>Search Results For "<?php echo $_SESSION['search_title'] ?>"</h2>
             </div>
             <!-- Pagination Controls -->
             <div class="col-8 d-flex justify-content-end <?php if($total_search_pages<=1){ echo 'd-none';} ?>">

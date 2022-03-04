@@ -373,7 +373,7 @@
             <?php
 
             if($reviews_data){
-                foreach($reviews_data as $review){
+                foreach($visible_reviews as $review){
                     $review_title = $review['review_title'];
                     $review_body = $review['review_text'];
                     $review_rating = $review['review_rating'];
