@@ -8,11 +8,13 @@
                         <p>Sign up to our newsletter to hear more about Pebble Revolution!</p>
                     </div>
                     <div class="d-flex flex-row">
-                        <form>
+                        <form action="php/user/processEmailSignup.php" method="POST">
                             <div class="form-group">
-                                <input type="email" class="form-control" id="emailInput" placeholder="name@example.com">
+                                <input type="email" class="form-control" id="emailListSignup" placeholder="name@example.com" name="emailListSignup">
                             </div>
-                            <button type="submit" class="btn mt-2 styled_button">Submit</button>
+                            <div class="form-group">
+                                <button type="submit" class="btn mt-2 styled_button">Submit</button>
+                            </div>
                         </form>
                     </div>
                 </div>
