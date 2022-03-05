@@ -137,12 +137,8 @@ class User {
 
     //Function to add a user's entered email to the email_list table
     public function createEmailSignup($email){
-        $query = "SELECT user.user_name, user.user_bio, location.location_code, location.location_name, user.user_contact_permissions, art.art_url FROM user
-                    INNER JOIN art 
-                    ON user.art_id = art.art_id 
-                    INNER JOIN location
-                    ON user.location_id = location.location_id
-                    WHERE user.user_id = ?";
+
+        $query = "INSERT INTO email_list (email_list_id, email) VALUES (null, ?)";
 
         $statement = $this -> conn -> prepare($query);
         $email = htmlspecialchars(strip_tags($email));
