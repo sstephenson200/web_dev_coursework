@@ -6,11 +6,12 @@
 
     if(isset($_POST['search'])){
         $search = urlencode($_POST['search']);
+        $_SESSION['search_title'] = $search;
+        unset($_SESSION['search_data']);
+        unset($_SESSION['filtered_search_data']);
     } else {
         $search = "";
     }
-
-    $_SESSION['search_title'] = $search;
 
     //Card count variables
     $music_card_count=0;
@@ -352,7 +353,7 @@
                     </div>
                     <div class="row mb-5 d-flex justify-content-center form-group">
                         <div class="col-12 col-sm-4 mb-2 text-center">
-                            <a type="button" class="btn clearButton" href="php/filter/clearAllFilters.php">Clear</a>
+                            <a type="button" class="btn clearButton" href="php/filter/clearSearchFilters.php">Clear</a>
                         </div>
                         <div class="col-12 col-sm-4 mb-2 text-center">
                             <button type="submit" class="btn  applyButton">Apply</button>
