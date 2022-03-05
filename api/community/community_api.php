@@ -60,6 +60,7 @@ class Community {
 
         $statement = $this -> conn -> prepare($query);
         $community_id = htmlspecialchars(strip_tags($community_id));
+        $community_id = $this -> conn -> real_escape_string($community_id);
         $statement -> bind_param("s", $community_id);
         $statement -> execute();
         return $statement;
@@ -74,6 +75,7 @@ class Community {
 
         $statement = $this -> conn -> prepare($query);
         $community_id = htmlspecialchars(strip_tags($community_id));
+        $community_id = $this -> conn -> real_escape_string($community_id);
         $statement -> bind_param("s", $community_id);
         $statement -> execute();
         return $statement;
@@ -94,6 +96,7 @@ class Community {
 
         $statement = $this -> conn -> prepare($query);
         $artist_name = htmlspecialchars(strip_tags($artist_name));
+        $artist_name = $this -> conn -> real_escape_string($artist_name);
         $statement -> bind_param("s", $artist_name);
         $statement -> execute();
         return $statement;
@@ -125,6 +128,7 @@ class Community {
 
         $statement = $this -> conn -> prepare($query);
         $community_id = htmlspecialchars(strip_tags($community_id));
+        $community_id = $this -> conn -> real_escape_string($community_id);
         $statement -> bind_param("s", $community_id);
         $statement -> execute();
         return $statement;

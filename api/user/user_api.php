@@ -48,6 +48,7 @@ class User {
 
         $statement = $this -> conn -> prepare($query);
         $user_id = htmlspecialchars(strip_tags($user_id));
+        $user_id = $this -> conn -> real_escape_string($user_id);
         $statement -> bind_param("s", $user_id);
         $statement -> execute();
         return $statement;
@@ -71,6 +72,7 @@ class User {
 
         $statement = $this -> conn -> prepare($query);
         $user_id = htmlspecialchars(strip_tags($user_id));
+        $user_id = $this -> conn -> real_escape_string($user_id);
         $statement -> bind_param("s", $user_id);
         $statement -> execute();
         return $statement;
@@ -89,6 +91,7 @@ class User {
 
         $statement = $this -> conn -> prepare($query);
         $user_id = htmlspecialchars(strip_tags($user_id));
+        $user_id = $this -> conn -> real_escape_string($user_id);
         $statement -> bind_param("s", $user_id);
         $statement -> execute();
         return $statement;
@@ -106,6 +109,7 @@ class User {
 
         $statement = $this -> conn -> prepare($query);
         $user_id = htmlspecialchars(strip_tags($user_id));
+        $user_id = $this -> conn -> real_escape_string($user_id);
         $statement -> bind_param("s", $user_id);
         $statement -> execute();
         return $statement;
@@ -127,6 +131,23 @@ class User {
         $query = "SELECT location_name FROM location";
 
         $statement = $this -> conn -> prepare($query);
+        $statement -> execute();
+        return $statement;
+    }
+
+    //Function to add a user's entered email to the email_list table
+    public function createEmailSignup($email){
+        $query = "SELECT user.user_name, user.user_bio, location.location_code, location.location_name, user.user_contact_permissions, art.art_url FROM user
+                    INNER JOIN art 
+                    ON user.art_id = art.art_id 
+                    INNER JOIN location
+                    ON user.location_id = location.location_id
+                    WHERE user.user_id = ?";
+
+        $statement = $this -> conn -> prepare($query);
+        $email = htmlspecialchars(strip_tags($email));
+        $email = $this -> conn -> real_escape_string($email);
+        $statement -> bind_param("s", $email);
         $statement -> execute();
         return $statement;
     }

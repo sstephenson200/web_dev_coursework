@@ -89,6 +89,7 @@ class Album {
 
         $statement = $this -> conn -> prepare($query);
         $album_id = htmlspecialchars(strip_tags($album_id));
+        $album_id = $this -> conn -> real_escape_string($album_id);
         $statement -> bind_param("s", $album_id);
         $statement -> execute();
         return $statement;
@@ -103,6 +104,7 @@ class Album {
 
         $statement = $this -> conn -> prepare($query);
         $album_id = htmlspecialchars(strip_tags($album_id));
+        $album_id = $this -> conn -> real_escape_string($album_id);
         $statement -> bind_param("s", $album_id);
         $statement -> execute();
         return $statement;
@@ -117,6 +119,7 @@ class Album {
 
         $statement = $this -> conn -> prepare($query);
         $album_id = htmlspecialchars(strip_tags($album_id));
+        $album_id = $this -> conn -> real_escape_string($album_id);
         $statement -> bind_param("s", $album_id);
         $statement -> execute();
         return $statement;
@@ -129,6 +132,7 @@ class Album {
 
         $statement = $this -> conn -> prepare($query);
         $album_id = htmlspecialchars(strip_tags($album_id));
+        $album_id = $this -> conn -> real_escape_string($album_id);
         $statement -> bind_param("s", $album_id);
         $statement -> execute();
         return $statement;
@@ -149,6 +153,7 @@ class Album {
 
         $statement = $this -> conn -> prepare($query);
         $artist_name = htmlspecialchars(strip_tags($artist_name));
+        $artist_name = $this -> conn -> real_escape_string($artist_name);
         $statement -> bind_param("s", $artist_name);
         $statement -> execute();
         return $statement;
@@ -170,6 +175,7 @@ class Album {
 
         $statement = $this -> conn -> prepare($query);
         $search = htmlspecialchars(strip_tags($search));
+        $search = $this -> conn -> real_escape_string($search);
         $search = "%$search%";
         $statement -> bind_param("ss", $search, $search);
         $statement -> execute();
