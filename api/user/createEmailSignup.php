@@ -10,8 +10,8 @@ $db = $database -> getConn();
 
 $users = new User($db);
 
-if (isset($_POST['emailListSignup'])) {
-    $email = $_POST['emailListSignup'];
+if (isset($_GET['email'])) {
+    $email = $_GET['email'];
 } else {
     $email = null;
 }
