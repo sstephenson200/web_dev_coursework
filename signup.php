@@ -44,30 +44,31 @@
                     <h3>Create An Account</h3>
                     <p>Have an account?<a type="button" class="btn loginLink" href="login.php">Login</a></p>
                 </div>
-                <div class="form-group mb-3">
-                    <i class="fas fa-envelope"></i>
-                    <label for="emailSignup">Email Address</label>
-                    <input type="email" class="form-control" id="emailSignup" placeholder="name@example.com" required="required">
-                </div>
-                <div class="form-group mb-3">
-                    <i class="fas fa-user"></i>
-                    <label for="usernameSignup">Username</label>
-                    <input type="text" class="form-control" id="usernameSignup" placeholder="Username" required="required">
-                </div>
-                <div class="form-group mb-3">
-                    <i class="fas fa-lock"></i>
-                    <label for="password1Signup">Password</label>
-                    <input type="text" class="form-control" id="password1Signup" placeholder="Password" required="required">
-                </div>
-                <div class="form-group mb-3">
-                    <i class="fas fa-key"></i>
-                    <label for="password2Signup">Confirm Password</label>
-                    <input type="text" class="form-control" id="password2Signup" placeholder="Password" required="required">
-                </div>
-                <div class="text-center mb-3">
-                    <button type="submit" class="btn styled_button">Submit</button>
-                </div>
-                
+                <form action="php/user/processSignup.php" method="POST">
+                    <div class="form-group mb-3">
+                        <i class="fas fa-envelope"></i>
+                        <label for="emailSignup">Email Address</label>
+                        <input type="email" class="form-control" id="emailSignup" name="emailSignup" placeholder="name@example.com" required="required">
+                    </div>
+                    <div class="form-group mb-3">
+                        <i class="fas fa-user"></i>
+                        <label for="usernameSignup">Username</label>
+                        <input type="text" class="form-control" id="usernameSignup" name="usernameSignup" placeholder="Username" required="required">
+                    </div>
+                    <div class="form-group mb-3">
+                        <i class="fas fa-lock"></i>
+                        <label for="password1Signup">Password</label>
+                        <input type="password" class="form-control" id="password1Signup" name="password1Signup" placeholder="Password" required="required">
+                    </div>
+                    <div class="form-group mb-3">
+                        <i class="fas fa-key"></i>
+                        <label for="password2Signup">Confirm Password</label>
+                        <input type="password" class="form-control" id="password2Signup" name="password2Signup" placeholder="Password" required="required">
+                    </div>
+                    <div class="form-group text-center mb-3">
+                        <button type="submit" name="submit" class="btn styled_button">Submit</button>
+                    </div>
+                </form>
             </div>
         </div>
 

@@ -148,6 +148,40 @@ class User {
         return $statement;
     }
 
+    //Function to check if username or email already exists in user table
+    public function checkUserExists($email, $username){
+
+        $query = "SELECT user_email, user_name FROM user WHERE user_email = ? OR user_name = ?";
+
+        $statement = $this -> conn -> prepare($query);
+        $email = htmlspecialchars(strip_tags($email));
+        $email = $this -> conn -> real_escape_string($email);
+        $username = htmlspecialchars(strip_tags($username));
+        $username = $this -> conn -> real_escape_string($username);
+        $statement -> bind_param("ss", $email, $username);
+        $statement -> execute();
+        return $statement;
+    }
+
+    //Function to create new user account
+    public function createAccount($email, $username, $password){
+
+        $query = "INSERT INTO user (user_id, user_name, user_password, user_email) VALUES (null, ?, ?, ?)";
+
+        $statement = $this -> conn -> prepare($query);
+        $email = htmlspecialchars(strip_tags($email));
+        $email = $this -> conn -> real_escape_string($email);
+        $username = htmlspecialchars(strip_tags($username));
+        $username = $this -> conn -> real_escape_string($username);
+        $password = htmlspecialchars(strip_tags($password));
+        $password = $this -> conn -> real_escape_string($password);
+        $password = password_hash($password, PASSWORD_DEFAULT);
+        $statement -> bind_param("sss", $username, $password, $email);
+        $statement -> execute();
+        return $statement;
+
+    }
+
 }
 
 ?>

@@ -44,31 +44,32 @@
                     <h3>Login</h3>
                     <p>Don't have an account?<a type="button" class="btn loginLink" href="signup.php">Sign Up</a></p>
                 </div>
-                <div class="form-group mb-3">
-                    <i class="fas fa-envelope"></i>
-                    <label for="emailLogin">Email Address</label>
-                    <input type="email" class="form-control" id="emailLogin" placeholder="name@example.com" required="required">
-                </div>
-                <div class="form-group mb-3">
-                    <i class="fas fa-lock"></i>
-                    <label for="passwordLogin">Password</label>
-                    <input type="text" class="form-control" id="passwordLogin" placeholder="Password" required="required">
-                </div>
-                <div class="row mb-3">
-                    <div class="col-12 col-sm-6">
-                        <div class='form-check'>
-                            <input class='form-check-input' type='checkbox' value='' id='loginCheckbox'>
-                            <label class='form-check-label' for='loginCheckbox'>Remember me</label>
+                <form action="php/user/processLogin.php" method="POST">
+                    <div class="form-group mb-3">
+                        <i class="fas fa-envelope"></i>
+                        <label for="emailLogin">Email Address</label>
+                        <input type="email" class="form-control" id="emailLogin" name="emailLogin" placeholder="name@example.com" required="required">
+                    </div>
+                    <div class="form-group mb-3">
+                        <i class="fas fa-lock"></i>
+                        <label for="passwordLogin">Password</label>
+                        <input type="password" class="form-control" id="passwordLogin" name="passwordLogin" placeholder="Password" required="required">
+                    </div>
+                    <div class="form-group row mb-3">
+                        <div class="col-12 col-sm-6">
+                            <div class='form-check'>
+                                <input class='form-check-input' type='checkbox' value='' id='loginCheckbox' name="loginCheckbox">
+                                <label class='form-check-label' for='loginCheckbox'>Remember me</label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <a type="button" class="btn loginLink" href="forgot_password.php">Forgot your password?</a>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-6">
-                        <a type="button" class="btn loginLink" href="forgot_password.php">Forgot your password?</a>
+                    <div class="form-group text-center mb-3">
+                        <button type="submit" class="btn styled_button">Login</button>
                     </div>
-                </div>
-                <div class="text-center mb-3">
-                    <button type="submit" class="btn styled_button">Login</button>
-                </div>
-                
+                </form>
             </div>
         </div>
 

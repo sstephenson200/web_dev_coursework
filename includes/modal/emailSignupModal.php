@@ -10,6 +10,10 @@ if(isset($_SESSION['email_submission'])){
             $title = "Miss us?";
             $body = "You've already signed up to our newsletter with this email address. Don't worry, we'll contact you soon!";
             break;
+        case 'Invalid email.':
+          $title = "Is that an email address?";
+          $body = "Sorry! That email address doesn't look valid. Please try again.";
+          break;
         default:
             $title = "Awkward...";
             $body = "Something went wrong. Please try again later.";
