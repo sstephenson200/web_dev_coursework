@@ -88,6 +88,12 @@
 
 <body>
 
+    <?php
+        if(isset($_SESSION['email_submission'])){
+            include("includes/modal/emailSignupModal.php");
+        }
+    ?>
+
     <div class="container-fluid p-0 content">
 
         <?php

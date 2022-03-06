@@ -1,5 +1,5 @@
 <?php
-    include("connections/dbconn.php");  
+    session_start(); 
 ?>
 
 <!DOCTYPE html>
@@ -25,6 +25,12 @@
 </head>
 
 <body>
+
+    <?php
+        if(isset($_SESSION['email_submission'])){
+            include("includes/modal/emailSignupModal.php");
+        }
+    ?>
 
     <div class="container-fluid p-0 content">
 

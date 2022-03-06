@@ -1,10 +1,12 @@
 <?php
 
+    $base_url = "http://localhost/web_dev_coursework/api/";
+
+    session_start();
+
     //Card count variables
     $music_card_count=0;
     $community_card_count=0;
-
-    $base_url = "http://localhost/web_dev_coursework/api/";
 
     //get trending album data
     $album_endpoint = $base_url . "album/getTrendingAlbums.php";
@@ -46,6 +48,12 @@
 </head>
 
 <body>
+
+    <?php
+        if(isset($_SESSION['email_submission'])){
+            include("includes/modal/emailSignupModal.php");
+        }
+    ?>
 
     <div class="container-fluid p-0 content">
 
@@ -160,7 +168,7 @@
 </body>
 
 <?php
-    include("js/card_functions.php");
+    include("js/card_functions.php");    
 ?>
 
 </html>
