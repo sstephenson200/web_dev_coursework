@@ -148,17 +148,28 @@ class User {
         return $statement;
     }
 
-    //Function to check if username or email already exists in user table
-    public function checkUserExists($email, $username){
+    //Function to check if username already exists in user table
+    public function checkUsernameExists($username){
 
-        $query = "SELECT user_email, user_name FROM user WHERE user_email = ? OR user_name = ?";
+        $query = "SELECT user_name FROM user WHERE user_name = ?";
+
+        $statement = $this -> conn -> prepare($query);
+        $username = htmlspecialchars(strip_tags($username));
+        $username = $this -> conn -> real_escape_string($username);
+        $statement -> bind_param("s", $username);
+        $statement -> execute();
+        return $statement;
+    }
+
+    //Function to check if username already exists in user table
+    public function checkEmailExists($email){
+
+        $query = "SELECT user_email FROM user WHERE user_email = ?";
 
         $statement = $this -> conn -> prepare($query);
         $email = htmlspecialchars(strip_tags($email));
         $email = $this -> conn -> real_escape_string($email);
-        $username = htmlspecialchars(strip_tags($username));
-        $username = $this -> conn -> real_escape_string($username);
-        $statement -> bind_param("ss", $email, $username);
+        $statement -> bind_param("s", $email);
         $statement -> execute();
         return $statement;
     }

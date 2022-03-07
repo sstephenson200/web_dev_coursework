@@ -25,7 +25,7 @@ class SignupController {
         }
     }
 
-    //check if _email is valid
+    //check if email is valid
     private function checkValidEmail(){
         
         if(filter_var($this -> email, FILTER_VALIDATE_EMAIL)){
@@ -35,7 +35,7 @@ class SignupController {
         }
     }
 
-    //check _ doesn't contain invalid characters and is between 3-30 chars
+    //check username doesn't contain invalid characters and is between 3-30 chars
     private function checkValidUsername(){
 
         if(!preg_match("/^[a-zA-Z0-9]*$/", $this -> username)) {

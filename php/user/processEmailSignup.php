@@ -20,7 +20,6 @@ if(isset($_GET['emailListSignup'])){
     } else {
         $_SESSION['email_submission'] = "Invalid email.";
     }
-
 }
 
 $location = $_SERVER['HTTP_REFERER'];

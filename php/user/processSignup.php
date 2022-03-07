@@ -24,22 +24,32 @@ if(isset($_POST['submit'])) {
     if(!$errors){
         //create account
         $signup_endpoint = $base_url . "user/createAccount.php";
-        $signup_resource = file_get_contents($signup_endpoint);
+
+        $opts = array('http' => array('header'=> 'Cookie: ' . $_SERVER['HTTP_COOKIE']."\r\n"));
+        $context = stream_context_create($opts);
+        session_write_close(); // unlock the file
+        $signup_resource = file_get_contents($signup_endpoint, false, $context);
+        session_start();
         $signup_data = json_decode($signup_resource, true);
 
-        $value = $signup_data['message'];
-        echo "$value";
+        if($signup_data['message'] != "Account created.") {
+            $_SESSION['signupErrors'] = $signup_data['message'];
+        }
+
     } else{
-        echo implode(',', $errors);
+        $_SESSION['signupErrors'] = $errors[0];
     }
 
-    //unset($_SESSION['emailSignup']);
-    //unset($_SESSION['usernameSignup']);
-    //unset($_SESSION['password1Signup']);
-    //unset($_SESSION['password2Signup']);
+    unset($_SESSION['emailSignup']);
+    unset($_SESSION['usernameSignup']);
+    unset($_SESSION['password1Signup']);
+    unset($_SESSION['password2Signup']);
 
-    //echo "<script>window.location = '../../index.php'</script>";
-
+    if(isset($_SESSION['signupErrors']) ){
+        echo "<script>window.location = '../../signup.php'</script>";
+    } else {
+        echo "<script>window.location = '../../index.php'</script>";
+    }
 }
 
 ?>

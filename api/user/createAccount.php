@@ -1,4 +1,5 @@
 <?php
+session_start(); 
 
 header("Content-Type: application/json");
 
@@ -22,11 +23,15 @@ if (isset($_SESSION['emailSignup']) and isset($_SESSION['usernameSignup']) and i
     $password2 = null;
 }
 
-$result = $users -> checkUserExists($email, $username);
+$result = $users -> checkUsernameExists($username);
 $result = $result -> get_result();
-$user_count = $result -> num_rows;
+$username_count = $result -> num_rows;
 
-if($user_count == 0){
+$result = $users -> checkEmailExists($email);
+$result = $result -> get_result();
+$email_count = $result -> num_rows;
+
+if($username_count == 0 and $email_count == 0){
     
     $data = json_decode(file_get_contents("php://input"));
 
@@ -41,9 +46,13 @@ if($user_count == 0){
             array("message" => "Unable to create account.")
         );
     }
-} else {
+} else if($username_count != 0) {
     echo json_encode(
-        array("message" => "Username and email are not unique.")
+        array("message" => "Username is not unique.")
+    );
+} else if($email_count != 0) {
+    echo json_encode(
+        array("message" => "Email is not unique.")
     );
 }
 
