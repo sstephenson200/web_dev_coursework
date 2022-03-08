@@ -47,7 +47,21 @@
         <div class='col-9 col-md-4 d-flex justify-content-end'>
             <?php 
                 if(isset($_SESSION['userID_LoggedIn'])) {
-                    echo "<p>YOU'RE LOGGED IN</p>";
+            ?>
+                <div class='dropdown'>
+                    <a class='btn btn-warning dropdown-toggle' data-bs-toggle='dropdown'> Dropdown </a>
+                    <div class='dropdown-menu'>
+                        <a class='dropdown-item' href='user_profile.php?user_id=<?php echo $_SESSION['userID_LoggedIn'] ?>'>My Profile</a>
+                        <a class='dropdown-item' href='#'>My Music</a>
+                        <a class='dropdown-item' href='#'>My Communities</a>
+                        <a class='dropdown-item' href='#'>My Reviews</a>
+                        <div class='dropdown-divider'></div>
+                        <a class='dropdown-item' href='user_settings.php?user_id=<?php echo $_SESSION['userID_LoggedIn'] ?>'>Settings</a>
+                        <div class='dropdown-divider'></div>
+                        <a class='dropdown-item' href='php/user/processLogout.php'>Logout</a>
+                    </div>
+                </div>
+            <?php
                 } else {
             ?>
             <ul class='nav'>
