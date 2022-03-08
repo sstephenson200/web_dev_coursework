@@ -37,6 +37,12 @@
         }
     ?>
 
+    <?php
+        if(isset($_SESSION['loginErrors'])){
+            include("includes/modal/loginErrorsModal.php");
+        }
+    ?>
+
     <div class="container-fluid p-0 content">
 
         <?php
