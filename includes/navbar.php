@@ -46,7 +46,7 @@
         </div>
         <div class='col-9 col-md-4 d-flex justify-content-end'>
             <?php 
-                if(isset($_SESSION['usedID_LoggedIn'])) {
+                if(isset($_SESSION['userID_LoggedIn'])) {
                     echo "<p>YOU'RE LOGGED IN</p>";
                 } else {
             ?>

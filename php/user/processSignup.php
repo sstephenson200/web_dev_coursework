@@ -34,6 +34,13 @@ if(isset($_POST['submit'])) {
 
         if($signup_data['message'] != "Account created.") {
             $_SESSION['signupErrors'] = $signup_data['message'];
+        } else {
+            //signup successful
+            $user_id_endpoint = $base_url . "user/getUserPassword.php?emailLogin=$email";
+            $user_id_resource = file_get_contents($user_id_endpoint);
+            $user_id_data = json_decode($user_id_resource, true);
+            $user_id = $user_id_data[0]['user_id'];
+            $_SESSION['userID_LoggedIn'] = $user_id;
         }
 
     } else{

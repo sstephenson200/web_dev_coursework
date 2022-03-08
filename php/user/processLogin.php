@@ -33,7 +33,7 @@ if(isset($_POST['submit'])) {
                 $_SESSION['loginErrors'] = "Password incorrect.";
             } else {
                 //login successful
-                $_SESSION['usedID_LoggedIn'] = $login_data[0]['user_id'];;
+                $_SESSION['userID_LoggedIn'] = $login_data[0]['user_id'];
             }
         }
 
