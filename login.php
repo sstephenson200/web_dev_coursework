@@ -72,7 +72,7 @@
                         </div>
                     </div>
                     <div class="form-group text-center mb-3">
-                        <button type="submit" class="btn styled_button">Login</button>
+                        <button type="submit" name="submit" class="btn styled_button">Login</button>
                     </div>
                 </form>
             </div>

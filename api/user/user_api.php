@@ -7,6 +7,7 @@ class User {
     //user variables
     public $user_id;
     public $user_name;
+    public $user_password;
     public $user_bio;
     public $location_code;
     public $location_name;
@@ -25,7 +26,7 @@ class User {
     public $reporting_user_id;
     public $reported_user_id;
     public $report_reasoning;
-   
+    
     public function __construct($db) {
         $this -> conn = $db;
     }
@@ -128,6 +129,7 @@ class User {
 
     //Function to get all user location options
     public function getUserLocationName(){
+        
         $query = "SELECT location_name FROM location";
 
         $statement = $this -> conn -> prepare($query);
@@ -190,7 +192,18 @@ class User {
         $statement -> bind_param("sss", $username, $password, $email);
         $statement -> execute();
         return $statement;
+    }
 
+    //Function to get user password
+    public function getUserPassword($email){
+        $query = "SELECT user_id, user_password FROM user WHERE user_email=?";
+
+        $statement = $this -> conn -> prepare($query);
+        $email = htmlspecialchars(strip_tags($email));
+        $email = $this -> conn -> real_escape_string($email);
+        $statement -> bind_param("s", $email);
+        $statement -> execute();
+        return $statement;
     }
 
 }
