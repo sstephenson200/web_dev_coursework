@@ -7,6 +7,18 @@
     background-color: #1F1B24;
 }
 
+.userDropdown {
+    background-color: #1F1B24;
+    border: #1F1B24;
+    color: white;
+}
+
+.userDropdown:hover {
+    background-color: #1F1B24;
+    border: #1F1B24;
+    color: #904FBB;
+}
+
 .title, .welcomeMessage {
     font-family: 'Permanent Marker', cursive;
 }

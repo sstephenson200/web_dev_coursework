@@ -69,7 +69,7 @@
                     <div class="form-group row mb-3">
                         <div class="col-12 col-sm-6">
                             <div class='form-check'>
-                                <input class='form-check-input' type='checkbox' value='' id='loginCheckbox' name="loginCheckbox">
+                                <input class='form-check-input' type='checkbox' value='1' id='loginCheckbox' name="loginCheckbox">
                                 <label class='form-check-label' for='loginCheckbox'>Remember me</label>
                             </div>
                         </div>

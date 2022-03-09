@@ -1,3 +1,17 @@
+<?php 
+
+    if(isset($_SESSION['userID_LoggedIn'])){
+        $user_id = $_SESSION['userID_LoggedIn'];
+        //get user profile data
+        $user_endpoint = $base_url . "user/getProfileDataByUserID.php?user_id=$user_id";
+        $user_resource = file_get_contents($user_endpoint);
+        $user_data = json_decode($user_resource, true);
+
+        $username = $user_data[0]['user_name'];
+        $user_art = $user_data[0]['art_url'];
+    }
+?>
+
 <!-- Header with search bar -->
 <div class='sticky-top site_header'>
 <header class='p-2'>
@@ -49,14 +63,13 @@
                 if(isset($_SESSION['userID_LoggedIn'])) {
             ?>
                 <div class='dropdown'>
-                    <a class='btn btn-warning dropdown-toggle' data-bs-toggle='dropdown'> Dropdown </a>
+                    <a class='btn dropdown-toggle userDropdown' data-bs-toggle='dropdown'> 
+                        <img src='<?php echo $user_art ?>' class='rounded-circle' width='45' height='45'>  
+                    </a>
                     <div class='dropdown-menu'>
-                        <a class='dropdown-item' href='user_profile.php?user_id=<?php echo $_SESSION['userID_LoggedIn'] ?>'>My Profile</a>
-                        <a class='dropdown-item' href='#'>My Music</a>
-                        <a class='dropdown-item' href='#'>My Communities</a>
-                        <a class='dropdown-item' href='#'>My Reviews</a>
-                        <div class='dropdown-divider'></div>
-                        <a class='dropdown-item' href='user_settings.php?user_id=<?php echo $_SESSION['userID_LoggedIn'] ?>'>Settings</a>
+                        <p class='dropdown-item'>Hello, <?php echo $username . "!" ?></p>
+                        <a class='dropdown-item' href='user_profile.php?user_id=<?php echo $user_id ?>'>My Profile</a>
+                        <a class='dropdown-item' href='user_settings.php?user_id=<?php echo $user_id ?>'>Settings</a>
                         <div class='dropdown-divider'></div>
                         <a class='dropdown-item' href='php/user/processLogout.php'>Logout</a>
                     </div>

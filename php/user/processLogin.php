@@ -8,7 +8,7 @@ if(isset($_POST['submit'])) {
 
     $email = $_POST['emailLogin'];
     $email = filter_var($email,FILTER_SANITIZE_EMAIL);
-    $password = $_POST['passwordLogin'];
+    $password = $_POST['passwordLogin']; 
 
     include ("LoginController.php");
 
