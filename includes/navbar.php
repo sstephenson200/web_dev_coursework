@@ -71,7 +71,7 @@
                         <a class='dropdown-item' href='user_profile.php?user_id=<?php echo $user_id ?>'>My Profile</a>
                         <a class='dropdown-item' href='user_settings.php?user_id=<?php echo $user_id ?>'>Settings</a>
                         <div class='dropdown-divider'></div>
-                        <a class='dropdown-item' href='php/user/processLogout.php'>Logout</a>
+                        <a class='dropdown-item' href='php/user/processLogout.php?user_id=<?php echo $user_id ?>'>Logout</a>
                     </div>
                 </div>
             <?php

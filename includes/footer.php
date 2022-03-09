@@ -34,7 +34,7 @@
             </div>
 
             <div class="row trademark p-2">
-                <p>©2021 Pebble Revolution Limited. All rights reserved.</p>
+                <p>©2022 Pebble Revolution Limited. All rights reserved.</p>
             </div>
 
 </div>

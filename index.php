@@ -4,6 +4,12 @@
 
     session_start();
 
+    include("php/user/processRememberMe.php");
+
+    if(isset($_SESSION['rememberMe'])){
+        setcookie("rememberMe", $_SESSION['rememberMe'][0], time() + (86400 * 30), "/");
+    } 
+    
     //Card count variables
     $music_card_count=0;
     $community_card_count=0;

@@ -4,6 +4,8 @@
 
     session_start();
 
+    include("php/user/processRememberMe.php");
+
     $user_id = $_GET['user_id'];
 
     //get user data

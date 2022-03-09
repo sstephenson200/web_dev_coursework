@@ -4,6 +4,8 @@
 
     session_start();
 
+    include("php/user/processRememberMe.php");
+
     //Card count variables
     $music_card_count = 0;
     $community_card_count = 0;

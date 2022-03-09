@@ -26,6 +26,10 @@ class User {
     public $reporting_user_id;
     public $reported_user_id;
     public $report_reasoning;
+    public $user_token_id;
+    public $user_token_selector;
+    public $user_token_validator;
+    public $expiry;
     
     public function __construct($db) {
         $this -> conn = $db;
@@ -202,6 +206,65 @@ class User {
         $email = htmlspecialchars(strip_tags($email));
         $email = $this -> conn -> real_escape_string($email);
         $statement -> bind_param("s", $email);
+        $statement -> execute();
+        return $statement;
+    }
+
+    //Function to create new user token
+    public function createUserToken($selector, $validator, $expiry_date, $user_id) {
+        $query = "INSERT INTO user_token (user_token_id, user_token_selector, user_token_validator, expiry, user_id) VALUES (null, ?, ?, ?, ?)";
+
+        $statement = $this -> conn -> prepare($query);
+        $selector = htmlspecialchars(strip_tags($selector));
+        $selector = $this -> conn -> real_escape_string($selector);
+        $validator = htmlspecialchars(strip_tags($validator));
+        $validator = $this -> conn -> real_escape_string($validator);
+        $validator = password_hash($validator, PASSWORD_DEFAULT);
+        $expiry_date = htmlspecialchars(strip_tags($expiry_date));
+        $expiry_date = $this -> conn -> real_escape_string($expiry_date);
+        $user_id = htmlspecialchars(strip_tags($user_id));
+        $user_id = $this -> conn -> real_escape_string($user_id);
+        $statement -> bind_param("ssss", $selector, $validator, $expiry_date, $user_id);
+        $statement -> execute();
+        return $statement;
+    }
+
+    //Function to get user by selector value
+    public function getUserTokenBySelector($selector) {
+        $query = "SELECT user_token_id, user_token_selector, user_token_validator, expiry, user_id FROM user_token WHERE user_token_selector = ?";
+
+        $statement = $this -> conn -> prepare($query);
+        $selector = htmlspecialchars(strip_tags($selector));
+        $selector = $this -> conn -> real_escape_string($selector);
+        $statement -> bind_param("s", $selector);
+        $statement -> execute();
+        return $statement;
+    }
+
+    //Function to delete user token
+    public function deleteUserToken($user_id) {
+        $query = "DELETE FROM user_token WHERE user_id = ?";
+
+        $statement = $this -> conn -> prepare($query);
+        $user_id = htmlspecialchars(strip_tags($user_id));
+        $user_id = $this -> conn -> real_escape_string($user_id);
+        $statement -> bind_param("s", $user_id);
+        $statement -> execute();
+        return $statement;
+    }
+
+    //Function to get user_id and user_name from token value
+    public function getUserByToken($token) {
+        $query = "SELECT user.user_id, user.user_name FROM user
+                    INNER JOIN user_token
+                    ON user.user_id = user_token.user_id
+                    WHERE user_token_selector = ? AND expiry > now()
+                    LIMIT 1";
+
+        $statement = $this -> conn -> prepare($query);
+        $token = htmlspecialchars(strip_tags($token));
+        $token = $this -> conn -> real_escape_string($token);
+        $statement -> bind_param("s", $token);
         $statement -> execute();
         return $statement;
     }

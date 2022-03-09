@@ -4,6 +4,8 @@
 
     session_start();
 
+    include("php/user/processRememberMe.php");
+
     if(isset($_POST['search'])){
         $search = urlencode($_POST['search']);
         $_SESSION['search_title'] = $search;

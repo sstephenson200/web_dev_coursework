@@ -4,6 +4,8 @@
 
     session_start();
 
+    include("php/user/processRememberMe.php");
+
     //get pending reviews
     $pending_review_endpoint = $base_url . "review/getReviewsByStatus.php?status_title=Pending";
     $pending_review_resource = @file_get_contents($pending_review_endpoint);

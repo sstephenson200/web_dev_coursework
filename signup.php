@@ -1,5 +1,7 @@
 <?php
     session_start(); 
+
+    include("php/user/processRememberMe.php");
 ?>
 
 <!DOCTYPE html>
