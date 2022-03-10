@@ -110,11 +110,9 @@
                             <a type='button' class='btn styled_button' href='user_settings.php?user_id=<?php echo $user_id ?>'><i class="fas fa-cog"></i> Settings</a>
                         <?php } ?>
                         <?php 
-                            if($admin_data) {
-                                if(($AdminCount != 0) and $logged_in_username == $username) { ?>
-                                    <a type='button' class='btn styled_button' href='admin.php?'><i class="fas fa-tools"></i> Admin</a>
-                             <?php } 
-                        } ?>
+                        if(($AdminCount != 0) and $logged_in_username == $username) { ?>
+                            <a type='button' class='btn styled_button' href='admin.php?'><i class="fas fa-tools"></i> Admin</a>
+                        <?php } ?>
                     </div>
                 </div> 
             </div>

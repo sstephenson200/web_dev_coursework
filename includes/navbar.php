@@ -1,5 +1,6 @@
 <?php 
 
+    $AdminCount = 0;
     $remember = new rememberMeController();
 
     if(isset($_SESSION['userID_LoggedIn'])){
@@ -25,7 +26,9 @@
         $admin_resource = file_get_contents($admin_endpoint);
         $admin_data = json_decode($admin_resource, true);
         
-        $AdminCount = $admin_data[0]['AdminCount'];
+        if($admin_data){
+            $AdminCount = $admin_data[0]['AdminCount'];
+        }         
     }
 ?>
 
