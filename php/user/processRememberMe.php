@@ -17,7 +17,7 @@ if(isset($_COOKIE['rememberMe']) and !isset($_SESSION['userID_LoggedIn'])) {
         $token_data = json_decode($token_resource, true);
 
         if($token_data){
-            $_SESSION['userID_LoggedIn'] = $token_data[0]['user_id'];
+            $_SESSION['userID_LoggedIn'] = $token;
         }
     }
 

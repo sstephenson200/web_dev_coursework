@@ -1,7 +1,17 @@
 <?php 
 
+    $remember = new rememberMeController();
+
     if(isset($_SESSION['userID_LoggedIn'])){
-        $user_id = $_SESSION['userID_LoggedIn'];
+        //get user_id
+        $tokens = $remember -> parse_token($_SESSION['userID_LoggedIn']);
+        $token = $tokens[0];
+        $token_endpoint = $base_url . "user/getUserByToken.php?token=$token";
+        $token_resource = file_get_contents($token_endpoint);
+        $token_data = json_decode($token_resource, true);
+
+        $user_id = $token_data[0]['user_id'];
+
         //get user profile data
         $user_endpoint = $base_url . "user/getProfileDataByUserID.php?user_id=$user_id";
         $user_resource = file_get_contents($user_endpoint);

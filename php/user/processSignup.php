@@ -17,8 +17,10 @@ if(isset($_POST['submit'])) {
     $_SESSION['password2Signup'] = $password2;
 
     include ("signupController.php");
+    include("rememberMeController.php");
 
     $signup = new signupController($email, $username, $password1, $password2);
+    $remember = new rememberMeController();
 
     $errors = $signup -> checkSignUp();
     if(!$errors){
@@ -40,7 +42,20 @@ if(isset($_POST['submit'])) {
             $user_id_resource = file_get_contents($user_id_endpoint);
             $user_id_data = json_decode($user_id_resource, true);
             $user_id = $user_id_data[0]['user_id'];
-            $_SESSION['userID_LoggedIn'] = $user_id;
+
+            //create token
+            [$selector, $validator, $token] = $remember -> generate_token();
+            //set expiration
+            $expiry = date('Y-m-d H:i:s', time() + (86400 * 30));
+            $expiry_request = urlencode($expiry);
+            //create new token
+            $create_endpoint = $base_url . "user/createUserToken.php?selector=$selector&validator=$validator&expiry_date=$expiry_request&user_id=$user_id";
+            $create_resource = file_get_contents($create_endpoint);
+            $create_data = json_decode($create_resource, true);
+
+            if($create_data['message'] == "Token created."){
+                $_SESSION['userID_LoggedIn'] = $token;
+            }
         }
 
     } else{

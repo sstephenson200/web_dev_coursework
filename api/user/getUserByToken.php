@@ -29,7 +29,7 @@ if($token) {
             extract($row);
             $user = array (
                 "user_name" => $user_name,
-                "user_id" => $user_id    
+                "user_id" => $user_id  
             );
     
             array_push($array, $user);
