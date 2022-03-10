@@ -106,20 +106,33 @@
                 </div>
                 <div class="row text-center mb-2">
                     <div class="col">
-                        <a type='button' class='btn styled_button' href='user_settings.php?user_id=<?php echo $user_id ?>'><i class="fas fa-cog"></i> Settings</a>
-                        <a type='button' class='btn styled_button' href='admin.php?'><i class="fas fa-tools"></i> Admin</a>
+                        <?php if(isset($_SESSION['userID_LoggedIn']) and $logged_in_username == $username) {?>
+                            <a type='button' class='btn styled_button' href='user_settings.php?user_id=<?php echo $user_id ?>'><i class="fas fa-cog"></i> Settings</a>
+                        <?php } ?>
+                        <?php 
+                            if($admin_data) {
+                                if(($AdminCount != 0) and $logged_in_username == $username) { ?>
+                                    <a type='button' class='btn styled_button' href='admin.php?'><i class="fas fa-tools"></i> Admin</a>
+                             <?php } 
+                        } ?>
                     </div>
-                </div>
+                </div> 
             </div>
             <div class="col-12 col-sm-7 col-md-8">
                 <div class="row py-1">
                     <div class="col-3 offset-9 col-md-1 offset-md-11">
-                        <a role='button px-1'>
-                            <i id='reportIcon' class='far fa-flag fa-lg report' data-toggle='popover' title='Report' data-content='Report Content' data-target='reportIcon'></i>
-                        </a>
-                        <a role='button px-1'>
-                            <i id='banIcon' class='fas fa-ban fa-lg ban' data-toggle='popover' title='Ban' data-content='Ban User' data-target='banIcon'></i>
-                        </a>
+                        <?php if(isset($_SESSION['userID_LoggedIn']) and $logged_in_username != $username) {?>
+                            <a role='button px-1'>
+                                <i id='reportIcon' class='far fa-flag fa-lg report' data-toggle='popover' title='Report' data-content='Report Content' data-target='reportIcon'></i>
+                            </a>
+                        <?php } ?>
+                        <?php if(isset($_SESSION['userID_LoggedIn']) and $logged_in_username != $username) {
+                            if($AdminCount != 0) { ?>
+                                <a role='button px-1'>
+                                    <i id='banIcon' class='fas fa-ban fa-lg ban' data-toggle='popover' title='Ban' data-content='Ban User' data-target='banIcon'></i>
+                                </a>
+                            <?php }
+                        } ?>
                     </div>
                 </div>
                 <div class="row">

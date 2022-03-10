@@ -30,6 +30,7 @@ class User {
     public $user_token_selector;
     public $user_token_validator;
     public $expiry;
+    public $AdminCount;
     
     public function __construct($db) {
         $this -> conn = $db;
@@ -265,6 +266,22 @@ class User {
         $token = htmlspecialchars(strip_tags($token));
         $token = $this -> conn -> real_escape_string($token);
         $statement -> bind_param("s", $token);
+        $statement -> execute();
+        return $statement;
+    }
+
+    //Function to check if user has admin privileges 
+    public function getUserAdminStatus($user_id){
+        $query = "SELECT COUNT(user.user_id) as AdminCount FROM admin_user
+                    INNER JOIN user 
+                    ON admin_user.user_id = user.user_id
+                    WHERE user.user_id = ?
+                    LIMIT 1";
+
+        $statement = $this -> conn -> prepare($query);
+        $user_id = htmlspecialchars(strip_tags($user_id));
+        $user_id = $this -> conn -> real_escape_string($user_id);
+        $statement -> bind_param("s", $user_id);
         $statement -> execute();
         return $statement;
     }

@@ -10,15 +10,22 @@
         $token_resource = file_get_contents($token_endpoint);
         $token_data = json_decode($token_resource, true);
 
-        $user_id = $token_data[0]['user_id'];
+        $logged_in_user_id = $token_data[0]['user_id'];
 
         //get user profile data
-        $user_endpoint = $base_url . "user/getProfileDataByUserID.php?user_id=$user_id";
+        $user_endpoint = $base_url . "user/getProfileDataByUserID.php?user_id=$logged_in_user_id";
         $user_resource = file_get_contents($user_endpoint);
         $user_data = json_decode($user_resource, true);
 
-        $username = $user_data[0]['user_name'];
-        $user_art = $user_data[0]['art_url'];
+        $logged_in_username = $user_data[0]['user_name'];
+        $logged_in_user_art = $user_data[0]['art_url'];
+
+        //check is user is admin
+        $admin_endpoint = $base_url . "user/getUserAdminStatus.php?user_id=$logged_in_user_id";
+        $admin_resource = file_get_contents($admin_endpoint);
+        $admin_data = json_decode($admin_resource, true);
+        
+        $AdminCount = $admin_data[0]['AdminCount'];
     }
 ?>
 
@@ -74,14 +81,17 @@
             ?>
                 <div class='dropdown'>
                     <a class='btn dropdown-toggle userDropdown' data-bs-toggle='dropdown'> 
-                        <img src='<?php echo $user_art ?>' class='rounded-circle' width='45' height='45'>  
+                        <img src='<?php echo $logged_in_user_art ?>' class='rounded-circle' width='45' height='45'>  
                     </a>
                     <div class='dropdown-menu'>
-                        <p class='dropdown-item'>Hello, <?php echo $username . "!" ?></p>
-                        <a class='dropdown-item' href='user_profile.php?user_id=<?php echo $user_id ?>'>My Profile</a>
-                        <a class='dropdown-item' href='user_settings.php?user_id=<?php echo $user_id ?>'>Settings</a>
+                        <p class='dropdown-item'>Hello, <?php echo $logged_in_username . "!" ?></p>
+                        <a class='dropdown-item' href='user_profile.php?user_id=<?php echo $logged_in_user_id ?>'>My Profile</a>
+                        <a class='dropdown-item' href='user_settings.php?user_id=<?php echo $logged_in_user_id ?>'>Settings</a>
+                        <?php if($AdminCount != 0) { ?>
+                            <a class='dropdown-item' href='admin.php'>Admin</a>
+                        <?php } ?>
                         <div class='dropdown-divider'></div>
-                        <a class='dropdown-item' href='php/user/processLogout.php?user_id=<?php echo $user_id ?>'>Logout</a>
+                        <a class='dropdown-item' href='php/user/processLogout.php?user_id=<?php echo $logged_in_user_id ?>'>Logout</a>
                     </div>
                 </div>
             <?php
