@@ -51,6 +51,8 @@
         include("includes/navbar.php");
         ?>
 
+        <?php if(!isset($_SESSION['userLoggedIn'])) { ?>
+
         <div class="row signup d-flex justify-content-center align-items-center py-2">
             <div class="col-10 col-sm-6 col-md-5 col-lg-4 col-xl-3 signupForm border px-3">
                 <div class="text-center mt-3">
@@ -85,6 +87,12 @@
                 </form>
             </div>
         </div>
+
+        <?php } else { ?>
+
+        <script>window.location = "index.php"</script>
+
+        <?php } ?>
 
         <!-- Footer -->
         <?php
