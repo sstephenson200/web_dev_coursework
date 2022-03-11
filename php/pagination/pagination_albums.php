@@ -20,8 +20,10 @@ $filtered_data = $_SESSION['filtered_data'];
 
 if(!empty($filtered_data)){
     $visible_album_data = array_slice($filtered_data,$offset,$cardsPerPage);
-} else{
+} else if($album_data) {
     $visible_album_data = array_slice($album_data,$offset,$cardsPerPage);
+} else {
+    $visible_album_data = null;
 }
 
 ?>

@@ -135,6 +135,9 @@
                                                     </td>
                                                     </tr>";    
                                         }
+                                    } else {
+                                        echo "<h4 class='d-flex justify-content-center mt-3'>No pending reviews.</h4>";
+                                        echo "<h5 class='d-flex justify-content-center mt-3'>Good job!</h5>";
                                     }
                                     ?>
 
@@ -160,7 +163,7 @@
             </div>
         </div>
 
-        <div class="row d-flex justify-content-center">
+        <div class="row d-flex justify-content-center userPage">
             <div class="col-12">
                 <div class="row">
                     <div class="col mx-2">
@@ -232,6 +235,9 @@
                                                 </td>
                                                 </tr>";               
                                         }
+                                    } else {
+                                        echo "<h4 class='d-flex justify-content-center mt-3'>No reported reviews.</h4>";
+                                        echo "<h5 class='d-flex justify-content-center mt-3'>Good job!</h5>";
                                     }
                                     ?>
 
@@ -291,6 +297,9 @@
                                                 </td>
                                                 </tr>";      
                                         }
+                                    } else {
+                                        echo "<h4 class='d-flex justify-content-center mt-3'>No reported users.</h4>";
+                                        echo "<h5 class='d-flex justify-content-center mt-3'>Good job!</h5>";
                                     }
                                     ?>
 

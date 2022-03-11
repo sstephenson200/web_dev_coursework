@@ -63,8 +63,10 @@
 
     if(!empty($_SESSION['filtered_data'])){
         $album_count = count($_SESSION['filtered_data']);
-    } else{
+    } else if($_SESSION['album_data']){
         $album_count = count($_SESSION['album_data']);
+    } else {
+        $album_count = 0;
     }
 
     //include pagination
@@ -154,7 +156,7 @@
             </div>
         </form>
 
-        <div class="row">
+        <div class="row resultsGrid">
             <!-- Filter Sidebar -->
             <div class="col-12 col-md-3 sidebar" id="musicSidebar">
                 <div class="row mb-2">
@@ -365,17 +367,23 @@
 
                 <?php
 
-                foreach ($visible_album_data as $row) {
-                    $album_art_url = $row['art_url'];
-                    $rating = $row['AverageRating'];
-                    $album_title = $row['album_title'];
-                    $album_artist = $row['artist_name'];
-                    $album_id = $row['album_id'];
-
-                    include("includes/music_card.php");
-
-                    $music_card_count++;
+                if($visible_album_data) {
+                    foreach ($visible_album_data as $row) {
+                        $album_art_url = $row['art_url'];
+                        $rating = $row['AverageRating'];
+                        $album_title = $row['album_title'];
+                        $album_artist = $row['artist_name'];
+                        $album_id = $row['album_id'];
+    
+                        include("includes/music_card.php");
+    
+                        $music_card_count++;
+                    }
+                } else {
+                    echo "<h2 class='d-flex justify-content-center mt-3'>No results!</h2>";
+                    echo "<p class='d-flex justify-content-center'>Sorry, your search was a little too niche.</p>";
                 }
+                
 
                 ?>
 

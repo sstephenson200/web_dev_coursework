@@ -20,8 +20,10 @@ $filtered_search_data = $_SESSION['filtered_search_data'];
 
 if(!empty($filtered_search_data)){
     $visible_search_data = array_slice($filtered_search_data,$offset,$cardsPerPage);
-} else{
+} else if($search_data) {
     $visible_search_data = array_slice($search_data,$offset,$cardsPerPage);
+} else {
+    $visible_search_data = null;
 }
 
 ?>

@@ -72,8 +72,10 @@
 
     if(!empty($_SESSION['filtered_search_data'])){
         $album_count = count($_SESSION['filtered_search_data']);
-    } else{
+    } else if($_SESSION['search_data']){
         $album_count = count($_SESSION['search_data']);
+    } else {
+        $album_count = 0;
     }
 
     //include pagination
@@ -163,7 +165,7 @@
             </div>
         </form>
 
-        <div class="row">
+        <div class="row resultsGrid">
             <!-- Filter Sidebar -->
             <div class="col-12 col-md-3 sidebar" id="musicSidebar">
                 <div class="row mb-2">
@@ -374,18 +376,24 @@
 
                 <?php
 
-                if($visible_search_data){
-                    foreach($visible_search_data as $search){
-                        $album_art_url = $search['art_url'];
-                        $rating = $search['AverageRating'];
-                        $album_title = $search['album_title'];
-                        $album_artist = $search['artist_name'];
-                        $album_id = $search['album_id'];
-    
-                        include("includes/music_card.php");
-                        $music_card_count++;
+                if($visible_search_data) {
+                    if($visible_search_data){
+                        foreach($visible_search_data as $search){
+                            $album_art_url = $search['art_url'];
+                            $rating = $search['AverageRating'];
+                            $album_title = $search['album_title'];
+                            $album_artist = $search['artist_name'];
+                            $album_id = $search['album_id'];
+        
+                            include("includes/music_card.php");
+                            $music_card_count++;
+                        }
                     }
+                } else {
+                    echo "<h2 class='d-flex justify-content-center mt-3'>No results!</h2>";
+                    echo "<p class='d-flex justify-content-center'>Sorry, your search was a little too niche.</p>";
                 }
+
                 ?>
             </div>
         </div>

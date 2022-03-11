@@ -86,7 +86,7 @@
         include("includes/navbar.php");
         ?>
 
-        <div class="row d-flex justify-content-center">
+        <div class="row d-flex justify-content-center userPage">
             <div class="col-12 col-sm-5 col-md-4 userSidebar">
                 <div class="row d-flex justify-content-center mb-3">
                     <div class="col-10 align-self-center">
@@ -176,6 +176,8 @@
                                                 include("includes/music_card.php");
                                                 $music_card_count++;
                                             }
+                                        } else {
+                                            echo "<h4 class='d-flex justify-content-center mt-3'>No owned music.</h4>";
                                         }
                                         ?>
 
@@ -198,6 +200,8 @@
                                                 include("includes/music_card.php");
                                                 $music_card_count++;
                                             }
+                                        } else {
+                                            echo "<h4 class='d-flex justify-content-center mt-3'>No favourited music.</h4>";
                                         }
                                         ?>
 
@@ -226,6 +230,8 @@
                                                 include("includes/community_card.php");
                                                 $community_card_count++;
                                             }
+                                        } else {
+                                            echo "<h4 class='d-flex justify-content-center mt-3'>No joined communities.</h4>";
                                         }
                                         ?>
 
@@ -273,6 +279,8 @@
                                                 echo "</div>";
                                                 $review_card_count++;
                                             }
+                                        } else {
+                                            echo "<h4 class='d-flex justify-content-center mt-3'>No reviews.</h4>";
                                         }
                                         ?>
 

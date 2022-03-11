@@ -141,6 +141,10 @@ html, body {
     padding-right: 1%;
 }
 
+.resultsGrid { 
+    min-height: 64vh;
+}
+
 .clearButton {
     background-color: red;
     border: red;
@@ -196,6 +200,10 @@ html, body {
 .reviewUserArt {
     max-height: 75%;
     width: auto;
+}
+
+.userPage {
+    min-height: 64vh;
 }
 
 .userSidebar {

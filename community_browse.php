@@ -56,8 +56,10 @@
 
     if(!empty($_SESSION['filtered_community_data'])){
         $community_count = count($_SESSION['filtered_community_data']);
-    } else{
+    } else if($_SESSION['community_data']){
         $community_count = count($_SESSION['community_data']);
+    } else {
+        $community_count = 0;
     }
 
     include ("php/pagination/pagination_communities.php");
@@ -143,7 +145,7 @@
             </div>
         </form>
 
-        <div class="row">
+        <div class="row resultsGrid">
             <!-- Filter Sidebar -->
             <div class="col-12 col-md-3 sidebar" id="musicSidebar">
                 <div class="row mb-2">
@@ -257,7 +259,7 @@
                             ?>
                         </select>
                     </div>
-                    <div class="row mb-5 d-flex justify-content-center form-group">
+                    <div class="row mb-5 mt-4 d-flex justify-content-center form-group">
                         <div class="col-12 col-sm-4 mb-2 text-center">
                             <a type="button" class="btn clearButton" href="php/filter/clearCommunityFilters.php">Clear</a>
                         </div>
@@ -272,16 +274,21 @@
 
                 <?php
 
-                foreach ($visible_community_data as $row) {
-                    $community_art_url = $row['art_url'];
-                    $community_name = $row['community_name'];
-                    $community_description = $row['community_description'];
-                    $community_members = $row['MemberCount'];
-
-                    include("includes/community_card.php");
-                    $community_card_count++;
+                if($visible_community_data) {
+                    foreach ($visible_community_data as $row) {
+                        $community_art_url = $row['art_url'];
+                        $community_name = $row['community_name'];
+                        $community_description = $row['community_description'];
+                        $community_members = $row['MemberCount'];
+    
+                        include("includes/community_card.php");
+                        $community_card_count++;
+                    }
+                } else {
+                    echo "<h2 class='d-flex justify-content-center mt-3'>No results!</h2>";
+                    echo "<p class='d-flex justify-content-center'>Sorry, your search was a little too niche.</p>";
                 }
-
+                
                 ?>
             </div>
 

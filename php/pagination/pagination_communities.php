@@ -20,8 +20,10 @@ $filtered_community_data = $_SESSION['filtered_community_data'];
 
 if(!empty($filtered_community_data)){
     $visible_community_data = array_slice($filtered_community_data,$offset,$cardsPerPage);
-} else{
+} else if($community_data){
     $visible_community_data = array_slice($community_data,$offset,$cardsPerPage);
+} else {
+    $visible_community_data = null;
 }
 
 ?>
