@@ -1,4 +1,4 @@
-<div class="footer">
+<div class="footer sticky-bottom">
             <div class="row">
                 <div class="col-12 col-md-9">
                     <div class="row my-2">

@@ -3,9 +3,9 @@
     $AdminCount = 0;
     $remember = new rememberMeController();
 
-    if(isset($_SESSION['userID_LoggedIn'])){
+    if(isset($_SESSION['userLoggedIn'])){
         //get user_id
-        $tokens = $remember -> parse_token($_SESSION['userID_LoggedIn']);
+        $tokens = $remember -> parse_token($_SESSION['userLoggedIn']);
         $token = $tokens[0];
         $token_endpoint = $base_url . "user/getUserByToken.php?token=$token";
         $token_resource = file_get_contents($token_endpoint);
@@ -80,7 +80,7 @@
         </div>
         <div class='col-9 col-md-4 d-flex justify-content-end'>
             <?php 
-                if(isset($_SESSION['userID_LoggedIn'])) {
+                if(isset($_SESSION['userLoggedIn'])) {
             ?>
                 <div class='dropdown'>
                     <a class='btn dropdown-toggle userDropdown' data-bs-toggle='dropdown'> 

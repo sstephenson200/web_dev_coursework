@@ -54,7 +54,7 @@ if(isset($_POST['submit'])) {
             $create_data = json_decode($create_resource, true);
 
             if($create_data['message'] == "Token created."){
-                $_SESSION['userID_LoggedIn'] = $token;
+                $_SESSION['userLoggedIn'] = $token;
             }
         }
 

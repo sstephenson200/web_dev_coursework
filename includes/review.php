@@ -1,7 +1,7 @@
 <div class="card reviewCard text-center bg-dark text-white border-secondary h-100 mb-3">
 	<div class="card-body">
         <div class="row py-2">
-            <?php if(isset($_SESSION['userID_LoggedIn']) and $logged_in_username == $username ) { ?>
+            <?php if(isset($_SESSION['userLoggedIn']) and $logged_in_username == $username ) { ?>
             <div class="col-3 col-sm-2 offset-9 offset-sm-10">
                 <a role='button px-1'>
                     <i id='editIcon<?php echo $review_card_count ?>' class='fas fa-edit fa-lg edit' data-toggle='popover' title='Edit' data-content='Edit Content' data-target='editIcon<?php echo $review_card_count ?>'></i>
@@ -11,7 +11,7 @@
                 </a>
             </div>
             <?php } ?>
-            <?php if(isset($_SESSION['userID_LoggedIn']) and $logged_in_username != $username) { ?>
+            <?php if(isset($_SESSION['userLoggedIn']) and $logged_in_username != $username) { ?>
             <div class="col-1 col-sm-2 offset-11 offset-sm-10">
                 <a role='button px-1'>
                     <i id='reportIcon<?php echo $review_card_count ?>' class='far fa-flag fa-lg report' data-toggle='popover' title='Report' data-content='Report Content' data-target='reportIcon<?php echo $review_card_count ?>'></i>

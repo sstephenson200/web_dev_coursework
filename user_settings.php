@@ -68,6 +68,8 @@
         include("includes/navbar.php");
         ?>
 
+        <?php if(isset($_SESSION['userLoggedIn']) and $logged_in_username == $username) { ?>
+
         <div class="row browseTitle mb-2">
             <div class="col-2">
                 <h2>Settings</h2>
@@ -271,13 +273,22 @@
             </div>
         </div>
 
+        <?php } else { ?>
 
+        <div class="row align-items-center restrictedMessage">
+            <div class="col text-center">
+                <h3>Are you lost?</h3>
+                <p>Sorry, this page isn't for you!</p>
+            </div>
+        </div>
+
+        <?php } ?>
 
         <!-- Footer -->
         <?php
             include("includes/footer.php");
         ?>
-
+            
     </div>
 
 </body>

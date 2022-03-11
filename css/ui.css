@@ -1,6 +1,12 @@
+html, body {
+    height: 100%;
+}
+
 .content {
     background-color: #1F1B24;
     color: white;
+    min-height: 100vh;
+    overflow: hidden;
 }
 
 .site_header {
@@ -166,11 +172,13 @@
 .signup {
     background-color: #bf3a30;
     background-image: linear-gradient(315deg, #bf3a30 0%, #864ba2 74%);
+    height: 64vh;
 }
 
 .signupForm {
     border-radius: 5%;
     background-color: black;
+    height: fit-content;
 }
 
 .loginLink {
@@ -222,6 +230,10 @@
 
 .fa-user-plus, .fa-users {
     color: white;
+}
+
+.restrictedMessage {
+    height: 64vh;
 }
 
 .footer {

@@ -51,7 +51,7 @@
         include("includes/navbar.php");
         ?>
 
-        <div class="row signup d-flex justify-content-center py-2">
+        <div class="row signup d-flex justify-content-center align-items-center py-2">
             <div class="col-10 col-sm-6 col-md-5 col-lg-4 col-xl-3 signupForm border px-3">
                 <div class="text-center mt-3">
                     <h3>Create An Account</h3>
@@ -78,7 +78,7 @@
                         <label for="password2Signup">Confirm Password</label>
                         <input type="password" class="form-control" id="password2Signup" name="password2Signup" placeholder="Password" required="required">
                     </div>
-                    <div class="form-group text-center mb-3">
+                    <div class="form-group text-center pb-3">
                         <button type="submit" name="submit" class="btn styled_button">Submit</button>
                     </div>
                 </form>

@@ -106,7 +106,7 @@
                 </div>
                 <div class="row text-center mb-2">
                     <div class="col">
-                        <?php if(isset($_SESSION['userID_LoggedIn']) and $logged_in_username == $username) {?>
+                        <?php if(isset($_SESSION['userLoggedIn']) and $logged_in_username == $username) {?>
                             <a type='button' class='btn styled_button' href='user_settings.php?user_id=<?php echo $user_id ?>'><i class="fas fa-cog"></i> Settings</a>
                         <?php } ?>
                         <?php 
@@ -119,12 +119,12 @@
             <div class="col-12 col-sm-7 col-md-8">
                 <div class="row py-1">
                     <div class="col-3 offset-9 col-md-1 offset-md-11">
-                        <?php if(isset($_SESSION['userID_LoggedIn']) and $logged_in_username != $username) {?>
+                        <?php if(isset($_SESSION['userLoggedIn']) and $logged_in_username != $username) {?>
                             <a role='button px-1'>
                                 <i id='reportIcon' class='far fa-flag fa-lg report' data-toggle='popover' title='Report' data-content='Report Content' data-target='reportIcon'></i>
                             </a>
                         <?php } ?>
-                        <?php if(isset($_SESSION['userID_LoggedIn']) and $logged_in_username != $username) {
+                        <?php if(isset($_SESSION['userLoggedIn']) and $logged_in_username != $username) {
                             if($AdminCount != 0) { ?>
                                 <a role='button px-1'>
                                     <i id='banIcon' class='fas fa-ban fa-lg ban' data-toggle='popover' title='Ban' data-content='Ban User' data-target='banIcon'></i>
