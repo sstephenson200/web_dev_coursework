@@ -7,6 +7,8 @@
         });
 });
 
+<?php if($_SESSION['userLoggedIn']){ ?>
+
     $('.favourite').click(function () {
         var target = $(this).attr('data-target');
         $('#'+target).toggleClass("far fa-heart fa-lg");
@@ -30,5 +32,7 @@
         $('#'+target).toggleClass("far fa-flag fa-lg");
         $('#'+target).toggleClass("fas fa-flag fa-lg");
 });
+
+<?php } ?>
 
 </script>

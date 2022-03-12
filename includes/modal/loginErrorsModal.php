@@ -14,6 +14,10 @@ if(isset($_SESSION['loginErrors'])){
           $title = "Cat got your tongue?";
           $body = "Please fill in all fields in the Login form to continue.";
           break;
+        case 'Card features.':
+          $title = "Who are you?";
+          $body = "Sorry about this, but you need to log in to use that feature.";
+          break;
         default:
             $title = "Awkward...";
             $body = "Something went wrong. Please try again later.";

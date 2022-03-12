@@ -7,7 +7,12 @@
             </div>
             <div class="card-footer row border-secondary align-items-center mx-0">
                 <div class="col-6">
-                    <a role="button">
+                    <a role="button"
+                    <?php if(!isset($_SESSION['userLoggedIn'])) {
+                         echo "href='login.php'"; 
+                         $_SESSION['loginErrors'] = "Card features.";
+                        } 
+                ?>>
                         <i id="joinIcon<?php echo $community_card_count ?>" class="fas fa-user-plus fa-lg join" data-toggle="popover" title="Join" data-content="Join this community" data-target='joinIcon<?php echo $community_card_count ?>'></i>
                     </a>
                 </div>

@@ -107,12 +107,22 @@
                 <img class='albumArt img-thumbnail mx-auto d-block h-75 w-auto' src='<?php echo $album_art_url ?>'>
                 <div class="row d-flex justify-content-center mt-4 pl-2">
                     <div class='col-2 col-xl-1 own text-center'>
-                    <a role='button'>
+                    <a role='button'
+                    <?php if(!isset($_SESSION['userLoggedIn'])) {
+                         echo "href='login.php'"; 
+                         $_SESSION['loginErrors'] = "Card features.";
+                        } 
+                    ?>>
                         <i id='ownIcon' class='fas fa-plus fa-2x own' data-toggle='popover' title='Own' data-content='Owned music' data-target='ownIcon'></i>
                     </a>
                     </div>
                     <div class='col-2 col-xl-1 favourite'>
-                        <a role='button'>
+                        <a role='button'
+                        <?php if(!isset($_SESSION['userLoggedIn'])) {
+                         echo "href='login.php'"; 
+                         $_SESSION['loginErrors'] = "Card features.";
+                        } 
+                        ?>>
                             <i id='favouriteIcon' class='far fa-heart fa-2x favourite' data-toggle='popover' title='Favourite' data-content='Favourited Music' data-target='favouriteIcon'></i>
                         </a>
                     </div> 
