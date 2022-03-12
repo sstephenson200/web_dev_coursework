@@ -301,6 +301,7 @@ class User {
         return $statement;
     }
 
+    //Function to get user_id associated with entered email
     public function getUserIDByEmail($email) {
         $query = "SELECT user_id FROM user WHERE user_email = ?";
 
@@ -308,6 +309,90 @@ class User {
         $email = htmlspecialchars(strip_tags($email));
         $email = $this -> conn -> real_escape_string($email);
         $statement -> bind_param("s", $email);
+        $statement -> execute();
+        return $statement;
+    }
+
+    //Function to add an album to a user's favourites
+    public function addUserFavourite($user_id, $album_id){
+        $query = "INSERT INTO favourite_music (favourite_music_id, user_id, album_id) VALUES (null, ?, ?)";
+
+        $statement = $this -> conn -> prepare($query);
+        $user_id = htmlspecialchars(strip_tags($user_id));
+        $user_id = $this -> conn -> real_escape_string($user_id);
+        $album_id = htmlspecialchars(strip_tags($album_id));
+        $album_id = $this -> conn -> real_escape_string($album_id);
+        $statement -> bind_param("ss", $user_id, $album_id);
+        $statement -> execute();
+        return $statement;
+    }
+
+    //Function to add an album to a user's owned albums
+    public function addUserOwned($user_id, $album_id) {
+        $query = "INSERT INTO owned_music (owned_music_id, user_id, album_id) VALUES (null, ?, ?)";
+
+        $statement = $this -> conn -> prepare($query);
+        $user_id = htmlspecialchars(strip_tags($user_id));
+        $user_id = $this -> conn -> real_escape_string($user_id);
+        $album_id = htmlspecialchars(strip_tags($album_id));
+        $album_id = $this -> conn -> real_escape_string($album_id);
+        $statement -> bind_param("ss", $user_id, $album_id);
+        $statement -> execute();
+        return $statement;
+    }
+
+    //Function to add user to community
+    public function joinCommunity($user_id, $community_id) {
+        $query = "INSERT INTO joined_communities (joined_communities_id, user_id, community_id) VALUES (null, ?, ?)";
+
+        $statement = $this -> conn -> prepare($query);
+        $user_id = htmlspecialchars(strip_tags($user_id));
+        $user_id = $this -> conn -> real_escape_string($user_id);
+        $community_id = htmlspecialchars(strip_tags($community_id));
+        $community_id = $this -> conn -> real_escape_string($community_id);
+        $statement -> bind_param("ss", $user_id, $community_id);
+        $statement -> execute();
+        return $statement;
+    }
+
+    //Function to delete user's favourited album
+    public function deleteUserFavourite($user_id, $album_id) {
+        $query = "DELETE FROM favourite_music WHERE user_id = ? AND album_id=?";
+
+        $statement = $this -> conn -> prepare($query);
+        $user_id = htmlspecialchars(strip_tags($user_id));
+        $user_id = $this -> conn -> real_escape_string($user_id);
+        $album_id = htmlspecialchars(strip_tags($album_id));
+        $album_id = $this -> conn -> real_escape_string($album_id);
+        $statement -> bind_param("ss", $user_id, $album_id);
+        $statement -> execute();
+        return $statement;
+    }
+
+    //Function to delete user's owned album
+    public function deleteUserOwned($user_id, $album_id) {
+        $query = "DELETE FROM owned_music WHERE user_id = ? AND album_id=?";
+
+        $statement = $this -> conn -> prepare($query);
+        $user_id = htmlspecialchars(strip_tags($user_id));
+        $user_id = $this -> conn -> real_escape_string($user_id);
+        $album_id = htmlspecialchars(strip_tags($album_id));
+        $album_id = $this -> conn -> real_escape_string($album_id);
+        $statement -> bind_param("ss", $user_id, $album_id);
+        $statement -> execute();
+        return $statement;
+    }
+
+    //Function to remove user from community
+    public function leaveCommunity($user_id, $community_id) {
+        $query = "DELETE FROM joined_communities WHERE user_id = ? AND community_id=?";
+
+        $statement = $this -> conn -> prepare($query);
+        $user_id = htmlspecialchars(strip_tags($user_id));
+        $user_id = $this -> conn -> real_escape_string($user_id);
+        $community_id = htmlspecialchars(strip_tags($community_id));
+        $community_id = $this -> conn -> real_escape_string($community_id);
+        $statement -> bind_param("ss", $user_id, $community_id);
         $statement -> execute();
         return $statement;
     }
