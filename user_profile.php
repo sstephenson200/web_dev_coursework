@@ -24,9 +24,9 @@
     $user_location = $profile_data[0]['location_code']; 
 
     //get owned music
-    $owned_endpoint = $base_url . "user/getOwnedAlbumsByUserID.php?user_id=$user_id";
-    $owned_resource = @file_get_contents($owned_endpoint);
-    $owned_data = json_decode($owned_resource, true);
+    $user_owned_endpoint = $base_url . "user/getOwnedAlbumsByUserID.php?user_id=$user_id";
+    $user_owned_resource = @file_get_contents($user_owned_endpoint);
+    $user_owned_data = json_decode($user_owned_resource, true);
 
     //get favourited music
     $favourited_endpoint = $base_url . "user/getFavouriteAlbumsByUserID.php?user_id=$user_id";
@@ -84,6 +84,9 @@
 
         <?php
         include("includes/navbar.php");
+        include("php/user/getUserAlbums.php");
+        include("php/user/getUserCommunities.php");
+
         ?>
 
         <div class="row d-flex justify-content-center userPage">
@@ -165,8 +168,8 @@
                                     <div class="col py-3 px-2">
 
                                         <?php
-                                        if($owned_data){
-                                            foreach($owned_data as $owned_album){
+                                        if($user_owned_data){
+                                            foreach($user_owned_data as $owned_album){
                                                 $album_art_url = $owned_album['art_url'];
                                                 $rating = $owned_album['AverageRating'];
                                                 $album_title = $owned_album['album_title'];

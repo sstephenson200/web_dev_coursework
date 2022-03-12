@@ -65,6 +65,8 @@
 
         <?php
         include("includes/navbar.php");
+        include("php/user/getUserAlbums.php");   
+        include("php/user/getUserCommunities.php"); 
         ?>
 
         <!-- Jumbotron -->

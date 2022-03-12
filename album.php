@@ -100,6 +100,8 @@
 
         <?php
         include("includes/navbar.php");
+        include("php/user/getUserAlbums.php");    
+        include("php/user/compareUserAlbums.php");
         ?>
 
         <div class="row d-flex justify-content-center py-2">
@@ -109,21 +111,19 @@
                     <div class='col-2 col-xl-1 own text-center'>
                     <a role='button'
                     <?php if(!isset($_SESSION['userLoggedIn'])) {
-                         echo "href='login.php'"; 
-                         $_SESSION['loginErrors'] = "Card features.";
+                         echo "href='php/user/processCardFunctionError.php'"; 
                         } 
                     ?>>
-                        <i id='ownIcon' class='fas fa-plus fa-2x own' data-toggle='popover' title='Own' data-content='Owned music' data-target='ownIcon'></i>
+                        <i id='ownIcon' class='fas <?php if($ownedFlag) { ?> fa-check <?php } else { ?> fa-plus <?php } ?> fa-2x own' data-toggle='popover' title='Own' data-content='Owned music' data-target='ownIcon'></i>
                     </a>
                     </div>
                     <div class='col-2 col-xl-1 favourite'>
                         <a role='button'
                         <?php if(!isset($_SESSION['userLoggedIn'])) {
-                         echo "href='login.php'"; 
-                         $_SESSION['loginErrors'] = "Card features.";
+                         echo "href='php/user/processCardFunctionError.php'"; 
                         } 
                         ?>>
-                            <i id='favouriteIcon' class='far fa-heart fa-2x favourite' data-toggle='popover' title='Favourite' data-content='Favourited Music' data-target='favouriteIcon'></i>
+                            <i id='favouriteIcon' class='<?php if($favouriteFlag) { ?> fas <?php } else { ?> far <?php } ?> fa-heart fa-2x favourite' data-toggle='popover' title='Favourite' data-content='Favourited Music' data-target='favouriteIcon'></i>
                         </a>
                     </div> 
                 </div>   

@@ -122,6 +122,7 @@
 
         <?php
         include("includes/navbar.php");
+        include("php/user/getUserAlbums.php");
         ?>
 
         <!-- Title -->

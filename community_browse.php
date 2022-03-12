@@ -105,6 +105,7 @@
 
         <?php
         include("includes/navbar.php");
+        include("php/user/getUserCommunities.php");
         ?>
 
         <!-- Title -->

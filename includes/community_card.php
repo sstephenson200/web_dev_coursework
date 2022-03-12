@@ -1,3 +1,9 @@
+<?php 
+    
+    include("php/user/compareUserCommunities.php");
+
+?>
+
 <div class="community mx-3">
     <div class="card communityCard text-center bg-dark text-white border-secondary mb-3">
         <img class="card-img-top img-thumbnail communityArt h-50" src="<?php echo $community_art_url ?>" alt="Card image cap">
@@ -9,11 +15,10 @@
                 <div class="col-6">
                     <a role="button"
                     <?php if(!isset($_SESSION['userLoggedIn'])) {
-                         echo "href='login.php'"; 
-                         $_SESSION['loginErrors'] = "Card features.";
+                         echo "href='php/user/processCardFunctionError.php'"; 
                         } 
                 ?>>
-                        <i id="joinIcon<?php echo $community_card_count ?>" class="fas fa-user-plus fa-lg join" data-toggle="popover" title="Join" data-content="Join this community" data-target='joinIcon<?php echo $community_card_count ?>'></i>
+                        <i id="joinIcon<?php echo $community_card_count ?>" class="fas <?php if($communityFlag) { ?> fa-users <?php } else { ?> fa-user-plus <?php } ?> fa-lg join" data-toggle="popover" title="Join" data-content="Join this community" data-target='joinIcon<?php echo $community_card_count ?>'></i>
                     </a>
                 </div>
                 <div class="col-6 view">
