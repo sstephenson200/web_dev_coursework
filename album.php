@@ -256,6 +256,8 @@
             </div>
         </div>
 
+        <?php if(isset($_SESSION['userLoggedIn'])) { ?>
+
         <div class="row d-flex justify-content-center">
             <div class="col-10 col-md-8 p-2 border bg-dark">
                 <div class="row">
@@ -294,6 +296,8 @@
                 </div> 
             </div>  
         </div>
+
+        <?php } ?>
 
         <div class="row d-flex justify-content-center m-4">
             <?php 

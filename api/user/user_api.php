@@ -286,6 +286,32 @@ class User {
         return $statement;
     }
 
+    //Function to update a user's password
+    public function updatePassword($password, $user_id){
+        $query = "UPDATE user SET user_password=? WHERE user_id=?";
+
+        $statement = $this -> conn -> prepare($query);
+        $password = htmlspecialchars(strip_tags($password));
+        $password = $this -> conn -> real_escape_string($password);
+        $password = password_hash($password, PASSWORD_DEFAULT);
+        $user_id = htmlspecialchars(strip_tags($user_id));
+        $user_id = $this -> conn -> real_escape_string($user_id);
+        $statement -> bind_param("ss", $password, $user_id);
+        $statement -> execute();
+        return $statement;
+    }
+
+    public function getUserIDByEmail($email) {
+        $query = "SELECT user_id FROM user WHERE user_email = ?";
+
+        $statement = $this -> conn -> prepare($query);
+        $email = htmlspecialchars(strip_tags($email));
+        $email = $this -> conn -> real_escape_string($email);
+        $statement -> bind_param("s", $email);
+        $statement -> execute();
+        return $statement;
+    }
+
 }
 
 ?>

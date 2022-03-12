@@ -39,29 +39,37 @@
         }
     ?>
 
+    <?php
+        if(isset($_SESSION['passwordResetMessage'])){
+            include("includes/modal/passwordResetModal.php");
+        }
+    ?>
+
     <div class="container-fluid p-0 content">
 
         <?php
         include("includes/navbar.php");
         ?>
 
-        <div class="row signup d-flex justify-content-center align-items-center py-2">
-            <div class="col-10 col-sm-6 col-md-5 col-lg-4 col-xl-3 signupForm border px-3">
-                <div class="text-center mt-3">
-                    <h3>Reset Password</h3>
-                    <p>Forgot your password? No worries.</p>
+        <form action="php/user/processPasswordReset.php" method="POST">
+            <div class="row signup d-flex justify-content-center align-items-center py-2">
+                <div class="col-10 col-sm-6 col-md-5 col-lg-4 col-xl-3 signupForm border px-3">
+                    <div class="text-center mt-3">
+                        <h3>Reset Password</h3>
+                        <p>Forgot your password? No worries.</p>
+                    </div>
+                    <div class="form-group mb-3">
+                        <i class="fas fa-envelope"></i>
+                        <label for="emailReset">Email Address</label>
+                        <input type="email" class="form-control" name="emailReset" id="emailReset" placeholder="name@example.com" required="required">
+                    </div>
+                    <div class="text-center mb-3">
+                        <button type="submit" name="submit" class="btn styled_button">Reset Password</button>
+                    </div>
+                    
                 </div>
-                <div class="form-group mb-3">
-                    <i class="fas fa-envelope"></i>
-                    <label for="emailLogin">Email Address</label>
-                    <input type="email" class="form-control" id="emailReset" placeholder="name@example.com" required="required">
-                </div>
-                <div class="text-center mb-3">
-                    <button type="submit" class="btn styled_button">Reset Password</button>
-                </div>
-                
             </div>
-        </div>
+        </form>
 
         <!-- Footer -->
         <?php
