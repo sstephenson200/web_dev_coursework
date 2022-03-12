@@ -150,6 +150,7 @@
                 foreach ($community_data as $row) {
                     echo "<div class='col-xs-12 col-sm-6 col-m-6 col-lg-6 col-xl-3 d-flex justify-content-center'>";
 
+                    $community_id = $row['community_id'];
                     $community_art_url = $row['art_url'];
                     $community_name = $row['community_name'];
                     $community_description = $row['community_description'];

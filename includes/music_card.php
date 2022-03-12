@@ -31,7 +31,9 @@
                 <a role='button' 
                 <?php if(!isset($_SESSION['userLoggedIn'])) {
                          echo "href='php/user/processCardFunctionError.php'";  
-                        } 
+                        } else {
+                            echo "href='php/user/processOwnedAlbum.php?album_id=$album_id&owned=$ownedFlag'";
+                        }
                 ?>>
                     <i id='ownIcon<?php echo $music_card_count ?>' class='fas <?php 
                         if($ownedFlag) { ?> fa-check <?php } else { ?> fa-plus <?php } ?> fa-lg own' data-toggle='popover' title='Own' data-content='Owned music' data-target='ownIcon<?php echo $music_card_count ?>'></i>
@@ -41,6 +43,8 @@
                 <a role='button'
                 <?php if(!isset($_SESSION['userLoggedIn'])) {
                          echo "href='php/user/processCardFunctionError.php'"; 
+                        } else {
+                            echo "href='php/user/processFavouriteAlbum.php?album_id=$album_id&favourited=$favouriteFlag'";
                         } 
                 ?>>
                     <i id='favouriteIcon<?php echo $music_card_count ?>' class='<?php

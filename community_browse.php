@@ -277,6 +277,7 @@
 
                 if($visible_community_data) {
                     foreach ($visible_community_data as $row) {
+                        $community_id = $row['community_id'];
                         $community_art_url = $row['art_url'];
                         $community_name = $row['community_name'];
                         $community_description = $row['community_description'];
