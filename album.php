@@ -96,6 +96,12 @@
         }
     ?>
 
+    <?php
+        if(isset($_SESSION['postReview'])){
+            include("includes/modal/postReviewModal.php");
+        }
+    ?>
+
     <div class="container-fluid p-0 content">
 
         <?php
@@ -282,7 +288,9 @@
                         <div class="col-6 col-sm-8">
                             <div class="form-group mb-3">
                             <label for="reviewTitle">Title</label>
-                            <input type="text" class="form-control" id="reviewTitle" name="reviewTitle" placeholder="Review Title" required="required">
+                            <input type="text" class="form-control" id="reviewTitle" name="reviewTitle" maxlength="30" placeholder="Review Title" required="required">
+                            <input type="hidden" name="album_id" value="<?php echo $album_id ?>" />
+                            <input type="hidden" name="user_id" value="<?php echo $logged_in_user_id ?>" />
                             </div>
                         </div>
                         <div class="col-4 col-sm-2">
@@ -300,7 +308,7 @@
                     <div class="col-10">
                         <div class="form-group">
                             <label for="reviewText">Your Review</label>
-                            <textarea class="form-control" id="reviewText" name="reviewText" rows="3" placeholder="Please enter your review..." maxlength="250" required="required"></textarea>
+                            <textarea class="form-control" id="reviewText" name="reviewText" rows="3" maxlength="250" placeholder="Please enter your review..." required="required"></textarea>
                         </div>
                     </div>
                 </div>
