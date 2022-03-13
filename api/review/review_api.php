@@ -29,7 +29,8 @@ class Review {
                     ON review.user_id = user.user_id
                     INNER JOIN art
                     ON user.art_id = art.art_id
-                    WHERE review.album_id = ?";
+                    WHERE review.album_id = ?
+                    AND status_id = 1";
 
         $statement = $this -> conn -> prepare($query);
         $album_id = htmlspecialchars(strip_tags($album_id));
@@ -165,6 +166,26 @@ class Review {
         $statement -> bind_param("ss", $search, $search);
         $statement -> execute();
         return $statement;        
+    }
+
+    //Function to create a new review
+    public function createReview($user_id, $album_id, $title, $text, $rating){
+        $query = "INSERT INTO review (review_id, review_title, review_text, review_rating, album_id, user_id) VALUES (null, ?, ?, ?, ?, ?)";
+
+        $statement = $this -> conn -> prepare($query);
+        $user_id = htmlspecialchars(strip_tags($user_id));
+        $user_id = $this -> conn -> real_escape_string($user_id);
+        $album_id = htmlspecialchars(strip_tags($album_id));
+        $album_id = $this -> conn -> real_escape_string($album_id);
+        $title = htmlspecialchars(strip_tags($title));
+        $title = $this -> conn -> real_escape_string($title);
+        $text = htmlspecialchars(strip_tags($text));
+        $text = $this -> conn -> real_escape_string($text);
+        $rating = htmlspecialchars(strip_tags($rating));
+        $rating = $this -> conn -> real_escape_string($rating);
+        $statement -> bind_param("sssss", $title, $text, $rating, $album_id, $user_id);
+        $statement -> execute();
+        return $statement;
     }
 
 }

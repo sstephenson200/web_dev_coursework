@@ -277,37 +277,39 @@
                 <div class="row">
                     <h2>Your Review</h2>
                 </div> 
-                <div class="row d-flex justify-content-center">
-                    <div class="col-6 col-sm-8">
-                        <div class="form-group mb-3">
-                        <label for="reviewTitle">Title</label>
-                        <input type="text" class="form-control" id="reviewTitle" placeholder="Review Title" required="required">
+                <form action="php/review/processPostReview.php" method="POST">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-6 col-sm-8">
+                            <div class="form-group mb-3">
+                            <label for="reviewTitle">Title</label>
+                            <input type="text" class="form-control" id="reviewTitle" name="reviewTitle" placeholder="Review Title" required="required">
+                            </div>
+                        </div>
+                        <div class="col-4 col-sm-2">
+                            <label for="reviewRating">Rating</label>
+                            <select class="form-select" aria-label="ratingSelector" id="reviewRating" name="reviewRating">
+                                <option value="5">5</option>
+                                <option value="4">4</option>
+                                <option value="3">3</option>
+                                <option value="2">2</option>
+                                <option value="1">1</option>
+                            </select>
                         </div>
                     </div>
-                    <div class="col-4 col-sm-2">
-                        <label for="reviewRating">Rating</label>
-                        <select class="form-select" aria-label="ratingSelector" id="reviewRating">
-                            <option value="5">5</option>
-                            <option value="4">4</option>
-                            <option value="3">3</option>
-                            <option value="2">2</option>
-                            <option value="1">1</option>
-                        </select>
-                    </div>
-                </div>
                 <div class="row d-flex justify-content-center">
                     <div class="col-10">
                         <div class="form-group">
                             <label for="reviewText">Your Review</label>
-                            <textarea class="form-control" id="reviewText" rows="3" placeholder="Please enter your review..."></textarea>
+                            <textarea class="form-control" id="reviewText" name="reviewText" rows="3" placeholder="Please enter your review..." maxlength="250" required="required"></textarea>
                         </div>
                     </div>
                 </div>
                 <div class="row d-flex justify-content-center mt-2">
                     <div class="col-2 mb-2">
-                        <button type="submit" class="btn styled_button">Submit</button>
+                        <button type="submit" name="submit" class="btn styled_button">Submit</button>
                     </div>
                 </div> 
+                </form>
             </div>  
         </div>
 
