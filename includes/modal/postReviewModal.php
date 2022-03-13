@@ -6,6 +6,10 @@ if(isset($_SESSION['postReview'])){
             $title = "Thanks for reviewing this album!";
             $body = "We've got your review and an administrator will be reviewing it shortly.";
             break;
+        case 'Previous review.':
+          $title = "You've already posted a review for this album";
+          $body = "Why not share your thoughts on another album?";
+          break;
         case 'Delete review.':
           $title = "You are about to delete this review.";
           $body = "Are you sure you want to proceed?";
@@ -13,6 +17,10 @@ if(isset($_SESSION['postReview'])){
         case 'Review deleted.':
           $title = "Your review has been deleted.";
           $body = "Be sure to post some more soon!";
+          break;
+        case 'Review updated.':
+          $title = "Your review has been updated.";
+          $body = "We've got your review and an administrator will be reviewing it shortly.";
           break;
         default:
             $title = "Awkward...";

@@ -54,6 +54,14 @@ if(isset($_SESSION['editDetails'])){
                     </div>
                 </div>
             </div>
+            <div class="row mt-2">
+                <div class="modal-footer">
+                    <div class="form-group">
+                        <button type="submit" name="edit" class="btn styled_button">Save Changes</button>
+                    </div>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </div>
         </form>
       </div>
     </div>
