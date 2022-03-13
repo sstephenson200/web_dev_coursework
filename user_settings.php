@@ -60,6 +60,10 @@
         if(isset($_SESSION['email_submission'])){
             include("includes/modal/emailSignupModal.php");
         }
+
+        if(isset($_SESSION['userSettingsMessage'])){
+            include("includes/modal/userSettingsModal.php");
+        }
     ?>
 
     <div class="container-fluid p-0 content">
@@ -167,30 +171,31 @@
 
                 <div class="row d-flex justify-content-center">
                     <div class="col-12 col-sm-10">
-                        
-                        <div class="row mb-2">
-                            <div class="col">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="emailOptIn" <?php if($user_contact_permissions=="1"){ echo "checked"; } ?>>
-                                    <label class="form-check-label" for="emailOptIn">Receive All Emails</label>
+                        <form action="php/user/processEmailPreferencesUpdate.php" method="POST">
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <div class="form-check" >
+                                        <input class="form-check-input" type="radio" name="radio" id="emailOptIn" value="1" <?php if($user_contact_permissions=="1"){ echo "checked"; } ?>>
+                                        <label class="form-check-label" for="emailOptIn">Receive All Emails</label>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="row mb-2">
-                            <div class="col">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="emailOptOut" <?php if($user_contact_permissions=="0"){ echo "checked"; } ?>>
-                                    <label class="form-check-label" for="emailOptOut">Account Related Emails Only</label>
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="radio" id="emailOptOut" value="0" <?php if($user_contact_permissions=="0"){ echo "checked"; } ?>>
+                                        <label class="form-check-label" for="emailOptOut">Account Related Emails Only</label>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="row text-center mb-2">
-                            <div class="col">
-                                <a type='submit' class='btn styled_button'>Save Email Preferences</a>
+                            <div class="row text-center mb-2">
+                                <div class="col">
+                                    <button type='submit' name="updateEmailPreferences" class='btn styled_button'>Save Email Preferences</button>
+                                </div>
                             </div>
-                        </div>
+                        </form>
 
                     </div>
                 </div>

@@ -427,6 +427,20 @@ class User {
         return $statement;
     }
 
+    //Function to update user's email contact permissions
+    public function updateUserContactPermissions($user_id, $permissions){
+        $query = "UPDATE user SET user_contact_permissions=? WHERE user_id =?";
+
+        $statement = $this -> conn -> prepare($query);
+        $permissions = htmlspecialchars(strip_tags($permissions));
+        $permissions = $this -> conn -> real_escape_string($permissions);
+        $user_id = htmlspecialchars(strip_tags($user_id));
+        $user_id = $this -> conn -> real_escape_string($user_id);
+        $statement -> bind_param("ss", $permissions, $user_id);
+        $statement -> execute();
+        return $statement;
+    }
+
 }
 
 ?>
