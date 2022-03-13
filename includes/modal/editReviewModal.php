@@ -5,12 +5,10 @@ if(isset($_SESSION['editReview'])){
 }
 
 if(isset($_SESSION['editDetails'])){
-    $user_id = $_SESSION['editDetails'][0];
-    $album_id = $_SESSION['editDetails'][1];
-    $review_title = $_SESSION['editDetails'][2];
-    $text = $_SESSION['editDetails'][3];
-    $rating = $_SESSION['editDetails'][4];
-
+    $album_id = $_SESSION['editDetails'][0];
+    $review_title = $_SESSION['editDetails'][1];
+    $text = $_SESSION['editDetails'][2];
+    $rating = $_SESSION['editDetails'][3];
 }
 
 ?>
@@ -32,7 +30,6 @@ if(isset($_SESSION['editDetails'])){
                         <label for="reviewTitle">Title</label>
                         <input type="text" class="form-control" id="reviewTitle" name="reviewTitle" maxlength="30" placeholder="<?php echo $review_title ?>" required="required">
                         <input type="hidden" name="album_id" value="<?php echo $album_id ?>" />
-                        <input type="hidden" name="user_id" value="<?php echo $user_id ?>" />
                     </div>
                 </div>
                 <div class="col-4 col-sm-2">

@@ -30,8 +30,7 @@ if(isset($_SESSION['postReview'])){
 }
 
 if(isset($_SESSION['reviewDetails'])){
-  $user_id = $_SESSION['reviewDetails'][0];
-  $album_id = $_SESSION['reviewDetails'][1];
+  $album_id = $_SESSION['reviewDetails'];
 }
 
 ?>
@@ -53,7 +52,6 @@ if(isset($_SESSION['reviewDetails'])){
           <form action="php/review/processDeleteReview.php" method="POST">
             <div class="form-group">
               <input type="hidden" name="album_id" value="<?php echo $album_id ?>" />
-              <input type="hidden" name="user_id" value="<?php echo $user_id ?>" />
               <button type="submit" name="delete" class="btn btn-danger">Confirm Deletion</button>
             </div>
           </form>
@@ -76,7 +74,7 @@ if(isset($_SESSION['postReview'])) {
     unset($_SESSION['postReview']);
 }
 
-if(isset($_SESSION['reviewDetails'])) {
+if(isset($_SESSION['reviewDetails'])){
   unset($_SESSION['reviewDetails']);
 }
 ?>
