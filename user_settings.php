@@ -96,13 +96,13 @@
                 <div class="col-12 col-sm-10">
                     <div class="row mb-2 d-flex justify-content-center">
                         <div class="col-12 col-md-4 align-self-center mb-4">
-                            <img src="<?php echo $user_art ?>" class="rounded-circle profilePic"/>
+                            <img src="<?php echo $user_art ?>" class="rounded-circle profilePic" width='200' height='200'/>
                         </div>
                         <div class="col-10 col-md-6 text-center">
                             <div class="form-group mb-4">
                                 <i class="fas fa-camera"></i>
                                 <label for="updateProfilePic">Profile Picture URL</label>
-                                <input type="url" class="form-control" id="updateProfilePic" name="updateProfilePic" placeholder="image.com" value="<?php echo $user_art ?>">
+                                <input type="url" class="form-control" id="updateProfilePic" name="updateProfilePic" placeholder="image.com" value="<?php echo $user_art ?>" required="required">
                             </div>
                             <div class="mb-2">
                                 <i class="fas fa-globe"></i>
@@ -128,7 +128,7 @@
                             <div class="form-group mb-2">
                                 <i class="fas fa-book"></i>
                                 <label for="updateBio">User Bio</label>
-                                <textarea class="form-control" id="updateBio" name="updateBio" maxlength="250" placeholder="What's your story?" rows="3"><?php echo $user_bio?></textarea>
+                                <textarea class="form-control" id="updateBio" name="updateBio" maxlength="250" placeholder="What's your story?" rows="3" required="required"><?php echo $user_bio?></textarea>
                             </div>
                         </div>
                     </div>

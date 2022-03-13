@@ -397,6 +397,36 @@ class User {
         return $statement;
     }
 
+    //Function to create new art record
+    public function createArt($art_url){
+        $query = "INSERT INTO art (art_id, art_url) VALUES (null, ?)";
+
+        $statement = $this -> conn -> prepare($query);
+        $art_url = htmlspecialchars(strip_tags($art_url));
+        $art_url = $this -> conn -> real_escape_string($art_url);
+        $statement -> bind_param("s", $art_url);
+        $statement -> execute();
+        return $statement;
+    }
+
+    //Function to update user profile data
+    public function updateUserProfile($user_id, $art_id, $location_name, $user_bio) {
+        $query = "UPDATE user SET art_id=?, location_id=(SELECT location.location_id FROM location WHERE location.location_name=?), user_bio=? WHERE user_id =?";
+
+        $statement = $this -> conn -> prepare($query);
+        $art_id = htmlspecialchars(strip_tags($art_id));
+        $art_id = $this -> conn -> real_escape_string($art_id);
+        $location_name = htmlspecialchars(strip_tags($location_name));
+        $location_name = $this -> conn -> real_escape_string($location_name);
+        $user_bio = htmlspecialchars(strip_tags($user_bio));
+        $user_bio = $this -> conn -> real_escape_string($user_bio);
+        $user_id = htmlspecialchars(strip_tags($user_id));
+        $user_id = $this -> conn -> real_escape_string($user_id);
+        $statement -> bind_param("ssss", $art_id, $location_name, $user_bio, $user_id);
+        $statement -> execute();
+        return $statement;
+    }
+
 }
 
 ?>
