@@ -91,57 +91,57 @@
             </div>
         </div>
 
-        <div class="row d-flex justify-content-center">
-            <div class="col-12 col-sm-10">
-
-                <div class="row mb-2 d-flex justify-content-center">
-                    <div class="col-12 col-md-4 align-self-center mb-4">
-                        <img src="<?php echo $user_art ?>" class="rounded-circle profilePic"/>
-                    </div>
-                    <div class="col-10 col-md-6 text-center">
-                        <div class="form-group mb-4">
-                            <i class="fas fa-camera"></i>
-                            <label for="updateProfilePic">Profile Picture URL</label>
-                            <input type="url" class="form-control" id="updateProfilePic" placeholder="image.com" value="<?php echo $user_art ?>">
+        <form action="php/user/processProfileUpdate.php" method="POST">
+            <div class="row d-flex justify-content-center">
+                <div class="col-12 col-sm-10">
+                    <div class="row mb-2 d-flex justify-content-center">
+                        <div class="col-12 col-md-4 align-self-center mb-4">
+                            <img src="<?php echo $user_art ?>" class="rounded-circle profilePic"/>
                         </div>
-                        <div class="form-group mb-2">
-                            <i class="fas fa-globe"></i>
-                            <label for="updateLocation">Location</label>
-                            <select class="form-select">
-                                <?php
-                                    foreach($location_data as $location){
-                                        $location = $location['location_name'];
+                        <div class="col-10 col-md-6 text-center">
+                            <div class="form-group mb-4">
+                                <i class="fas fa-camera"></i>
+                                <label for="updateProfilePic">Profile Picture URL</label>
+                                <input type="url" class="form-control" id="updateProfilePic" name="updateProfilePic" placeholder="image.com" value="<?php echo $user_art ?>">
+                            </div>
+                            <div class="mb-2">
+                                <i class="fas fa-globe"></i>
+                                <label for="updateLocation">Location</label>
+                                <select class="form-select" name="updateLocation">
+                                    <?php
+                                        foreach($location_data as $location){
+                                            $location = $location['location_name'];
 
-                                        if($location == $user_location_name){
-                                            echo "<option selected value='$location'>$location</option>";
-                                        } else {
-                                            echo "<option value='$location'>$location</option>";
+                                            if($location == $user_location_name){
+                                                echo "<option selected value='$location'>$location</option>";
+                                            } else {
+                                                echo "<option value='$location'>$location</option>";
+                                            }
                                         }
-                                    }
-                                ?>
-                            </select>
+                                    ?>
+                                </select>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="row mb-2 d-flex justify-content-center">
-                    <div class="col-10 text-center">
-                        <div class="form-group mb-2">
-                            <i class="fas fa-book"></i>
-                            <label for="updateBio">User Bio</label>
-                            <textarea class="form-control" id="updateBio" placeholder="What's your story?" rows="3"><?php echo $user_bio?></textarea>
+                    <div class="row mb-2 d-flex justify-content-center">
+                        <div class="col-10 text-center">
+                            <div class="form-group mb-2">
+                                <i class="fas fa-book"></i>
+                                <label for="updateBio">User Bio</label>
+                                <textarea class="form-control" id="updateBio" name="updateBio" maxlength="250" placeholder="What's your story?" rows="3"><?php echo $user_bio?></textarea>
+                            </div>
                         </div>
                     </div>
+                    <div class="row text-center mb-2">
+                        <div class="col">
+                            <div class="form-group">
+                                <button type="submit" name="saveProfile" class="btn styled_button">Save Profile</button>
+                            </div>
+                        </div>
+                    </div>        
                 </div>
-                
-                <div class="row text-center mb-2">
-                    <div class="col">
-                        <a type='submit' class='btn styled_button'>Save Profile</a>
-                    </div>
-                </div>
-
             </div>
-        </div>
+        </form>
 
         <div class="row px-5 mb-2">
             <div class="col-2">
