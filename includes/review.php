@@ -6,7 +6,7 @@
                 <a role='button px-1'>
                     <i id='editIcon<?php echo $review_card_count ?>' class='fas fa-edit fa-lg edit' data-toggle='popover' title='Edit' data-content='Edit Content' data-target='editIcon<?php echo $review_card_count ?>'></i>
                 </a>
-                <a role='button px-1'>
+                <a role='button px-1' href='php/review/confirmDeleteReview.php?user_id=<?php echo $user_id ?>&album_id=<?php echo $album_id ?>' class='text-reset text-decoration-none'>
                     <i id='deleteIcon<?php echo $review_card_count ?>' class='far fa-trash-alt fa-lg delete' data-toggle='popover' title='Delete' data-content='Delete Content' data-target='deleteIcon<?php echo $review_card_count ?>'></i>
                 </a>
             </div>

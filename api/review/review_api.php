@@ -188,6 +188,20 @@ class Review {
         return $statement;
     }
 
+    //Function to delete a user's review
+    public function deleteReview($user_id, $album_id){
+        $query = "DELETE FROM review WHERE user_id = ? AND album_id = ?";
+
+        $statement = $this -> conn -> prepare($query);
+        $user_id = htmlspecialchars(strip_tags($user_id));
+        $user_id = $this -> conn -> real_escape_string($user_id);
+        $album_id = htmlspecialchars(strip_tags($album_id));
+        $album_id = $this -> conn -> real_escape_string($album_id);
+        $statement -> bind_param("ss", $user_id, $album_id);
+        $statement -> execute();
+        return $statement;
+    }
+
 }
 
 ?>

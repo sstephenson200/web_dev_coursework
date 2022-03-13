@@ -80,6 +80,12 @@
         }
     ?>
 
+    <?php
+        if(isset($_SESSION['postReview'])){
+            include("includes/modal/postReviewModal.php");
+        }
+    ?>
+
     <div class="container-fluid p-0 content">
 
         <?php

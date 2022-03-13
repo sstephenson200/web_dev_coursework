@@ -94,9 +94,7 @@
         if(isset($_SESSION['email_submission'])){
             include("includes/modal/emailSignupModal.php");
         }
-    ?>
 
-    <?php
         if(isset($_SESSION['postReview'])){
             include("includes/modal/postReviewModal.php");
         }
