@@ -10,6 +10,14 @@ if(isset($_SESSION['userSettingsMessage'])){
           $title = "Email preferences updated";
           $body = "Looks like we're on the same page regarding the amount of emails you receive.";
           break;
+        case 'Incorrect password.':
+          $title = "Password incorrect";
+          $body = "Sorry, that password doesn't look right... Let's try that again.";
+          break;
+        case 'Passwords not a match.':
+          $title = "Not a pair";
+          $body = "It doesn't look like your passwords are a match. Please try again.";
+          break;
         default:
             $title = "Awkward...";
             $body = "Something went wrong. Please try again later.";

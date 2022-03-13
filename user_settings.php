@@ -220,28 +220,28 @@
 
                 <div class="row d-flex justify-content-center">
                     <div class="col-10 col-sm-8">
-                        
-                        <div class="form-group mb-3">
-                            <label for="passwordResetOld">Old Password</label>
-                            <input type="text" class="form-control" id="passwordResetOld" placeholder="Password" required="required">
-                        </div>
-
-                        <div class="form-group mb-3">
-                            <label for="passwordResetNew1">New Password</label>
-                            <input type="text" class="form-control" id="passwordResetNew1" placeholder="Password" required="required">
-                        </div>
-
-                        <div class="form-group mb-3">
-                            <label for="passwordResetNew2">Confirm New Password</label>
-                            <input type="text" class="form-control" id="passwordResetNew2" placeholder="Password" required="required">
-                        </div>
-
-                        <div class="row text-center mb-2">
-                            <div class="col">
-                                <a type='submit' class='btn styled_button'>Update Password</a>
+                        <form action="php/user/processPasswordUpdate.php" method="POST">
+                            <div class="form-group mb-3">
+                                <label for="passwordResetOld">Old Password</label>
+                                <input type="password" class="form-control" id="passwordResetOld" name="passwordResetOld" placeholder="Password" required="required">
                             </div>
-                        </div>
 
+                            <div class="form-group mb-3">
+                                <label for="passwordResetNew1">New Password</label>
+                                <input type="password" class="form-control" id="passwordResetNew1" name="passwordResetNew1" placeholder="Password" required="required">
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="passwordResetNew2">Confirm New Password</label>
+                                <input type="password" class="form-control" id="passwordResetNew2" name="passwordResetNew2" placeholder="Password" required="required">
+                            </div>
+
+                            <div class="row text-center mb-2">
+                                <div class="col">
+                                    <button type='submit' name="changePassword" class='btn styled_button'>Update Password</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
 

@@ -199,7 +199,7 @@ class User {
         return $statement;
     }
 
-    //Function to get user password
+    //Function to get user password by email
     public function getUserPassword($email){
         $query = "SELECT user_id, user_password FROM user WHERE user_email=?";
 
@@ -207,6 +207,18 @@ class User {
         $email = htmlspecialchars(strip_tags($email));
         $email = $this -> conn -> real_escape_string($email);
         $statement -> bind_param("s", $email);
+        $statement -> execute();
+        return $statement;
+    }
+
+    //Function to get user password by user_id
+    public function getUserPasswordByID($user_id){
+        $query = "SELECT user_password FROM user WHERE user_id=?";
+
+        $statement = $this -> conn -> prepare($query);
+        $user_id = htmlspecialchars(strip_tags($user_id));
+        $user_id = $this -> conn -> real_escape_string($user_id);
+        $statement -> bind_param("s", $user_id);
         $statement -> execute();
         return $statement;
     }
