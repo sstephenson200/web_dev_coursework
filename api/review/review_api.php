@@ -52,7 +52,8 @@ class Review {
                     ON review.album_id = album.album_id
                     INNER JOIN artist
                     ON album.artist_id = artist.artist_id
-                    WHERE review.user_id = ?";
+                    WHERE review.user_id = ?
+                    AND status_id = 1";
 
         $statement = $this -> conn -> prepare($query);
         $user_id = htmlspecialchars(strip_tags($user_id));

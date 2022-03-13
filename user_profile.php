@@ -84,6 +84,10 @@
         if(isset($_SESSION['postReview'])){
             include("includes/modal/postReviewModal.php");
         }
+
+        if(isset($_SESSION['editReview'])){
+            include("includes/modal/editReviewModal.php");
+        }
     ?>
 
     <div class="container-fluid p-0 content">
