@@ -18,6 +18,10 @@ if(isset($_SESSION['userSettingsMessage'])){
           $title = "Not a pair";
           $body = "It doesn't look like your passwords are a match. Please try again.";
           break;
+        case 'Password updated.':
+          $title = "You've updated your password";
+          $body = "You can now log in with your new password.";
+          break;
         default:
             $title = "Awkward...";
             $body = "Something went wrong. Please try again later.";
