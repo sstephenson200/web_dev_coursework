@@ -154,7 +154,13 @@
                     $community_art_url = $row['art_url'];
                     $community_name = $row['community_name'];
                     $community_description = $row['community_description'];
-                    $community_members = $row['MemberCount'];
+
+                    //get community size
+                    $community_size_endpoint = $base_url . "community/getCommunitySizeByCommunityID.php?community_id=$community_id";
+                    $community_size_resource = file_get_contents($community_size_endpoint);
+                    $community_size_data = json_decode($community_size_resource, true);
+
+                    $community_members = $community_size_data[0]['MemberCount'];
 
                     include("includes/community_card.php");
                     $community_card_count++;

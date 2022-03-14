@@ -28,7 +28,8 @@ if($user_count != 0){
         extract($row);
         $user = array (
             "user_id" => $user_id,
-            "user_password" => $user_password
+            "user_password" => $user_password,
+            "is_active" => $is_active
         );
 
         array_push($array, $user);

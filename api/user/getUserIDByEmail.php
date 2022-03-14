@@ -28,7 +28,8 @@ if($email) {
         while($row = $result -> fetch_assoc()) {
             extract($row);
             $user = array (
-                "user_id" => $user_id  
+                "user_id" => $user_id,
+                "is_active" => $is_active  
             );
     
             array_push($array, $user);

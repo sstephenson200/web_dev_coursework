@@ -13,35 +13,42 @@
 
     $user_id = $_GET['user_id'];
 
-    //get user profile data
-    $profile_endpoint = $base_url . "user/getProfileDataByUserID.php?user_id=$user_id";
-    $profile_resource = file_get_contents($profile_endpoint);
-    $profile_data = json_decode($profile_resource, true);
+    //check user active
+    $active_endpoint = $base_url . "user/checkUserActive.php?user_id=$user_id";
+    $active_resource = file_get_contents($active_endpoint);
+    $active_data = json_decode($active_resource, true);
 
-    $username = $profile_data[0]['user_name'];
-    $user_art = $profile_data[0]['art_url'];
-    $user_bio = $profile_data[0]['user_bio'];
-    $user_location = $profile_data[0]['location_code']; 
+    if($active_data['message']=="Account active."){
+        //get user profile data
+        $profile_endpoint = $base_url . "user/getProfileDataByUserID.php?user_id=$user_id";
+        $profile_resource = file_get_contents($profile_endpoint);
+        $profile_data = json_decode($profile_resource, true);
 
-    //get owned music
-    $user_owned_endpoint = $base_url . "user/getOwnedAlbumsByUserID.php?user_id=$user_id";
-    $user_owned_resource = @file_get_contents($user_owned_endpoint);
-    $user_owned_data = json_decode($user_owned_resource, true);
+        $username = $profile_data[0]['user_name'];
+        $user_art = $profile_data[0]['art_url'];
+        $user_bio = $profile_data[0]['user_bio'];
+        $user_location = $profile_data[0]['location_code']; 
 
-    //get favourited music
-    $favourited_endpoint = $base_url . "user/getFavouriteAlbumsByUserID.php?user_id=$user_id";
-    $favourited_resource = @file_get_contents($favourited_endpoint);
-    $favourited_data = json_decode($favourited_resource, true);
+        //get owned music
+        $user_owned_endpoint = $base_url . "user/getOwnedAlbumsByUserID.php?user_id=$user_id";
+        $user_owned_resource = @file_get_contents($user_owned_endpoint);
+        $user_owned_data = json_decode($user_owned_resource, true);
 
-    //get joined communities
-    $community_endpoint = $base_url . "user/getJoinedCommunitiesByUserID.php?user_id=$user_id";
-    $community_resource = @file_get_contents($community_endpoint);
-    $community_data = json_decode($community_resource, true);
+        //get favourited music
+        $favourited_endpoint = $base_url . "user/getFavouriteAlbumsByUserID.php?user_id=$user_id";
+        $favourited_resource = @file_get_contents($favourited_endpoint);
+        $favourited_data = json_decode($favourited_resource, true);
 
-    //get user reviews
-    $review_endpoint = $base_url . "review/getReviewsByUserID.php?user_id=$user_id";
-    $review_resource = @file_get_contents($review_endpoint);
-    $review_data = json_decode($review_resource, true);
+        //get joined communities
+        $community_endpoint = $base_url . "user/getJoinedCommunitiesByUserID.php?user_id=$user_id";
+        $community_resource = @file_get_contents($community_endpoint);
+        $community_data = json_decode($community_resource, true);
+
+        //get user reviews
+        $review_endpoint = $base_url . "review/getReviewsByUserID.php?user_id=$user_id";
+        $review_resource = @file_get_contents($review_endpoint);
+        $review_data = json_decode($review_resource, true);
+    }
 
 ?>
 
@@ -98,6 +105,8 @@
         include("php/user/getUserCommunities.php");
 
         ?>
+
+        <?php if($active_data['message']=="Account active.") { ?>
 
         <div class="row d-flex justify-content-center userPage">
             <div class="col-12 col-sm-5 col-md-4 userSidebar">
@@ -312,6 +321,17 @@
                 </div>
             </div>
         </div>
+
+        <?php } else { ?>
+
+        <div class="row align-items-center restrictedMessage">
+            <div class="col text-center">
+                <h3>Are you lost?</h3>
+                <p>Sorry, this page isn't for you!</p>
+            </div>
+        </div>
+
+        <?php } ?>
 
         <!-- Footer -->
         <?php

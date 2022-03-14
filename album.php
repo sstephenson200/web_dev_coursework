@@ -110,6 +110,7 @@
         include("includes/navbar.php");
         include("php/user/getUserAlbums.php");    
         include("php/user/compareUserAlbums.php");
+        include("php/user/getUserCommunities.php");
         ?>
 
         <div class="row d-flex justify-content-center py-2">
@@ -493,10 +494,19 @@
 
                 if($related_communities_data){
                     foreach($related_communities_data as $related_community){
+                        $community_id = $related_community['community_id'];
                         $community_art_url = $related_community['art_url'];
                         $community_name = $related_community['community_name'];
                         $community_description = $related_community['community_description'];
-                        $community_members = $related_community['MemberCount'];
+
+                        include("php/user/compareUserCommunities.php");
+
+                        //get community size
+                        $community_size_endpoint = $base_url . "community/getCommunitySizeByCommunityID.php?community_id=$community_id";
+                        $community_size_resource = file_get_contents($community_size_endpoint);
+                        $community_size_data = json_decode($community_size_resource, true);
+
+                        $community_members = $community_size_data[0]['MemberCount'];
             
                         include("includes/community_card.php");
                         $community_card_count++;

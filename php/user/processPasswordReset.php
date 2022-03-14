@@ -25,23 +25,30 @@ if(isset($_POST['submit'])) {
             if(array_key_exists('message', $user_data)) {
                 $_SESSION['passwordResetMessage'] = $user_data['message'];
             } else {
-                $user_id = $user_data[0]['user_id'];
-                //generate new password
-                $password = $password_reset -> generateUserPassword();
-                //update user password
-                $password_endpoint = $base_url . "user/updatePassword.php?password=$password&user_id=$user_id";
-                $password_resource = file_get_contents($password_endpoint);
-                $password_data = json_decode($password_resource, true);
-    
-                if($password_data['message'] != "Password updated.") {
-                    $_SESSION['passwordResetMessage'] = $password_data['message'];
+                $is_active = $user_data[0]['is_active'];
+
+                if($is_active == 1){
+                    $user_id = $user_data[0]['user_id'];
+                    //generate new password
+                    $password = $password_reset -> generateUserPassword();
+                    //update user password
+                    $password_endpoint = $base_url . "user/updatePassword.php?password=$password&user_id=$user_id";
+                    $password_resource = file_get_contents($password_endpoint);
+                    $password_data = json_decode($password_resource, true);
+        
+                    if($password_data['message'] != "Password updated.") {
+                        $_SESSION['passwordResetMessage'] = $password_data['message'];
+                    } else {
+                        //email to user
+                        $message = "Your new password is $password. Please update is as soon as possible.";
+                        $headers = "From: <passwordReset@pebblerevolution.com>" . "\r\n";
+                        //mail($email, "Password Reset", $message, $headers);
+                        $_SESSION['passwordResetMessage'] = "Updated.";
+                    }   
                 } else {
-                    //email to user
-                    $message = "Your new password is $password. Please update is as soon as possible.";
-                    $headers = "From: <passwordReset@pebblerevolution.com>" . "\r\n";
-                    //mail($email, "Password Reset", $message, $headers);
-                    $_SESSION['passwordResetMessage'] = "Updated.";
+                    $_SESSION['passwordResetMessage'] = "Deleted account.";
                 }
+                
             }
         } else {
             $_SESSION['passwordResetMessage'] = "Invalid email.";

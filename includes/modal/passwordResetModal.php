@@ -10,6 +10,10 @@ if(isset($_SESSION['passwordResetMessage'])){
           $title = "Is that an email address?";
           $body = "Sorry! That email address doesn't look valid. Please try again.";
           break;
+        case 'Deleted account.':
+          $title = "No entry";
+          $body = "This account is no longer active and cannot be accessed.";
+          break;
         default:
             $title = "Awkward...";
             $body = "Something went wrong. Please try again later.";

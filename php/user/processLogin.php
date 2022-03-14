@@ -27,37 +27,44 @@ if(isset($_POST['submit'])) {
         if(array_key_exists('message', $login_data)) {
             $_SESSION['loginErrors'] = $login_data['message'];
         } else {
-            //check password at login against stored password
-            $hashed_password = $login_data[0]['user_password'];
-            $flag = password_verify($password, $hashed_password);
-            if(!$flag){
-                //log error if password is incorrect
-                $_SESSION['loginErrors'] = "Password incorrect.";
-            } else {
-                //login successful
-                $user_id = $login_data[0]['user_id'];
-                //create token
-                [$selector, $validator, $token] = $remember -> generate_token();
-                //delete prior token
-                $delete_endpoint = $base_url . "user/deleteUserToken.php?user_id=$user_id";
-                $delete_resource = file_get_contents($delete_endpoint);
-                $delete_data = json_decode($delete_resource, true);
-                //set expiration
-                $expiry = date('Y-m-d H:i:s', time() + (86400 * 30));
-                $expiry_request = urlencode($expiry);
-                //create new token
-                $create_endpoint = $base_url . "user/createUserToken.php?selector=$selector&validator=$validator&expiry_date=$expiry_request&user_id=$user_id";
-                $create_resource = file_get_contents($create_endpoint);
-                $create_data = json_decode($create_resource, true);
-                
-                if($create_data['message'] == "Token created."){
-                    $_SESSION['userLoggedIn'] = $token;
-                    if(isset($_POST['loginCheckbox'])){
-                        $_SESSION['rememberMe'] = [$token, $expiry];
+
+            //check is account is active
+            if($login_data[0]['is_active'] == 1) {
+                //check password at login against stored password
+                $hashed_password = $login_data[0]['user_password'];
+                $flag = password_verify($password, $hashed_password);
+                if(!$flag){
+                    //log error if password is incorrect
+                    $_SESSION['loginErrors'] = "Password incorrect.";
+                } else {
+                    //login successful
+                    $user_id = $login_data[0]['user_id'];
+                    //create token
+                    [$selector, $validator, $token] = $remember -> generate_token();
+                    //delete prior token
+                    $delete_endpoint = $base_url . "user/deleteUserToken.php?user_id=$user_id";
+                    $delete_resource = file_get_contents($delete_endpoint);
+                    $delete_data = json_decode($delete_resource, true);
+                    //set expiration
+                    $expiry = date('Y-m-d H:i:s', time() + (86400 * 30));
+                    $expiry_request = urlencode($expiry);
+                    //create new token
+                    $create_endpoint = $base_url . "user/createUserToken.php?selector=$selector&validator=$validator&expiry_date=$expiry_request&user_id=$user_id";
+                    $create_resource = file_get_contents($create_endpoint);
+                    $create_data = json_decode($create_resource, true);
+                    
+                    if($create_data['message'] == "Token created."){
+                        $_SESSION['userLoggedIn'] = $token;
+                        if(isset($_POST['loginCheckbox'])){
+                            $_SESSION['rememberMe'] = [$token, $expiry];
+                        }
                     }
-                }
                
+                }
+            } else {
+                $_SESSION['loginErrors'] = "Deleted account.";
             }
+
         }
 
     } else{

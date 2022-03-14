@@ -26,6 +26,9 @@ class Community {
                     ON community.art_id = art.art_id
                     INNER JOIN joined_communities
                     ON community.community_id = joined_communities.community_id
+                    INNER JOIN user
+                    ON joined_communities.user_id = user.user_id
+                    WHERE user.is_active=1
                     GROUP BY community.community_id
                     ORDER BY COUNT(joined_communities.user_id) DESC
                     LIMIT 4";
@@ -37,11 +40,9 @@ class Community {
 
     //Function to get all communities
     public function getAllCommunities() {
-        $query = "SELECT community.community_id, community.community_name, community.community_description, art.art_url, artist.artist_name, COUNT(joined_communities.user_id) AS MemberCount FROM community
+        $query = "SELECT community.community_id, community.community_name, community.community_description, art.art_url, artist.artist_name FROM community
                     INNER JOIN art
                     ON community.art_id = art.art_id
-                    INNER JOIN joined_communities
-                    ON community.community_id = joined_communities.community_id
                     LEFT JOIN artist
                     ON community.artist_id = artist.artist_id
                     GROUP BY community.community_id";
@@ -84,11 +85,9 @@ class Community {
     //Function to get all communities by artist_name
     public function getCommunitiesByArtistName($artist_name){
 
-        $query = "SELECT community.community_id, community.community_name, community.community_description, art.art_url, artist.artist_name, COUNT(joined_communities.user_id) AS MemberCount FROM community
+        $query = "SELECT community.community_id, community.community_name, community.community_description, art.art_url, artist.artist_name FROM community
                     INNER JOIN art
                     ON community.art_id = art.art_id
-                    INNER JOIN joined_communities
-                    ON community.community_id = joined_communities.community_id
                     INNER JOIN artist
                     ON community.artist_id = artist.artist_id
                     WHERE artist.artist_name = ?
@@ -107,8 +106,6 @@ class Community {
         $query = "SELECT community.community_id, community.community_name, community.community_description, art.art_url FROM community
                     INNER JOIN art
                     ON community.art_id = art.art_id
-                    INNER JOIN joined_communities
-                    ON community.community_id = joined_communities.community_id
                     INNER JOIN status
                     ON community.status_id = status.status_id
                     WHERE status.status_title='Pending'
@@ -124,7 +121,10 @@ class Community {
         $query = "SELECT COUNT(joined_communities.user_id) AS MemberCount FROM community
                     INNER JOIN joined_communities
                     ON community.community_id = joined_communities.community_id
-                    WHERE community.community_id=?";
+                    INNER JOIN user
+                    ON joined_communities.user_id = user.user_id
+                    WHERE user.is_active=1
+                    AND community.community_id=?";
 
         $statement = $this -> conn -> prepare($query);
         $community_id = htmlspecialchars(strip_tags($community_id));

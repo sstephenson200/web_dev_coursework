@@ -31,6 +31,7 @@ class User {
     public $user_token_validator;
     public $expiry;
     public $AdminCount;
+    public $is_active;
     
     public function __construct($db) {
         $this -> conn = $db;
@@ -201,7 +202,7 @@ class User {
 
     //Function to get user password by email
     public function getUserPassword($email){
-        $query = "SELECT user_id, user_password FROM user WHERE user_email=?";
+        $query = "SELECT user_id, is_active, user_password FROM user WHERE user_email=?";
 
         $statement = $this -> conn -> prepare($query);
         $email = htmlspecialchars(strip_tags($email));
@@ -315,7 +316,7 @@ class User {
 
     //Function to get user_id associated with entered email
     public function getUserIDByEmail($email) {
-        $query = "SELECT user_id FROM user WHERE user_email = ?";
+        $query = "SELECT user_id, is_active FROM user WHERE user_email = ?";
 
         $statement = $this -> conn -> prepare($query);
         $email = htmlspecialchars(strip_tags($email));
@@ -455,6 +456,18 @@ class User {
 
     public function deleteAccount($user_id){
         $query = "UPDATE user SET is_active=0 WHERE user_id =?";
+
+        $statement = $this -> conn -> prepare($query);
+        $user_id = htmlspecialchars(strip_tags($user_id));
+        $user_id = $this -> conn -> real_escape_string($user_id);
+        $statement -> bind_param("s", $user_id);
+        $statement -> execute();
+        return $statement;
+    }
+
+    //Function to check if user's account is active or deleted
+    public function checkUserActive($user_id){
+        $query = "SELECT user.is_active FROM user WHERE user.user_id = ? LIMIT 1";
 
         $statement = $this -> conn -> prepare($query);
         $user_id = htmlspecialchars(strip_tags($user_id));

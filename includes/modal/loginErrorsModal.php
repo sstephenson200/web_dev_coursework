@@ -18,6 +18,10 @@ if(isset($_SESSION['loginErrors'])){
           $title = "Who are you?";
           $body = "Sorry about this, but you need to log in to use that feature.";
           break;
+        case 'Deleted account.':
+          $title = "No entry";
+          $body = "This account is no longer active and cannot be accessed.";
+          break;
         default:
             $title = "Awkward...";
             $body = "Something went wrong. Please try again later.";
