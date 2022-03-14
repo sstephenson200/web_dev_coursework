@@ -268,7 +268,7 @@
 
                         <div class="row text-center mb-2">
                             <div class="col">
-                                <a type='submit' class='btn styled_button'>Delete Account</a>
+                                <a type='submit' name="deleteAccount" href='php/user/confirmDeleteAccount.php' class='btn styled_button'>Delete Account</a>
                             </div>
                         </div>
 

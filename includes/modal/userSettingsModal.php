@@ -10,6 +10,10 @@ if(isset($_SESSION['userSettingsMessage'])){
           $title = "Email preferences updated";
           $body = "Looks like we're on the same page regarding the amount of emails you receive.";
           break;
+        case 'Invalid password length.':
+          $title = "Password length";
+          $body = "Please make sure your password is between 5 and 30 characters.";
+          break;
         case 'Incorrect password.':
           $title = "Password incorrect";
           $body = "Sorry, that password doesn't look right... Let's try that again.";
@@ -21,6 +25,10 @@ if(isset($_SESSION['userSettingsMessage'])){
         case 'Password updated.':
           $title = "You've updated your password";
           $body = "You can now log in with your new password.";
+          break;
+        case 'Delete account.':
+          $title = "You are about to delete your account!";
+          $body = "Are you sure? You won't be able to recover this account or create a new account with this email address.";
           break;
         default:
             $title = "Awkward...";
@@ -42,7 +50,23 @@ if(isset($_SESSION['userSettingsMessage'])){
       </div>
       <div class="modal-body">
         <p><?php echo $body ?></p>
-      </div>
+        <?php if($_SESSION['userSettingsMessage'] == "Delete account.") { ?>
+          <form action="php/user/processDeleteAccount.php" method="POST">
+          <div class="form-group mb-3">
+            <label for="passwordConfirmDelete">Password</label>
+            <input type="password" class="form-control" id="passwordConfirmDelete" name="passwordConfirmDelete" placeholder="Password" required="required">
+          </div>
+        </div>
+            <div class="modal-footer">
+              <div>
+                <button type="submit" name="confirmDelete" class="btn btn-danger">Confirm Deletion</button>
+              </div>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+          </form>
+      <?php } else { ?>
+        </div>
+      <?php } ?>
     </div>
   </div>
 </div>

@@ -103,7 +103,7 @@
             <div class="col-12 col-sm-5 col-md-4 userSidebar">
                 <div class="row d-flex justify-content-center mb-3">
                     <div class="col-10 align-self-center">
-                        <img src="<?php echo $user_art ?>" class="rounded-circle profilePic"/>
+                        <img src="<?php echo $user_art ?>" class="rounded-circle profilePic" width='200' height='200'/>
                     </div>
                 </div>
                 <div class="row d-flex justify-content-center text-center mb-2">

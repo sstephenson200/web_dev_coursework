@@ -21,7 +21,7 @@
         </div>
         <div class="row">
             <div class="col-12 col-md-5 col-lg-6 align-self-center">
-                <img src="<?php echo $user_art ?>?random=<?php echo rand() ?>" class="rounded-circle reviewUserArt"/>
+                <img src="<?php echo $user_art ?>?random=<?php echo rand() ?>" class="rounded-circle reviewUserArt" width='200' height='200'/>
             </div>
         	<div class="col-12 col-md-7 col-lg-6">
                 <div class="row d-flex justify-content-center">

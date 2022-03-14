@@ -25,36 +25,43 @@ if(isset($_POST['changePassword'])) {
         if($token_data){
             $logged_in_user_id = $token_data[0]['user_id'];
 
-            //check two new passwords match
-            if($passwordNew1 == $passwordNew2){
-                //check old password is correct
-                $check_password_endpoint = $base_url . "user/getUserPasswordByID.php?user_id=$logged_in_user_id";
-                $check_password_resource = file_get_contents($check_password_endpoint);
-                $check_password_data = json_decode($check_password_resource, true);
-            
-                if($check_password_data){
-                    $hashed_password = $check_password_data[0]['user_password'];
-                    if(password_verify($passwordOld, $hashed_password)) {
-                        //update password
-                        $password_endpoint = $base_url . "user/updatePassword.php?password=$passwordNew1&user_id=$logged_in_user_id";
-                        $password_resource = file_get_contents($password_endpoint);
-                        $password_data = json_decode($password_resource, true);
+            //check new password is appropriate length
+            if(strlen($passwordNew1)>5 and strlen($passwordNew1)<30){
+
+                //check two new passwords match
+                if($passwordNew1 == $passwordNew2){
+                    //check old password is correct
+                    $check_password_endpoint = $base_url . "user/getUserPasswordByID.php?user_id=$logged_in_user_id";
+                    $check_password_resource = file_get_contents($check_password_endpoint);
+                    $check_password_data = json_decode($check_password_resource, true);
+                
+                    if($check_password_data){
+                        $hashed_password = $check_password_data[0]['user_password'];
+                        if(password_verify($passwordOld, $hashed_password)) {
+                            //update password
+                            $password_endpoint = $base_url . "user/updatePassword.php?password=$passwordNew1&user_id=$logged_in_user_id";
+                            $password_resource = file_get_contents($password_endpoint);
+                            $password_data = json_decode($password_resource, true);
+                            
+                            if($password_data['message'] != "Password updated.") {
+                                $_SESSION['userSettingsMessage'] = "Error.";
+                            } else {
+                                $_SESSION['userSettingsMessage'] = $password_data['message'];
+                            }
                         
-                        if($password_data['message'] != "Password updated.") {
-                            $_SESSION['userSettingsMessage'] = "Error.";
                         } else {
-                            $_SESSION['userSettingsMessage'] = $password_data['message'];
+                            $_SESSION['userSettingsMessage'] = "Incorrect password.";
                         }
-                    
                     } else {
-                        $_SESSION['userSettingsMessage'] = "Incorrect password.";
+                        $_SESSION['userSettingsMessage'] = "Error.";
                     }
+                
                 } else {
-                    $_SESSION['userSettingsMessage'] = "Error.";
+                    $_SESSION['userSettingsMessage'] = "Passwords not a match.";
                 }
-            
+
             } else {
-                $_SESSION['userSettingsMessage'] = "Passwords not a match.";
+                $_SESSION['userSettingsMessage'] = "Invalid password length."; 
             }
 
         } else {
