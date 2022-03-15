@@ -13,7 +13,7 @@
             <?php } ?>
             <?php if(isset($_SESSION['userLoggedIn']) and $logged_in_username != $username) { ?>
             <div class="col-1 col-sm-2 offset-11 offset-sm-10">
-                <a role='button px-1'>
+                <a role='button px-1' href='php/review/confirmReportReview.php?album_id=<?php echo $album_id ?>&user_id=<?php echo $user_id?>' class='text-reset text-decoration-none'>
                     <i id='reportIcon<?php echo $review_card_count ?>' class='far fa-flag fa-lg report' data-toggle='popover' title='Report' data-content='Report Content' data-target='reportIcon<?php echo $review_card_count ?>'></i>
                 </a>
             </div>

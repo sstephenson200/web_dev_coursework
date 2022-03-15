@@ -477,6 +477,36 @@ class User {
         return $statement;
     }
 
+    //Function to check if user has already reported other user
+    public function checkUserReportExists($reporting_user_id, $reported_user_id){
+        $query = "SELECT user_report_id FROM user_report WHERE reporting_user_id=? AND reported_user_id=?";
+
+        $statement = $this -> conn -> prepare($query);
+        $reporting_user_id = htmlspecialchars(strip_tags($reporting_user_id));
+        $reporting_user_id = $this -> conn -> real_escape_string($reporting_user_id);
+        $reported_user_id = htmlspecialchars(strip_tags($reported_user_id));
+        $reported_user_id = $this -> conn -> real_escape_string($reported_user_id);
+        $statement -> bind_param("ss", $reporting_user_id, $reported_user_id);
+        $statement -> execute();
+        return $statement;
+    }
+
+    //Function to create a new user report
+    public function reportUser($reporter, $reportee, $reason){
+        $query = "INSERT INTO user_report (user_report_id, reporting_user_id, reported_user_id, report_reasoning) VALUES (null, ?, ?, ?)";
+
+        $statement = $this -> conn -> prepare($query);
+        $reporter = htmlspecialchars(strip_tags($reporter));
+        $reporter = $this -> conn -> real_escape_string($reporter);
+        $reportee = htmlspecialchars(strip_tags($reportee));
+        $reportee = $this -> conn -> real_escape_string($reportee);
+        $reason = htmlspecialchars(strip_tags($reason));
+        $reason = $this -> conn -> real_escape_string($reason);
+        $statement -> bind_param("sss", $reporter, $reportee, $reason);
+        $statement -> execute();
+        return $statement;
+    }
+
 }
 
 ?>

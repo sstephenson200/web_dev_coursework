@@ -26,15 +26,27 @@ if($user_id and $album_id){
     $review_count = $result -> num_rows;
 
     if($review_count == 0){
+        
         http_response_code(200);
         echo json_encode(
             array("message" => "No review.")
         );
     } else {
+
+        $array = array();
+
+        while($row = $result -> fetch_assoc()) {
+            extract($row);
+            $review = array (
+                "review_id" => $review_id,
+                "message" => "Posted review."
+            );
+    
+            array_push($array, $review);
+        }
+
         http_response_code(200);
-        echo json_encode(
-            array("message" => "Posted review.")
-        );
+        echo json_encode($array);
     }
 
 

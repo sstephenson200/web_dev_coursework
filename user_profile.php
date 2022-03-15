@@ -85,15 +85,17 @@
         if(isset($_SESSION['email_submission'])){
             include("includes/modal/emailSignupModal.php");
         }
-    ?>
 
-    <?php
         if(isset($_SESSION['postReview'])){
             include("includes/modal/postReviewModal.php");
         }
 
         if(isset($_SESSION['editReview'])){
             include("includes/modal/editReviewModal.php");
+        }
+
+        if(isset($_SESSION['reportUser'])){
+            include("includes/modal/reportUserModal.php");
         }
     ?>
 
@@ -103,7 +105,6 @@
         include("includes/navbar.php");
         include("php/user/getUserAlbums.php");
         include("php/user/getUserCommunities.php");
-
         ?>
 
         <?php if($active_data['message']=="Account active.") { ?>
@@ -141,11 +142,31 @@
             <div class="col-12 col-sm-7 col-md-8">
                 <div class="row py-1">
                     <div class="col-3 offset-9 col-md-1 offset-md-11">
-                        <?php if(isset($_SESSION['userLoggedIn']) and $logged_in_username != $username) {?>
-                            <a role='button px-1'>
-                                <i id='reportIcon' class='far fa-flag fa-lg report' data-toggle='popover' title='Report' data-content='Report Content' data-target='reportIcon'></i>
+                        <?php if(isset($_SESSION['userLoggedIn']) and $logged_in_username != $username) {
+                            
+                            //check if visiting user has already reported user
+                            $reported_endpoint = $base_url . "user/checkUserReportExists.php?reporter=$logged_in_user_id&reportee=$user_id";
+                            $reported_resource = file_get_contents($reported_endpoint);
+                            $reported_data = json_decode($reported_resource, true);
+
+                            $reported_flag = false;
+
+                            if($reported_data){
+                                $check_reported = $reported_data['message'];
+                                if($check_reported == "Reported."){
+                                    $reported_flag = true;
+                                }
+                            }
+
+                            if($reported_flag){ ?>
+                                <i id='reported' class='fas fa-flag fa-lg report' data-toggle='popover' title='Reported' data-content='Reported Content' data-target='reportIcon'></i>
+                            <?php } else { ?>
+
+                            <a role='button px-1' href='php/user/confirmReportUser.php?user_id=<?php echo $user_id?>&reported=<?php echo $reported_flag ?>' class='text-reset text-decoration-none'>
+                                <i id='reportIcon' class='<?php if($reported_flag) { ?> fas <?php } else { ?> far <?php } ?> fa-flag fa-lg report' data-toggle='popover' title='Report' data-content='Report Content' data-target='reportIcon'></i>
                             </a>
-                        <?php } ?>
+                        <?php }
+                        } ?>
                         <?php if(isset($_SESSION['userLoggedIn']) and $logged_in_username != $username) {
                             if($AdminCount != 0) { ?>
                                 <a role='button px-1'>
