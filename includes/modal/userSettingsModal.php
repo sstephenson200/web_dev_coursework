@@ -26,6 +26,22 @@ if(isset($_SESSION['userSettingsMessage'])){
           $title = "You've updated your email";
           $body = "You can now log in with your new email and we'll contact you with your new email address from now on.";
           break;
+        case 'Reset username.':
+          $title = "You are about to reset your username";
+          $body = "Are you sure? This will change on your profile and all previous reviews.";
+          break;
+        case 'Username length.':
+          $title = "Username length";
+          $body = "Please make sure your username is between 5 and 30 characters.";
+          break;
+        case 'Username in use.':
+          $title = "A popular name";
+          $body = "Sorry! That username has already been taken. Please choose another.";
+          break;
+        case 'Username updated.':
+          $title = "You've updated your username";
+          $body = "Your new username can now be seen on your profile and reviews.";
+          break;
         case 'Invalid password length.':
           $title = "Password length";
           $body = "Please make sure your password is between 5 and 30 characters.";
@@ -55,6 +71,8 @@ if(isset($_SESSION['userSettingsMessage'])){
 
 if(isset($_SESSION['emailResetDetails'])){
   $email = $_SESSION['emailResetDetails'];
+} else if(isset($_SESSION['usernameResetDetails'])){
+  $username = $_SESSION['usernameResetDetails'];
 }
 
 ?>
@@ -99,6 +117,21 @@ if(isset($_SESSION['emailResetDetails'])){
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
             </div>
           </form>
+          <?php } else if($_SESSION['userSettingsMessage'] == "Reset username.") { ?>
+        <form action="php/user/processResetUsername.php" method="POST">
+          <div class="form-group mb-3">
+            <input type="hidden" name="username" value="<?php echo $username ?>" />
+            <label for="passwordConfirmUsernameReset">Password</label>
+            <input type="password" class="form-control" id="passwordConfirmUsernameReset" name="passwordConfirmUsernameReset" placeholder="Password" required="required">
+          </div>
+        </div>
+            <div class="modal-footer">
+              <div>
+                <button type="submit" name="confirmUsernameReset" class="btn btn-danger">Confirm Username Reset</button>
+              </div>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+          </form>
       <?php } else { ?>
         </div>
       <?php } ?>
@@ -120,5 +153,9 @@ if(isset($_SESSION['userSettingsMessage'])) {
 
 if(isset($_SESSION['emailResetDetails'])) {
   unset($_SESSION['emailResetDetails']);
+}
+
+if(isset($_SESSION['usernameResetDetails'])) {
+  unset($_SESSION['usernameResetDetails']);
 }
 ?>

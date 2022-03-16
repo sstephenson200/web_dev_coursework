@@ -243,7 +243,7 @@
 
                 <div class="row d-flex justify-content-center">
                     <div class="col-10 col-sm-8">
-                        <form action="php/user/processUsernameUpdate.php" method="POST">
+                        <form action="php/user/confirmUsernameUpdate.php" method="POST">
                             <div class="form-group mb-3">
                                 <label for="usernameReset">New Username</label>
                                 <input type="text" class="form-control" id="usernameReset" name="usernameReset" placeholder="Username" required="required">

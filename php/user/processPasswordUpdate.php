@@ -26,7 +26,7 @@ if(isset($_POST['changePassword'])) {
             $logged_in_user_id = $token_data[0]['user_id'];
 
             //check new password is appropriate length
-            if(strlen($passwordNew1)>5 and strlen($passwordNew1)<30){
+            if(strlen($passwordNew1)>4 and strlen($passwordNew1)<31){
 
                 //check two new passwords match
                 if($passwordNew1 == $passwordNew2){

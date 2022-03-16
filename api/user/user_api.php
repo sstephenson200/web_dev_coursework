@@ -522,6 +522,32 @@ class User {
         return $statement;
     }
 
+    //Function to get user ID from username
+    public function getUserIDByUsername($username){
+        $query = "SELECT user_id, is_active FROM user WHERE user_name = ?";
+
+        $statement = $this -> conn -> prepare($query);
+        $username = htmlspecialchars(strip_tags($username));
+        $username = $this -> conn -> real_escape_string($username);
+        $statement -> bind_param("s", $username);
+        $statement -> execute();
+        return $statement;
+    }
+
+    //Function to update a user's username
+    public function updateUsername($user_id, $username){
+        $query = "UPDATE user SET user_name=? WHERE user_id =?";
+
+        $statement = $this -> conn -> prepare($query);
+        $user_id = htmlspecialchars(strip_tags($user_id));
+        $user_id = $this -> conn -> real_escape_string($user_id);
+        $username = htmlspecialchars(strip_tags($username));
+        $username = $this -> conn -> real_escape_string($username);
+        $statement -> bind_param("ss", $username, $user_id);
+        $statement -> execute();
+        return $statement;
+    }
+
 }
 
 ?>

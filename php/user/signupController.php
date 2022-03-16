@@ -48,7 +48,7 @@ class SignupController {
     //check if username length is between 5 and 30 chars
     public function checkUsernameLength(){
         $len = strlen($this -> username);
-        if($len<5 or $len>30){
+        if($len<4 or $len>31){
             return false;
         } else {
             return true;
@@ -68,7 +68,7 @@ class SignupController {
     //check if password length is between 5 and 30 chars
     private function checkPasswordLength(){
         $len = strlen($this -> password1);
-        if($len<5 or $len>30){
+        if($len<4 or $len>31){
             return false;
         } else {
             return true;
