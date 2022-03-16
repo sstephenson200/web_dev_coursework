@@ -454,6 +454,7 @@ class User {
         return $statement;
     }
 
+    //Function to delete the user account
     public function deleteAccount($user_id){
         $query = "UPDATE user SET is_active=0 WHERE user_id =?";
 
@@ -503,6 +504,20 @@ class User {
         $reason = htmlspecialchars(strip_tags($reason));
         $reason = $this -> conn -> real_escape_string($reason);
         $statement -> bind_param("sss", $reporter, $reportee, $reason);
+        $statement -> execute();
+        return $statement;
+    }
+
+    //Function to update user email address
+    public function updateUserEmail($user_id, $email){
+        $query = "UPDATE user SET user_email=? WHERE user_id =?";
+
+        $statement = $this -> conn -> prepare($query);
+        $user_id = htmlspecialchars(strip_tags($user_id));
+        $user_id = $this -> conn -> real_escape_string($user_id);
+        $email = htmlspecialchars(strip_tags($email));
+        $email = $this -> conn -> real_escape_string($email);
+        $statement -> bind_param("ss", $email, $user_id);
         $statement -> execute();
         return $statement;
     }

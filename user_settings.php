@@ -208,6 +208,64 @@
 
                 <div class="row">
                     <div class="col">
+                        <h5>Change Your Email Address</h5>
+                    </div>
+                </div>
+
+                <div class="row d-flex justify-content-center">
+                    <div class="col-10 col-sm-8">
+                        <form action="php/user/confirmEmailUpdate.php" method="POST">
+                            <div class="form-group mb-3">
+                                <label for="emailReset">New Email Address</label>
+                                <input type="email" class="form-control" id="emailReset" name="emailReset" placeholder="name@example.com" required="required">
+                            </div>
+
+                            <div class="row text-center mb-2">
+                                <div class="col">
+                                    <button type='submit' name="changeEmail" class='btn styled_button'>Update Email</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row d-flex justify-content-center px-2">
+            <div class="col-12 col-sm-10">
+
+                <div class="row">
+                    <div class="col">
+                        <h5>Change Your Username</h5>
+                    </div>
+                </div>
+
+                <div class="row d-flex justify-content-center">
+                    <div class="col-10 col-sm-8">
+                        <form action="php/user/processUsernameUpdate.php" method="POST">
+                            <div class="form-group mb-3">
+                                <label for="usernameReset">New Username</label>
+                                <input type="text" class="form-control" id="usernameReset" name="usernameReset" placeholder="Username" required="required">
+                            </div>
+
+                            <div class="row text-center mb-2">
+                                <div class="col">
+                                    <button type='submit' name="changeUsername" class='btn styled_button'>Update Username</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row d-flex justify-content-center px-2">
+            <div class="col-12 col-sm-10">
+
+                <div class="row">
+                    <div class="col">
                         <h5>Change Your Password</h5>
                     </div>
                 </div>

@@ -10,6 +10,22 @@ if(isset($_SESSION['userSettingsMessage'])){
           $title = "Email preferences updated";
           $body = "Looks like we're on the same page regarding the amount of emails you receive.";
           break;
+        case 'Invalid email.':
+          $title = "Invalid email address";
+          $body = "Please check the entered email address is correct.";
+          break;
+        case 'Email in use.':
+          $title = "You from around here?";
+          $body = "It looks like there's already an account with this email.";
+          break;
+        case 'Reset email.':
+          $title = "You are about to reset your email address";
+          $body = "Are you sure? You'll not be able to access your account with your previous email address.";
+          break;
+        case 'Email updated.':
+          $title = "You've updated your email";
+          $body = "You can now log in with your new email and we'll contact you with your new email address from now on.";
+          break;
         case 'Invalid password length.':
           $title = "Password length";
           $body = "Please make sure your password is between 5 and 30 characters.";
@@ -35,6 +51,10 @@ if(isset($_SESSION['userSettingsMessage'])){
             $body = "Something went wrong. Please try again later.";
             break;
     }
+}
+
+if(isset($_SESSION['emailResetDetails'])){
+  $email = $_SESSION['emailResetDetails'];
 }
 
 ?>
@@ -64,6 +84,21 @@ if(isset($_SESSION['userSettingsMessage'])){
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
             </div>
           </form>
+      <?php } else if($_SESSION['userSettingsMessage'] == "Reset email.") { ?>
+        <form action="php/user/processResetEmail.php" method="POST">
+          <div class="form-group mb-3">
+            <input type="hidden" name="email" value="<?php echo $email ?>" />
+            <label for="passwordConfirmEmailReset">Password</label>
+            <input type="password" class="form-control" id="passwordConfirmEmailReset" name="passwordConfirmEmailReset" placeholder="Password" required="required">
+          </div>
+        </div>
+            <div class="modal-footer">
+              <div>
+                <button type="submit" name="confirmEmailReset" class="btn btn-danger">Confirm Email Reset</button>
+              </div>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+          </form>
       <?php } else { ?>
         </div>
       <?php } ?>
@@ -81,5 +116,9 @@ if(isset($_SESSION['userSettingsMessage'])){
 <?php 
 if(isset($_SESSION['userSettingsMessage'])) {
     unset($_SESSION['userSettingsMessage']);
+}
+
+if(isset($_SESSION['emailResetDetails'])) {
+  unset($_SESSION['emailResetDetails']);
 }
 ?>

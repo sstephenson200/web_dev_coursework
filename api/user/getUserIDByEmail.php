@@ -38,7 +38,7 @@ if($email) {
         http_response_code(200);
         echo json_encode($array);
     } else {
-        http_response_code(400);
+        http_response_code(200);
         echo json_encode(
             array("message" => "Invalid email value.")
         );

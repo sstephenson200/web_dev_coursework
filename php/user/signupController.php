@@ -26,7 +26,7 @@ class SignupController {
     }
 
     //check if email is valid
-    private function checkValidEmail(){
+    public function checkValidEmail(){
         
         if(filter_var($this -> email, FILTER_VALIDATE_EMAIL)){
             return true;
@@ -36,7 +36,7 @@ class SignupController {
     }
 
     //check username doesn't contain invalid characters and is between 3-30 chars
-    private function checkValidUsername(){
+    public function checkValidUsername(){
 
         if(!preg_match("/^[a-zA-Z0-9]*$/", $this -> username)) {
             return false;
@@ -46,7 +46,7 @@ class SignupController {
     }
 
     //check if username length is between 5 and 30 chars
-    private function checkUsernameLength(){
+    public function checkUsernameLength(){
         $len = strlen($this -> username);
         if($len<5 or $len>30){
             return false;
