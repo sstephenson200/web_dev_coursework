@@ -197,6 +197,7 @@
                     <div class="col">
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="reportedReviews">
+                                <form action="php/user/processPendingReviews.php" method="POST">
                                 <table class="table table-sm table-bordered table-striped table-dark">
                                     <thead>
                                         <tr>
@@ -236,7 +237,8 @@
                                                     <td><?php echo $review_text ?></td>
                                                     <td><?php echo $review_rating ?></td>
                                                     <td>  
-                                                        <select class='form-select'>
+                                                        <input type="hidden" name="review_id[]" value="<?php echo $review_id ?>" />
+                                                        <select class='form-select' name="pendingReviewStatus[]">
                                                             <option value='Approved'>Approved</option>
                                                             <option selected value='Flagged'>Flagged</option>
                                                             <option value='Rejected'>Rejected</option>
@@ -255,8 +257,9 @@
                                     </tbody>
                                 </table>
                                 <div class="text-center mb-3">
-                                    <button type="submit" class="btn styled_button">Save Changes</button>
+                                    <button type="submit" name="saveReportedReviews" class="btn styled_button">Save Changes</button>
                                 </div>
+                                </form>
                             </div>
                             <div class="tab-pane fade" id="reportedCommunities">
                                 <h5>Reported Communities</h5>

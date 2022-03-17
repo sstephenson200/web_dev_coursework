@@ -4,7 +4,7 @@ $base_url = "http://localhost/web_dev_coursework/api/";
 
 session_start();
 
-if(isset($_POST['savePendingReviews'])){
+if(isset($_POST['savePendingReviews']) or isset($_POST['saveReportedReviews'])){
 
     foreach(array_combine($_POST['review_id'], $_POST['pendingReviewStatus']) as $review_id => $status){
         
