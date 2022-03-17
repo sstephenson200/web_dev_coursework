@@ -90,6 +90,7 @@
                     <div class="col">
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="pendingReviews">
+                                <form action="php/user/processPendingReviews.php" method="POST">
                                 <table class="table table-sm table-bordered table-striped table-dark">
                                     <thead>
                                         <tr>
@@ -118,22 +119,27 @@
                                             $review_text = $review['review_text'];
                                             $review_rating = $review['review_rating'];
     
-                                            echo "<tr>
-                                                <th scope='row'>$review_id</th>
-                                                <td>$review_date</td>
-                                                <td><a role='button' href='user_profile.php?user_id=$user_id'>$username</a></td>
-                                                <td><a role='button' href='album.php?album_id=$album_id'>$album_id</a></td>
-                                                <td>$review_title</td>
-                                                <td>$review_text</td>
-                                                <td>$review_rating</td>
-                                                <td>  
-                                                    <select class='form-select'>
-                                                        <option value='Approved'>Approved</option>
-                                                        <option selected value='Pending'>Pending</option>
-                                                        <option value='Rejected'>Rejected</option>
-                                                    </select>
+                                            ?>
+                                             
+                                            <tr>
+                                                <th scope='row'><?php echo $review_id ?></th>
+                                                    <td><?php echo $review_date ?></td>
+                                                    <td><a role='button' href='user_profile.php?user_id=<?php echo $user_id ?>'><?php echo $username ?></a></td>
+                                                    <td><a role='button' href='album.php?album_id=<?php echo $album_id ?>'><?php echo $album_id ?></a></td>
+                                                    <td><?php echo $review_title ?></td>
+                                                    <td><?php echo $review_text ?></td>
+                                                    <td><?php echo $review_rating ?></td>
+                                                    <td>  
+                                                        <input type="hidden" name="review_id[]" value="<?php echo $review_id ?>" />
+                                                        <select class='form-select' name="pendingReviewStatus[]">
+                                                            <option value='Approved'>Approved</option>
+                                                            <option selected value='Pending'>Pending</option>
+                                                            <option value='Rejected'>Rejected</option>
+                                                        </select>
                                                     </td>
-                                                    </tr>";    
+                                                </tr>
+                                                    
+                                            <?php
                                         }
                                     } else {
                                         echo "<h4 class='d-flex justify-content-center mt-3'>No pending reviews.</h4>";
@@ -144,8 +150,9 @@
                                     </tbody>
                                 </table>
                                 <div class="text-center mb-3">
-                                    <button type="submit" class="btn styled_button">Save Changes</button>
+                                    <button type="submit" name="savePendingReviews" class="btn styled_button">Save Changes</button>
                                 </div>
+                                </form>
                             </div>
                             <div class="tab-pane fade" id="pendingCommunities">
                                 <h5>Pending Communities</h5>
@@ -218,22 +225,26 @@
                                             $review_text = $review['review_text'];
                                             $review_rating = $review['review_rating'];
     
-                                            echo "<tr>
-                                                <th scope='row'>$review_id</th>
-                                                <td>$review_date</td>
-                                                <td><a role='button' href='user_profile.php?user_id=$user_id'>$username</a></td>
-                                                <td><a role='button' href='album.php?album_id=$album_id'>$album_id</a></td>
-                                                <td>$review_title</td>
-                                                <td>$review_text</td>
-                                                <td>$review_rating</td>
-                                                <td>  
-                                                    <select class='form-select'>
-                                                        <option value='Approved'>Approved</option>
-                                                        <option selected value='Flagged'>Flagged</option>
-                                                        <option value='Rejected'>Rejected</option>
-                                                    </select>
-                                                </td>
-                                                </tr>";               
+                                        ?>
+
+                                            <tr>
+                                                <th scope='row'><?php echo $review_id ?></th>
+                                                    <td><?php echo $review_date ?></td>
+                                                    <td><a role='button' href='user_profile.php?user_id=<?php echo $user_id ?>'><?php echo $username ?></a></td>
+                                                    <td><a role='button' href='album.php?album_id=<?php echo $album_id ?>'><?php echo $album_id ?></a></td>
+                                                    <td><?php echo $review_title ?></td>
+                                                    <td><?php echo $review_text ?></td>
+                                                    <td><?php echo $review_rating ?></td>
+                                                    <td>  
+                                                        <select class='form-select'>
+                                                            <option value='Approved'>Approved</option>
+                                                            <option selected value='Flagged'>Flagged</option>
+                                                            <option value='Rejected'>Rejected</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                                
+                                        <?php
                                         }
                                     } else {
                                         echo "<h4 class='d-flex justify-content-center mt-3'>No reported reviews.</h4>";
@@ -285,17 +296,20 @@
                                             $reported_user_resource = file_get_contents($reported_user_endpoint);
                                             $reported_user_data = json_decode($reported_user_resource, true);
                                             $reported_user_name = $reported_user_data[0]['user_name'];
+
+                                            ?>
     
-                                            echo "<tr>
-                                                <th scope='row'>$report_id</th>
-                                                <td>$report_date</td>
-                                                <td><a role='button' href='user_profile.php?user_id=$reporting_user'>$reporting_user_name</a></td>
-                                                <td><a role='button' href='user_profile.php?user_id=$reported_user'>$reported_user_name</a></td>
-                                                <td>$report_reasoning</td>
+                                            <tr>
+                                                <th scope='row'><?php echo $report_id ?></th>
+                                                <td><?php echo $report_date ?></td>
+                                                <td><a role='button' href='user_profile.php?user_id=<?php echo $reporting_user ?>'><?php echo $reporting_user_name ?></a></td>
+                                                <td><a role='button' href='user_profile.php?user_id=<?php echo $reported_user ?>'><?php echo $reported_user_name ?></a></td>
+                                                <td><?php echo $report_reasoning ?></td>
                                                 <td><button type='submit' class='btn styled_button'>Close Report</button>
                                                     <button type='submit' class='btn styled_button'>Ban User</button>
                                                 </td>
-                                                </tr>";      
+                                            </tr>
+                                        <?php      
                                         }
                                     } else {
                                         echo "<h4 class='d-flex justify-content-center mt-3'>No reported users.</h4>";

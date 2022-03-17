@@ -158,6 +158,42 @@ class Review {
         return $statement;
     }
 
+    //Function to update review status to approved
+    public function approveReview($review_id){
+        $query = "UPDATE review SET status_id=1 WHERE review_id=?";
+
+        $statement = $this -> conn -> prepare($query);
+        $review_id = htmlspecialchars(strip_tags($review_id));
+        $review_id = $this -> conn -> real_escape_string($review_id);
+        $statement -> bind_param("s", $review_id);
+        $statement -> execute();
+        return $statement;
+    }
+
+    //Function to update review status to rejected
+    public function rejectReview($review_id){
+        $query = "UPDATE review SET status_id=3 WHERE review_id=?";
+
+        $statement = $this -> conn -> prepare($query);
+        $review_id = htmlspecialchars(strip_tags($review_id));
+        $review_id = $this -> conn -> real_escape_string($review_id);
+        $statement -> bind_param("s", $review_id);
+        $statement -> execute();
+        return $statement;
+    }
+
+    //Function to delete review by review_id
+    public function deleteReviewByID($review_id){
+        $query = "DELETE FROM review WHERE review_id = ?";
+
+        $statement = $this -> conn -> prepare($query);
+        $review_id = htmlspecialchars(strip_tags($review_id));
+        $review_id = $this -> conn -> real_escape_string($review_id);
+        $statement -> bind_param("s", $review_id);
+        $statement -> execute();
+        return $statement; 
+    }
+
 }
 
 ?>
