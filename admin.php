@@ -21,6 +21,11 @@
     $reported_users_resource = @file_get_contents($reported_users_endpoint);
     $reported_users_data = json_decode($reported_users_resource, true);
 
+    //get all albums
+    $album_endpoint = $base_url . "album/getAllAlbums.php";
+    $album_resource = file_get_contents($album_endpoint);
+    $album_data = json_decode($album_resource, true);
+
 ?>
 
 <!DOCTYPE html>
@@ -73,7 +78,7 @@
         <?php if(isset($_SESSION['userLoggedIn']) and $AdminCount != 0) { ?>
 
         <div class="row browseTitle mb-2">
-            <div class="col-2">
+            <div class="col">
                 <h2>Pending Content</h2>
             </div>
         </div>
@@ -172,7 +177,7 @@
         </div>
 
         <div class="row browseTitle mb-2">
-            <div class="col-2">
+            <div class="col">
                 <h2>Reported Content</h2>
             </div>
         </div>
@@ -345,6 +350,110 @@
 
             </div>
         </div>
+
+        <div class="row browseTitle mb-2">
+            <div class="col">
+                <h2>Add Album</h2>
+                <p>Please ensure your entry is accurate. You can review our full list of artists, genres and subgenres to ensure you're not making a duplicate entry.</p>
+            </div>
+        </div>
+
+        <div class="row d-flex justify-content-center">
+            <div class="col-12">
+                <form action="php/user/processAddAlbum.php" method="POST">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-10 col-sm-5">
+                            <div class="form-group mb-3">
+                            <label for="albumTitle">Album Title</label>
+                            <input type="text" class="form-control" id="albumTitle" name="albumTitle" maxlength="30" placeholder="Album Title" required="required">
+                            </div>
+                        </div>
+                        <div class="col-10 col-sm-5">
+                            <div class="form-group mb-3">
+                            <label for="artist">Artist</label>
+                            <input type="text" class="form-control" id="artist" name="artist" maxlength="30" placeholder="Artist" required="required">
+                            </div>
+                        </div>
+                        <div class="col-10 col-sm-5">
+                            <div class="form-group mb-3">
+                            <label for="art">Art URL</label>
+                            <input type="url" class="form-control" id="art" name="art" placeholder="Art URL" required="required">
+                            </div>
+                        </div>
+                        <div class="col-10 col-sm-5">
+                            <div class="form-group mb-3">
+                            <label for="spotifyID">Spotify ID</label>
+                            <input type="text" class="form-control" id="spotifyID" name="spotifyID" placeholder="Spotify ID">
+                            </div>
+                        </div>
+                        <div class="col-10 col-sm-5">
+                            <div class="form-group mb-3">
+                            <label for="rating">Album Rating</label>
+                            <input type="text" class="form-control" id="rating" maxlength="3" name="rating" placeholder="Album Rating">
+                            </div>
+                        </div>
+                        <div class="col-10 col-sm-5">
+                            <div class="form-group mb-3">
+                            <label for="year">Year</label>
+                            <input type="text" class="form-control" id="year" name="year" maxlength="4" placeholder="Year Published" required="required">
+                            </div>
+                        </div>
+                        <div class="col-10">
+                            <div class="form-group mb-3">
+                            <label for="genres">Genres</label>
+                            <input type="text" class="form-control" id="genres" name="genres" placeholder="Genre1, Genre2, Genre3">
+                            </div>
+                        </div>
+                        <div class="col-10">
+                            <div class="form-group mb-3">
+                            <label for="subgenres">Subgenres</label>
+                            <input type="text" class="form-control" id="subgenres" name="subgenres" placeholder="Subgenre1, Subgenre2, Subgenre3">
+                            </div>
+                        </div>
+                        <div class="col-10">
+                            <div class="form-group mb-3">
+                            <label for="songs">Album Tracks</label>
+                            <textarea class="form-control" id="songs" name="songs" placeholder="Track1, Track2, Track3" rows="3" required="required"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-10">
+                            <div class="form-group mb-3">
+                            <label for="lengths">Track Lengths</label>
+                            <textarea class="form-control" id="lengths" name="lengths" placeholder="TrackLength1, TrackLength2, TrackLength3" rows="3" required="required"></textarea>
+                            </div>
+                        </div>
+                <div class="row d-flex justify-content-center text-center mt-2">
+                    <div class="col mb-2">
+                        <button type="submit" name="addAlbum" class="btn styled_button">Add Album</button>
+                    </div>
+                </div> 
+                </form>
+            </div>  
+        </div>
+
+        <div class="row browseTitle mb-2">
+            <div class="col">
+                <h2>Edit Album</h2>
+                <p>Search by artist or album title to begin</p>
+            </div>
+        </div> 
+        
+        <?php 
+            //search for albums to edit
+            //show related albums
+            //Edit button
+            //Show "Add Album" form with current info -> send to processing form to update
+        ?>
+
+        <div class="row browseTitle mb-2">
+            <div class="col">
+                <h2>Delete Album</h2>
+            </div>
+        </div>
+
+        <?php 
+            //search for albums to delete. Return albums w/ Delete button -> get_id and call delete method
+        ?>
 
         <?php } else { ?>
 

@@ -24,17 +24,9 @@
     $rating = $album_data[0]['AverageRating'];
     $spotify_id = $album_data[0]['spotify_id'];
     $year = $album_data[0]['year_value'];
+    $genres = $album_data[0]['Genres'];
+    $subgenres = $album_data[0]['Subgenres'];
     
-    //get album genre
-    $genre_endpoint = $base_url . "album/getGenreByAlbumID.php?album_id=$album_id";
-    $genre_resource = @file_get_contents($genre_endpoint);
-    $genre_data = json_decode($genre_resource, true);
-
-    //get album subgenre
-    $subgenre_endpoint = $base_url . "album/getSubgenreByAlbumID.php?album_id=$album_id";
-    $subgenre_resource = @file_get_contents($subgenre_endpoint);
-    $subgenre_data = json_decode($subgenre_resource, true);
-
     //get album songs
     $songs_endpoint = $base_url . "album/getSongsByAlbumID.php?album_id=$album_id";
     $songs_resource = @file_get_contents($songs_endpoint);
@@ -186,10 +178,9 @@
                         <h4>
                             <?php 
                                 $genreList = "";
-                                if($genre_data){
-                                    foreach($genre_data as $genre){
-                                        $title = $genre['genre_title'];
-                                        $genreList .= "$title, ";
+                                if($genres){
+                                    foreach($genres as $genre){
+                                        $genreList .= "$genre, ";
                                     }
                                     $genreList = rtrim($genreList, ", ");
                                 }
@@ -206,10 +197,9 @@
                         <h4>
                             <?php 
                                 $subgenreList = "";
-                                if($subgenre_data){
-                                    foreach($subgenre_data as $subgenre){
-                                        $title = $subgenre['subgenre_title'];
-                                        $subgenreList .= "$title, ";
+                                if($subgenres){
+                                    foreach($subgenres as $subgenre){
+                                        $subgenreList .= "$subgenre, ";
                                     }
                                     $subgenreList = rtrim($subgenreList, ", ");
                                 }

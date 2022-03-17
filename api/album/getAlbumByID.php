@@ -31,7 +31,9 @@ if($album_count != 0) {
             "artist_name" => $artist_name,
             "art_url" => $art_url,
             "year_value" => $year_value,
-            "AverageRating" => $AverageRating
+            "AverageRating" => $AverageRating,
+            "Genres" => explode(',',$Genres),
+            "Subgenres" => explode(',',$Subgenres)
         );
 
         array_push($array, $album);

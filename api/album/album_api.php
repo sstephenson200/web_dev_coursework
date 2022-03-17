@@ -76,7 +76,7 @@ class Album {
     //Function to get album by album_id
     public function getAlbumByID($album_id) {
 
-        $query = "SELECT album.album_title, album.spotify_id, art.art_url, artist.artist_name, year_value.year_value, AVG(review.review_rating) AS AverageRating from album
+        $query = "SELECT album.album_title, album.spotify_id, art.art_url, artist.artist_name, year_value.year_value, GROUP_CONCAT(DISTINCT genre.genre_title) AS Genres, GROUP_CONCAT(DISTINCT subgenre.subgenre_title) as Subgenres, AVG(review.review_rating) AS AverageRating from album
                     INNER JOIN art
                     ON album.art_id = art.art_id
                     INNER JOIN artist 
@@ -85,37 +85,15 @@ class Album {
                     ON album.year_id = year_value.year_value_id
                     LEFT JOIN review 
                     ON album.album_id = review.album_id 
-                    WHERE album.album_id = ?";
-
-        $statement = $this -> conn -> prepare($query);
-        $album_id = htmlspecialchars(strip_tags($album_id));
-        $album_id = $this -> conn -> real_escape_string($album_id);
-        $statement -> bind_param("s", $album_id);
-        $statement -> execute();
-        return $statement;
-    }
-
-    //Function to get album genres by album_id
-    public function getGenreByAlbumID($album_id){
-        $query = "SELECT genre.genre_title FROM genre
                     INNER JOIN album_genre 
+                    ON album.album_id = album_genre.album_id 
+                    INNER JOIN genre
                     ON album_genre.genre_id = genre.genre_id
-                    WHERE album_genre.album_id = ?";
-
-        $statement = $this -> conn -> prepare($query);
-        $album_id = htmlspecialchars(strip_tags($album_id));
-        $album_id = $this -> conn -> real_escape_string($album_id);
-        $statement -> bind_param("s", $album_id);
-        $statement -> execute();
-        return $statement;
-    }
-
-    //Function to get album subgenres by album_id
-    public function getSubgenreByAlbumID($album_id){
-        $query = "SELECT subgenre.subgenre_title FROM subgenre
                     INNER JOIN album_subgenre 
+                    ON album.album_id = album_subgenre.album_id 
+                    INNER JOIN subgenre
                     ON album_subgenre.subgenre_id = subgenre.subgenre_id
-                    WHERE album_subgenre.album_id = ?";
+                    WHERE album.album_id = ?";
 
         $statement = $this -> conn -> prepare($query);
         $album_id = htmlspecialchars(strip_tags($album_id));
