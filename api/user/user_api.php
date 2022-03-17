@@ -126,6 +126,9 @@ class User {
     public function getReportedUsers(){
        
         $query = "SELECT user_report_id, report_date, reporting_user_id, reported_user_id, report_reasoning FROM user_report
+                    INNER JOIN user
+                    ON user.user_id = user_report.reported_user_id
+                    WHERE user.is_active = 1
                     ORDER BY report_date";
 
         $statement = $this -> conn -> prepare($query);
@@ -544,6 +547,18 @@ class User {
         $username = htmlspecialchars(strip_tags($username));
         $username = $this -> conn -> real_escape_string($username);
         $statement -> bind_param("ss", $username, $user_id);
+        $statement -> execute();
+        return $statement;
+    }
+
+    //Function to delete user_report record
+    public function closeUserReport($report_id){
+        $query = "DELETE FROM user_report WHERE user_report_id=?";
+
+        $statement = $this -> conn -> prepare($query);
+        $report_id = htmlspecialchars(strip_tags($report_id));
+        $report_id = $this -> conn -> real_escape_string($report_id);
+        $statement -> bind_param("s", $report_id);
         $statement -> execute();
         return $statement;
     }

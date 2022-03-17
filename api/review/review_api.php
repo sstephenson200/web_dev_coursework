@@ -74,6 +74,7 @@ class Review {
                     INNER JOIN status
                     ON review.status_id = status.status_id
                     WHERE status.status_title = ?
+                    AND user.is_active = 1
                     ORDER BY review.review_date";
 
         $statement = $this -> conn -> prepare($query);

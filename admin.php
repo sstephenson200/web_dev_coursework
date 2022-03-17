@@ -58,6 +58,12 @@
         }
     ?>
 
+    <?php
+        if(isset($_SESSION['adminMessage'])){
+            include("includes/modal/adminModal.php");
+        }
+    ?>
+
     <div class="container-fluid p-0 content">
 
         <?php
@@ -86,11 +92,13 @@
                         </ul>
                     </div>
                 </div>
+
                 <div class="row mx-2 my-3">
                     <div class="col">
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="pendingReviews">
-                                <form action="php/user/processPendingReviews.php" method="POST">
+                            <?php if($pending_review_data){ ?>
+                                <form action="php/review/processPendingReviews.php" method="POST">
                                 <table class="table table-sm table-bordered table-striped table-dark">
                                     <thead>
                                         <tr>
@@ -107,7 +115,6 @@
                                     <tbody>   
 
                                     <?php
-                                    if($pending_review_data){
                                         foreach($pending_review_data as $review){
                                             $review_id = $review['review_id'];
                                             $review_date = $review['review_date'];
@@ -197,7 +204,8 @@
                     <div class="col">
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="reportedReviews">
-                                <form action="php/user/processPendingReviews.php" method="POST">
+                            <?php if($reported_review_data){ ?>
+                                <form action="php/review/processPendingReviews.php" method="POST">
                                 <table class="table table-sm table-bordered table-striped table-dark">
                                     <thead>
                                         <tr>
@@ -214,7 +222,6 @@
                                     <tbody>   
 
                                     <?php
-                                    if($reported_review_data){
                                         foreach($reported_review_data as $review){
                                             $review_id = $review['review_id'];
                                             $review_date = $review['review_date'];
@@ -265,6 +272,7 @@
                                 <h5>Reported Communities</h5>
                             </div>
                             <div class="tab-pane fade" id="reportedUsers">
+                            <?php if($reported_users_data){ ?>
                                 <table class="table table-sm table-bordered table-striped table-dark">
                                     <thead>
                                         <tr>
@@ -279,7 +287,6 @@
                                     <tbody>   
 
                                     <?php
-                                    if($reported_users_data){
                                         foreach($reported_users_data as $report){
                                             $report_id = $report['user_report_id'];
                                             $report_date = $report['report_date'];
@@ -301,18 +308,21 @@
                                             $reported_user_name = $reported_user_data[0]['user_name'];
 
                                             ?>
-    
                                             <tr>
                                                 <th scope='row'><?php echo $report_id ?></th>
                                                 <td><?php echo $report_date ?></td>
                                                 <td><a role='button' href='user_profile.php?user_id=<?php echo $reporting_user ?>'><?php echo $reporting_user_name ?></a></td>
                                                 <td><a role='button' href='user_profile.php?user_id=<?php echo $reported_user ?>'><?php echo $reported_user_name ?></a></td>
                                                 <td><?php echo $report_reasoning ?></td>
-                                                <td><button type='submit' class='btn styled_button'>Close Report</button>
-                                                    <button type='submit' class='btn styled_button'>Ban User</button>
-                                                </td>
+                                                <form action="php/user/processReportedUser.php" method="POST">
+                                                    <input type="hidden" name="user_id" value="<?php echo $reported_user ?>" />
+                                                    <input type="hidden" name="report_id" value="<?php echo $report_id ?>" />
+                                                    <td><button type='submit' name="closeReport" class='btn styled_button'>Close Report</button>
+                                                        <button type='submit' name="banUser" class='btn styled_button'>Ban User</button>
+                                                    </td>
+                                                </form>
                                             </tr>
-                                        <?php      
+                                        <?php    
                                         }
                                     } else {
                                         echo "<h4 class='d-flex justify-content-center mt-3'>No reported users.</h4>";
