@@ -74,6 +74,10 @@ if(isset($_SESSION['userSettingsMessage'])){
           $title = "You are about to give this account admin permissions";
           $body = "Are you sure? This user will be able to ban users and add and remove content.";
           break;
+        case 'Admin access granted.':
+          $title = "This user has been given admin permissions.";
+          $body = "They can now process website content and users.";
+          break;
         default:
             $title = "Awkward...";
             $body = "Something went wrong. Please try again later.";
@@ -157,6 +161,21 @@ if(isset($_SESSION['emailResetDetails'])){
             <div class="modal-footer">
               <div>
                 <button type="submit" name="confirmBan" class="btn btn-danger">Confirm Deletion</button>
+              </div>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+          </form>
+          <?php } else if($_SESSION['userSettingsMessage'] == "Make admin.") { ?>
+            <form action="php/user/processMakeAdmin.php" method="POST">
+          <div class="form-group mb-3">
+            <input type="hidden" name="user_id" value="<?php echo $user_id ?>" />
+            <label for="passwordConfirmAdmin">Password</label>
+            <input type="password" class="form-control" id="passwordConfirmAdmin" name="passwordConfirmAdmin" placeholder="Password" required="required">
+          </div>
+        </div>
+            <div class="modal-footer">
+              <div>
+                <button type="submit" name="confirmAdmin" class="btn btn-danger">Give Admin Privileges</button>
               </div>
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
             </div>

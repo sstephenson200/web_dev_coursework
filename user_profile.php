@@ -48,6 +48,17 @@
         $review_endpoint = $base_url . "review/getReviewsByUserID.php?user_id=$user_id";
         $review_resource = @file_get_contents($review_endpoint);
         $review_data = json_decode($review_resource, true);
+
+        //check if user is admin
+        $check_admin_endpoint = $base_url . "user/getUserAdminStatus.php?user_id=$user_id";
+        $check_admin_resource = file_get_contents($check_admin_endpoint);
+        $check_admin_data = json_decode($check_admin_resource, true);
+
+        if($check_admin_data[0]['AdminCount']){
+            $is_admin = true;
+        } else {
+            $is_admin = false;
+        }
     }
 
 ?>
@@ -185,9 +196,11 @@
                                 <a role='button' href='php/user/confirmBanUser.php?user_id=<?php echo $user_id?>' class='text-reset text-decoration-none px-1'>
                                     <i id='banIcon' class='fas fa-ban fa-lg ban' data-toggle='popover' title='Ban' data-content='Ban User' data-target='banIcon'></i>
                                 </a>
+                                <?php if(!$is_admin) { ?>
                                 <a role='button' href='php/user/confirmMakeAdmin.php?user_id=<?php echo $user_id?>' class='text-reset text-decoration-none px-1'>
                                     <i id='adminIcon' class='fas fa-tools fa-lg admin' data-toggle='popover' title='Admin' data-content='Give User Admin Rights' data-target='adminIcon'></i>
                                 </a>
+                                <?php } ?>
                             <?php }
                         } ?>
                     </div>

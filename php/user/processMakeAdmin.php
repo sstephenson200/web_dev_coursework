@@ -8,15 +8,10 @@ include("../user/rememberMeController.php");
 $remember = new rememberMeController();
 
 $location = $_SERVER['HTTP_REFERER'];
-if(strpos($location, "profile")) {
-    $modalType = "userSettingsMessage";
-} else if(strpos($location, "admin")) {
-    $modalType = "adminMessage";
-}
 
-if(isset($_SESSION['userLoggedIn']) and isset($_POST['confirmBan'])){
+if(isset($_SESSION['userLoggedIn']) and isset($_POST['confirmAdmin'])){
 
-    $password = $_POST['passwordConfirmBan'];
+    $password = $_POST['passwordConfirmAdmin'];
     $user_id =  $_POST['user_id'];
     //get logged in user id
     $tokens = $remember -> parse_token($_SESSION['userLoggedIn']);
@@ -36,39 +31,28 @@ if(isset($_SESSION['userLoggedIn']) and isset($_POST['confirmBan'])){
         if($check_password_data){
             $hashed_password = $check_password_data[0]['user_password'];
             if(password_verify($password, $hashed_password)) {
-                //ban account
-                $delete_endpoint = $base_url . "user/deleteAccount.php?user_id=$user_id";
-                $delete_resource = file_get_contents($delete_endpoint);
-                $delete_data = json_decode($delete_resource, true);
+                //give admin access
+                $admin_endpoint = $base_url . "user/createAdmin.php?user_id=$user_id";
+                $admin_resource = file_get_contents($admin_endpoint);
+                $admin_data = json_decode($admin_resource, true);
 
-                if(array_key_exists('message', $delete_data)){
-
-                    if($delete_data['message'] == 'Account deleted.'){
-                        $_SESSION[$modalType] = $delete_data['message'];
-                    } else {
-                        $_SESSION[$modalType] = $delete_data['message'];
-                    }
-
-                //delete user token
-                $delete_token_endpoint = $base_url . "user/deleteUserToken.php?user_id=$user_id";
-                $delete_token_resource = @file_get_contents($delete_token_endpoint);
-                $delete_token_data = json_decode($delete_token_resource, true);
+                if($admin_data){
+                    $_SESSION['userSettingsMessage'] = $admin_data['message'];
+                } else {
+                    $_SESSION['userSettingsMessage'] = "Error.";
+                }
 
                 } else {
-                    $_SESSION[$modalType] = "Error.";
+                    $_SESSION['userSettingsMessage'] = "Error.";
                 }
 
             } else {
-                $_SESSION[$modalType] = "Incorrect password.";
+                $_SESSION['userSettingsMessage'] = "Incorrect password.";
                 echo "<script>window.location = '$location'</script>";
             }
         } else {
-            $_SESSION[$modalType] = "Error.";
+            $_SESSION['userSettingsMessage'] = "Error.";
         }
-
-    } else {
-        $_SESSION[$modalType] = "Error.";
-    }
 
 } else {
     echo "<script>window.location = '../../index.php'</script>";

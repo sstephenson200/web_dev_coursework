@@ -563,6 +563,18 @@ class User {
         return $statement;
     }
 
+    //Function to give a user admin access
+    public function createAdmin($user_id){
+        $query = "INSERT INTO admin_user (admin_user_id, user_id) VALUES (null, ?)";
+
+        $statement = $this -> conn -> prepare($query);
+        $user_id = htmlspecialchars(strip_tags($user_id));
+        $user_id = $this -> conn -> real_escape_string($user_id);;
+        $statement -> bind_param("s", $user_id);
+        $statement -> execute();
+        return $statement;
+    }
+
 }
 
 ?>
