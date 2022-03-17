@@ -44,6 +44,11 @@ if(isset($_SESSION['userLoggedIn']) and isset($_POST['confirmBan'])){
                         $_SESSION['adminMessage'] = $delete_data['message'];
                     }
 
+                //delete user token
+                $delete_token_endpoint = $base_url . "user/deleteUserToken.php?user_id=$user_id";
+                $delete_token_resource = @file_get_contents($delete_token_endpoint);
+                $delete_token_data = json_decode($delete_token_resource, true);
+
                 } else {
                     $_SESSION['adminMessage'] = "Error.";
                 }

@@ -97,6 +97,10 @@
         if(isset($_SESSION['reportUser'])){
             include("includes/modal/reportUserModal.php");
         }
+
+        if(isset($_SESSION['userSettingsMessage'])){
+            include("includes/modal/userSettingsModal.php");
+        }
     ?>
 
     <div class="container-fluid p-0 content">
@@ -169,7 +173,7 @@
                         } ?>
                         <?php if(isset($_SESSION['userLoggedIn']) and $logged_in_username != $username) {
                             if($AdminCount != 0) { ?>
-                                <a role='button px-1'>
+                                <a role='button px-1' href='php/user/confirmBanUser.php?user_id=<?php echo $user_id?>' class='text-reset text-decoration-none'>
                                     <i id='banIcon' class='fas fa-ban fa-lg ban' data-toggle='popover' title='Ban' data-content='Ban User' data-target='banIcon'></i>
                                 </a>
                             <?php }
