@@ -66,6 +66,14 @@ if(isset($_SESSION['userSettingsMessage'])){
           $title = "You are about to delete this account!";
           $body = "Are you sure? This user will no longer be able to access Pebble Revolution.";
           break;
+        case 'Account deleted.':
+          $title = "You have deleted a user account.";
+          $body = "This user will no longer be able to access Pebble Revolution.";
+          break;
+        case 'Make admin.':
+          $title = "You are about to give this account admin permissions";
+          $body = "Are you sure? This user will be able to ban users and add and remove content.";
+          break;
         default:
             $title = "Awkward...";
             $body = "Something went wrong. Please try again later.";

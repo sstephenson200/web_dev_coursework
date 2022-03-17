@@ -121,7 +121,11 @@
                     </div>
                 </div>
                 <div class="row d-flex justify-content-center text-center mb-2">
-                    <div class="col-12 col-lg-3">
+                    <?php if(strlen($username)>10){ ?>
+                        <div class="col-12">
+                    <?php } else { ?>
+                        <div class="col-12 col-lg-3">
+                    <?php } ?>
                         <h3><?php echo $username ?></h3>
                     </div>
                     <div class="col-12 col-lg-3">
@@ -144,8 +148,13 @@
                 </div> 
             </div>
             <div class="col-12 col-sm-7 col-md-8">
-                <div class="row py-1">
-                    <div class="col-3 offset-9 col-md-1 offset-md-11">
+                <div class="row py-1 d-flex justify-content-end">
+                    <?php if(isset($_SESSION['userLoggedIn']) and $logged_in_username != $username) {
+                            if($AdminCount != 0) { ?>
+                                <div class="col-6 col-sm-5 col-md-4 col-lg-3 col-xl-2">
+                            <?php } } else { ?>
+                                <div class="col-1">
+                            <?php } ?>
                         <?php if(isset($_SESSION['userLoggedIn']) and $logged_in_username != $username) {
                             
                             //check if visiting user has already reported user
@@ -166,15 +175,18 @@
                                 <i id='reported' class='fas fa-flag fa-lg report' data-toggle='popover' title='Reported' data-content='Reported Content' data-target='reportIcon'></i>
                             <?php } else { ?>
 
-                            <a role='button px-1' href='php/user/confirmReportUser.php?user_id=<?php echo $user_id?>&reported=<?php echo $reported_flag ?>' class='text-reset text-decoration-none'>
+                            <a role='button' href='php/user/confirmReportUser.php?user_id=<?php echo $user_id?>&reported=<?php echo $reported_flag ?>' class='text-reset text-decoration-none px-1'>
                                 <i id='reportIcon' class='<?php if($reported_flag) { ?> fas <?php } else { ?> far <?php } ?> fa-flag fa-lg report' data-toggle='popover' title='Report' data-content='Report Content' data-target='reportIcon'></i>
                             </a>
                         <?php }
                         } ?>
                         <?php if(isset($_SESSION['userLoggedIn']) and $logged_in_username != $username) {
                             if($AdminCount != 0) { ?>
-                                <a role='button px-1' href='php/user/confirmBanUser.php?user_id=<?php echo $user_id?>' class='text-reset text-decoration-none'>
+                                <a role='button' href='php/user/confirmBanUser.php?user_id=<?php echo $user_id?>' class='text-reset text-decoration-none px-1'>
                                     <i id='banIcon' class='fas fa-ban fa-lg ban' data-toggle='popover' title='Ban' data-content='Ban User' data-target='banIcon'></i>
+                                </a>
+                                <a role='button' href='php/user/confirmMakeAdmin.php?user_id=<?php echo $user_id?>' class='text-reset text-decoration-none px-1'>
+                                    <i id='adminIcon' class='fas fa-tools fa-lg admin' data-toggle='popover' title='Admin' data-content='Give User Admin Rights' data-target='adminIcon'></i>
                                 </a>
                             <?php }
                         } ?>
