@@ -391,6 +391,78 @@ class Album {
         return $statement;
     }
 
+    //Function to delete songs for a given album_id
+    public function deleteSongsPerAlbum($album_id){
+        $query = "DELETE FROM song WHERE album_id = ?";
+
+        $statement = $this -> conn -> prepare($query);
+        $album_id = htmlspecialchars(strip_tags($album_id));
+        $album_id = $this -> conn -> real_escape_string($album_id);
+        $statement -> bind_param("s", $album_id);
+        $statement -> execute();
+        return $statement;
+    }
+
+    //Function to delete genres for a given album_id
+    public function deleteGenresPerAlbum($album_id){
+        $query = "DELETE FROM album_genre WHERE album_id = ?";
+
+        $statement = $this -> conn -> prepare($query);
+        $album_id = htmlspecialchars(strip_tags($album_id));
+        $album_id = $this -> conn -> real_escape_string($album_id);
+        $statement -> bind_param("s", $album_id);
+        $statement -> execute();
+        return $statement;
+    }
+
+    //Function to delete subgenres for a given album_id
+    public function deleteSubgenresPerAlbum($album_id){
+        $query = "DELETE FROM album_subgenre WHERE album_id = ?";
+
+        $statement = $this -> conn -> prepare($query);
+        $album_id = htmlspecialchars(strip_tags($album_id));
+        $album_id = $this -> conn -> real_escape_string($album_id);
+        $statement -> bind_param("s", $album_id);
+        $statement -> execute();
+        return $statement;
+    }
+
+    //Function to delete album
+    public function deleteAlbum($album_id){
+        $query = "DELETE FROM album WHERE album_id = ?";
+
+        $statement = $this -> conn -> prepare($query);
+        $album_id = htmlspecialchars(strip_tags($album_id));
+        $album_id = $this -> conn -> real_escape_string($album_id);
+        $statement -> bind_param("s", $album_id);
+        $statement -> execute();
+        return $statement;
+    }
+
+    //Function to delete an album from all favourite lists
+    public function deleteFavouriteAlbumsByAlbumID($album_id){
+        $query = "DELETE FROM favourite_music WHERE album_id = ?";
+
+        $statement = $this -> conn -> prepare($query);
+        $album_id = htmlspecialchars(strip_tags($album_id));
+        $album_id = $this -> conn -> real_escape_string($album_id);
+        $statement -> bind_param("s", $album_id);
+        $statement -> execute();
+        return $statement;
+    }
+
+       //Function to delete an album from all owned lists
+       public function deleteOwnedAlbumsByAlbumID($album_id){
+        $query = "DELETE FROM owned_music WHERE album_id = ?";
+
+        $statement = $this -> conn -> prepare($query);
+        $album_id = htmlspecialchars(strip_tags($album_id));
+        $album_id = $this -> conn -> real_escape_string($album_id);
+        $statement -> bind_param("s", $album_id);
+        $statement -> execute();
+        return $statement;
+    }
+
 }
 
 ?>

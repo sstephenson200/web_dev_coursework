@@ -195,6 +195,18 @@ class Review {
         return $statement; 
     }
 
+    //Function to delete review by album_id
+    public function deleteReviewByAlbumID($album_id){
+        $query = "DELETE FROM review WHERE album_id = ?";
+
+        $statement = $this -> conn -> prepare($query);
+        $album_id = htmlspecialchars(strip_tags($album_id));
+        $album_id = $this -> conn -> real_escape_string($album_id);
+        $statement -> bind_param("s", $album_id);
+        $statement -> execute();
+        return $statement; 
+    }
+
 }
 
 ?>

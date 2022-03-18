@@ -59,7 +59,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Album</title>
+    <title><?php echo $album_title ?></title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
@@ -93,6 +93,10 @@
 
         if(isset($_SESSION['editReview'])){
             include("includes/modal/editReviewModal.php");
+        }
+
+        if(isset($_SESSION['albumMessage'])){
+            include("includes/modal/albumModal.php");
         }
     ?>
 
@@ -134,6 +138,18 @@
                 </div>   
             </div>
             <div class="col-12 col-md-8 text-center">
+                <?php if(isset($_SESSION['userLoggedIn']) and $AdminCount != 0) { ?>
+                    <div class="row">
+                        <div class="col-3 col-sm-2 offset-9 offset-sm-10">
+                            <a role='button px-1' href='php/album/processEditAlbum.php' class='text-reset text-decoration-none'>
+                                <i id='editIcon' class='fas fa-edit fa-lg edit' data-toggle='popover' title='Edit' data-content='Edit Content' data-target='editIcon'></i>
+                            </a>
+                            <a role='button px-1' href='php/album/confirmDeleteAlbum.php?album_id=<?php echo $album_id ?>' class='text-reset text-decoration-none'>
+                                <i id='deleteIcon' class='far fa-trash-alt fa-lg delete' data-toggle='popover' title='Delete' data-content='Delete Content' data-target='deleteIcon'></i>
+                            </a>
+                        </div>
+                    </div>  
+                <?php } ?>
                 <div class="row">
                     <h1 class="display-2 p-0"><?php echo $album_title?></h1>
                     <h1 class="display-4 mb-2">
