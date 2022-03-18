@@ -1,7 +1,23 @@
 <?php 
 
 if(isset($_SESSION['adminMessage'])){
-    switch($_SESSION['adminMessage']){        
+    switch($_SESSION['adminMessage']){
+        case 'Album exists.':
+          $title = "This album already exists!";
+          $body = "Sorry, an album already exists with this artist and title. Please double check your entry!";
+          break; 
+        case 'Incorrect songs.':
+          $title = "Not a match";
+          $body = "Please enter an equal number of songs and song lengths.";
+          break; 
+        case 'Song Length Format.':
+          $title = "Track length format incorrect";
+          $body = "Please enter track lengths as mm:ss format.";
+          break; 
+        case 'Album added.':
+          $title = "You have created a new album";
+          $body = "Nice one! Thanks for keeping the revolution up to date.";
+          break; 
         case 'Incorrect password.':
           $title = "Password incorrect";
           $body = "Sorry, that password doesn't look right... Let's try that again.";
@@ -69,6 +85,14 @@ if(isset($_SESSION['banUserDetails'])){
 
 <?php 
 if(isset($_SESSION['adminMessage'])) {
+  if($_SESSION['adminMessage'] == "Album added."){
+    if(isset($_SESSION['album_data'])){
+      unset($_SESSION['album_data']);
+    }
+    if(isset($_SESSION['filtered_data'])){
+      unset($_SESSION['album_data']);
+    }
+  }
     unset($_SESSION['adminMessage']);
 }
 
