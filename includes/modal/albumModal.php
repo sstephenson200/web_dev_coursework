@@ -22,6 +22,9 @@ if(isset($_SESSION['albumMessage'])){
             $title = "You have deleted this album.";
             $body = "Users are no longer be able to access this content.";
             break;
+        case 'Edit Album.':
+            $title = "Edit Album";
+            break;
         default:
             $title = "Awkward...";
             $body = "Something went wrong. Please try again later.";
@@ -31,6 +34,17 @@ if(isset($_SESSION['albumMessage'])){
 
 if(isset($_SESSION['albumDetails'])){
     $album_id = $_SESSION['albumDetails'];
+}
+
+$tracks = array();
+$lengths = array();
+
+foreach($songs_data as $song){
+  $song_title = $song['song_title'];
+  $duration = $song['song_length'];
+
+  $tracks[] = $song_title;
+  $lengths[] = $duration;
 }
 
 ?>
@@ -45,6 +59,78 @@ if(isset($_SESSION['albumDetails'])){
         </button>
       </div>
       <div class="modal-body">
+        <?php if($_SESSION['albumMessage'] == "Edit Album.") { ?>
+          <form action="php/album/processEditAlbum.php" method="POST">
+            <div class="col-12">
+                <div class="form-group mb-3">
+                <input type="hidden" name="album_id" value="<?php echo $album_id ?>" />
+                <label for="albumTitle">Album Title</label>
+                <input type="text" class="form-control" id="albumTitle" name="albumTitle" maxlength="30" placeholder="Album Title" value="<?php echo $album_title ?>" required="required">
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group mb-3">
+                <label for="artist">Artist</label>
+                <input type="text" class="form-control" id="artist" name="artist" maxlength="30" placeholder="Artist" value="<?php echo $album_artist ?>" required="required">
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group mb-3">
+                <label for="art">Art URL</label>
+                <input type="url" class="form-control" id="art" name="art" placeholder="Art URL" value="<?php echo $album_art_url ?>" required="required">
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group mb-3">
+                <label for="spotifyID">Spotify ID</label>
+                <input type="text" class="form-control" id="spotifyID" name="spotifyID" value="<?php echo $spotify_id ?>" placeholder="Spotify ID">
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group mb-3">
+                <label for="rating">Album Rating</label>
+                <input type="text" class="form-control" id="rating" maxlength="3" name="rating" value="<?php echo $rating ?>" placeholder="Album Rating">
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group mb-3">
+                <label for="year">Year</label>
+                <input type="text" class="form-control" id="year" name="year" maxlength="4" placeholder="Year Published" value="<?php echo $year ?>" required="required">
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group mb-3">
+                <label for="genres">Genres</label>
+                <input type="text" class="form-control" id="genres" name="genres" placeholder="Genre1, Genre2, Genre3" value="<?php echo implode(',',$genres) ?>" required="required">
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group mb-3">
+                <label for="subgenres">Subgenres</label>
+                <input type="text" class="form-control" id="subgenres" name="subgenres" placeholder="Subgenre1, Subgenre2, Subgenre3" value="<?php echo implode(',',$subgenres) ?>" required="required">
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group mb-3">
+                <label for="songs">Album Tracks</label>
+                <textarea class="form-control" id="songs" name="songs" placeholder="Track1, Track2, Track3" rows="3" required="required"><?php echo implode(',',$tracks) ?></textarea>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group mb-3">
+                <label for="lengths">Track Lengths</label>
+                <textarea class="form-control" id="lengths" name="lengths" placeholder="TrackLength1, TrackLength2, TrackLength3" rows="3" required="required"><?php echo implode(',',$lengths) ?></textarea>
+                </div>
+            </div>
+        </div>
+            <div class="modal-footer">
+              <div>
+                <button type="submit" name="confirmEdit" class="btn styled_button">Save Changes</button>
+              </div>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+          </form>
+        <?php } else {?> 
         <p><?php echo $body ?></p>
         <?php if($_SESSION['albumMessage'] == "Delete Album.") { ?>
           <form action="php/album/processDeleteAlbum.php" method="POST">
@@ -64,6 +150,7 @@ if(isset($_SESSION['albumDetails'])){
       <?php } else { ?>
       </div>
       <?php } ?>
+    <?php } ?>
     </div>
   </div>
 </div>
@@ -88,5 +175,9 @@ if(isset($_SESSION['albumMessage'])) {
     }
 
     unset($_SESSION['albumMessage']);
+}
+
+if(isset($_SESSION['albumDetails'])){
+  unset($_SESSION['albumDetails']);
 }
 ?>

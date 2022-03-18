@@ -294,7 +294,7 @@ class Album {
         $statement = $this -> conn -> prepare($query);
         $art_url = htmlspecialchars(strip_tags($art_url));
         $art_url = $this -> conn -> real_escape_string($art_url);
-        $statement -> bind_param("s", $artist_name);
+        $statement -> bind_param("s", $art_url);
         $statement -> execute();
         return $statement;  
     }
@@ -459,6 +459,20 @@ class Album {
         $album_id = htmlspecialchars(strip_tags($album_id));
         $album_id = $this -> conn -> real_escape_string($album_id);
         $statement -> bind_param("s", $album_id);
+        $statement -> execute();
+        return $statement;
+    }
+
+    //Function to update art_url for specific art_id
+    public function updateArt($art_id, $art_url){
+        $query = "UPDATE art SET art_url=? WHERE art_id=?";
+
+        $statement = $this -> conn -> prepare($query);
+        $art_id = htmlspecialchars(strip_tags($art_id));
+        $art_id = $this -> conn -> real_escape_string($art_id);
+        $art_url = htmlspecialchars(strip_tags($art_url));
+        $art_url = $this -> conn -> real_escape_string($art_url);
+        $statement -> bind_param("ss", $art_url, $art_id);
         $statement -> execute();
         return $statement;
     }

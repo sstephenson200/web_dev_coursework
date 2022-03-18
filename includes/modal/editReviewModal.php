@@ -8,7 +8,7 @@ if(isset($_SESSION['editDetails'])){
     $album_id = $_SESSION['editDetails'][0];
     $review_title = $_SESSION['editDetails'][1];
     $text = $_SESSION['editDetails'][2];
-    $rating = $_SESSION['editDetails'][3];
+    $review_rating = $_SESSION['editDetails'][3];
 }
 
 ?>
@@ -28,18 +28,18 @@ if(isset($_SESSION['editDetails'])){
                 <div class="col-6 col-sm-8">
                     <div class="form-group mb-3">
                         <label for="reviewTitle">Title</label>
-                        <input type="text" class="form-control" id="reviewTitle" name="reviewTitle" maxlength="30" placeholder="<?php echo $review_title ?>" required="required">
+                        <input type="text" class="form-control" id="reviewTitle" name="reviewTitle" maxlength="30" placeholder="Review Title" value="<?php echo $review_title ?>" required="required">
                         <input type="hidden" name="album_id" value="<?php echo $album_id ?>" />
                     </div>
                 </div>
                 <div class="col-4 col-sm-2">
                     <label for="reviewRating">Rating</label>
                     <select class="form-select" aria-label="ratingSelector" id="reviewRating" name="reviewRating">
-                        <option value="5" <?php if($rating == '5') { echo "selected";} ?>>5</option>
-                        <option value="4" <?php if($rating == '4') { echo "selected";} ?>>4</option>
-                        <option value="3" <?php if($rating == '3') { echo "selected";} ?>>3</option>
-                        <option value="2" <?php if($rating == '2') { echo "selected";} ?>>2</option>
-                        <option value="1" <?php if($rating == '1') { echo "selected";} ?>>1</option>
+                        <option value="5" <?php if($review_rating == '5') { echo "selected";} ?>>5</option>
+                        <option value="4" <?php if($review_rating == '4') { echo "selected";} ?>>4</option>
+                        <option value="3" <?php if($review_rating == '3') { echo "selected";} ?>>3</option>
+                        <option value="2" <?php if($review_rating == '2') { echo "selected";} ?>>2</option>
+                        <option value="1" <?php if($review_rating == '1') { echo "selected";} ?>>1</option>
                     </select>
                 </div>
             </div>

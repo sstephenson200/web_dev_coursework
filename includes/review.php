@@ -3,7 +3,7 @@
         <div class="row py-2">
             <?php if(isset($_SESSION['userLoggedIn']) and $logged_in_username == $username ) { ?>
             <div class="col-3 col-sm-2 offset-9 offset-sm-10">
-                <a role='button px-1' href='php/review/processEditReview.php?album_id=<?php echo $album_id ?>&title=<?php echo $review_title ?>&text=<?php echo $review_body ?>&rating=<?php echo $review_rating?>' class='text-reset text-decoration-none'>
+                <a role='button px-1' href='php/review/processEditReview.php?album_id=<?php echo $album_id ?>&title=<?php echo urlencode(trim($review_title)) ?>&text=<?php echo urlencode(trim($review_body)) ?>&review_rating=<?php echo $review_rating?>' class='text-reset text-decoration-none'>
                     <i id='editIcon<?php echo $review_card_count ?>' class='fas fa-edit fa-lg edit' data-toggle='popover' title='Edit' data-content='Edit Content' data-target='editIcon<?php echo $review_card_count ?>'></i>
                 </a>
                 <a role='button px-1' href='php/review/confirmDeleteReview.php?album_id=<?php echo $album_id ?>' class='text-reset text-decoration-none'>
