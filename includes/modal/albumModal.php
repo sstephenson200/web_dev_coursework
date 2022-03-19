@@ -25,6 +25,10 @@ if(isset($_SESSION['albumMessage'])){
         case 'Edit Album.':
             $title = "Edit Album";
             break;
+        case 'Album updated.':
+          $title = "Album updated.";
+          $body = "Thanks for updating this album!";
+          break;
         default:
             $title = "Awkward...";
             $body = "Something went wrong. Please try again later.";

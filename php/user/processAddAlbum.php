@@ -141,7 +141,7 @@ if(isset($_POST['addAlbum'])){
         //check if year exists
         foreach($year_data as $current_year){
             if($current_year[0] == $year){
-                //get artist id for existing artist
+                //get year id for existing year
                 $get_year_endpoint = $base_url . "album/getYearIDByValue.php?year_value=$year";
                 $get_year_resource = file_get_contents($get_year_endpoint);
                 $get_year_data = json_decode($get_year_resource, true);
@@ -257,8 +257,6 @@ if(isset($_POST['addAlbum'])){
             
         }
         
-
-       
         //check if subgenre exists
         foreach($subgenres as $subgenre){
             $subgenre = urlencode(trim($subgenre));
@@ -305,7 +303,7 @@ if(isset($_POST['addAlbum'])){
         //add album songs
         foreach (array_combine($tracks, $trackLengths) as $track => $length){
             $track = urlencode(trim($track));
-            $length = urlencode(trim($length));
+            $length = trim($length);
 
             $song_endpoint = $base_url . "album/addTrack.php?album_id=$album_id&title=$track&length=$length";
             $song_resource = file_get_contents($song_endpoint);

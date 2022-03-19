@@ -477,6 +477,88 @@ class Album {
         return $statement;
     }
 
+    //Function to update album
+    public function updateAlbum($album_id, $title, $artist_id, $art_id, $spotify_id, $rating, $year_id){
+        $query = "UPDATE album SET album_title=?, album_rating=?, spotify_id=?, art_id=?, artist_id=?, year_id=? WHERE album_id=?";
+
+        $statement = $this -> conn -> prepare($query);
+        $album_id = htmlspecialchars(strip_tags($album_id));
+        $album_id = $this -> conn -> real_escape_string($album_id);
+        $title = htmlspecialchars(strip_tags($title));
+        $title = $this -> conn -> real_escape_string($title);
+        $artist_id = htmlspecialchars(strip_tags($artist_id));
+        $artist_id = $this -> conn -> real_escape_string($artist_id);
+        $art_id = htmlspecialchars(strip_tags($art_id));
+        $art_id = $this -> conn -> real_escape_string($art_id);
+        $spotify_id = htmlspecialchars(strip_tags($spotify_id));
+        $spotify_id = $this -> conn -> real_escape_string($spotify_id);
+        $rating = htmlspecialchars(strip_tags($rating));
+        $rating = $this -> conn -> real_escape_string($rating);
+        $year_id = htmlspecialchars(strip_tags($year_id));
+        $year_id = $this -> conn -> real_escape_string($year_id);
+        $statement -> bind_param("sssssss", $title, $rating, $spotify_id, $art_id, $artist_id, $year_id, $album_id);
+        $statement -> execute();
+        return $statement;
+    }
+
+    //Function to delete an entry from the album_genre table, based on album_id and genre_id
+    public function deleteAlbumGenre($album_id, $genre_id){
+        $query = "DELETE FROM album_genre WHERE album_id = ? and genre_id=?";
+
+        $statement = $this -> conn -> prepare($query);
+        $album_id = htmlspecialchars(strip_tags($album_id));
+        $album_id = $this -> conn -> real_escape_string($album_id);
+        $genre_id = htmlspecialchars(strip_tags($genre_id));
+        $genre_id = $this -> conn -> real_escape_string($genre_id);
+        $statement -> bind_param("ss", $album_id, $genre_id);
+        $statement -> execute();
+        return $statement;
+    }
+
+    //Function to delete an entry from the album_subgenre table, based on album_id and subgenre_id
+    public function deleteAlbumSubgenre($album_id, $subgenre_id){
+        $query = "DELETE FROM album_subgenre WHERE album_id = ? and subgenre_id=?";
+
+        $statement = $this -> conn -> prepare($query);
+        $album_id = htmlspecialchars(strip_tags($album_id));
+        $album_id = $this -> conn -> real_escape_string($album_id);
+        $subgenre_id = htmlspecialchars(strip_tags($subgenre_id));
+        $subgenre_id = $this -> conn -> real_escape_string($subgenre_id);
+        $statement -> bind_param("ss", $album_id, $subgenre_id);
+        $statement -> execute();
+        return $statement;
+    }
+
+    //Function to get length of song given title and album_id
+    public function getSongLength($album_id, $song_title){
+        $query = "SELECT song_length FROM song WHERE album_id=? AND song_title=?";
+
+        $statement = $this -> conn -> prepare($query);
+        $album_id = htmlspecialchars(strip_tags($album_id));
+        $album_id = $this -> conn -> real_escape_string($album_id);
+        $song_title = htmlspecialchars(strip_tags($song_title));
+        $song_title = $this -> conn -> real_escape_string($song_title);
+        $statement -> bind_param("ss", $album_id, $song_title);
+        $statement -> execute();
+        return $statement;  
+    }
+
+    //Function to update a given song's duration
+    public function updateSongLength($album_id, $song_title, $song_length){
+        $query = "UPDATE song SET song_length=? WHERE album_id=? AND song_title=?";
+
+        $statement = $this -> conn -> prepare($query);
+        $album_id = htmlspecialchars(strip_tags($album_id));
+        $album_id = $this -> conn -> real_escape_string($album_id);
+        $song_title = htmlspecialchars(strip_tags($song_title));
+        $song_title = $this -> conn -> real_escape_string($song_title);
+        $song_length = htmlspecialchars(strip_tags($song_length));
+        $song_length = $this -> conn -> real_escape_string($song_length);
+        $statement -> bind_param("sss", $song_length, $album_id, $song_title);
+        $statement -> execute();
+        return $statement;
+    }
+
 }
 
 ?>
