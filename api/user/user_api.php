@@ -575,18 +575,6 @@ class User {
         return $statement;
     }
 
-    //Function to check if user_id exists
-    public function checkValidUser($user_id){
-        $query = "SELECT user_id FROM user WHERE user_id = ?";
-
-        $statement = $this -> conn -> prepare($query);
-        $user_id = htmlspecialchars(strip_tags($user_id));
-        $user_id = $this -> conn -> real_escape_string($user_id);
-        $statement -> bind_param("s", $user_id);
-        $statement -> execute();
-        return $statement;
-    }
-
 }
 
 ?>

@@ -4,7 +4,6 @@ session_start();
 
 $active_filters = $_SESSION["active_filters"];
 
-
 //remove artist filters
 if(isset($_GET['artist'])){
     $artist = $_GET['artist'];

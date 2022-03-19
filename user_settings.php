@@ -132,7 +132,7 @@
                             <div class="form-group mb-2">
                                 <i class="fas fa-book"></i>
                                 <label for="updateBio">User Bio</label>
-                                <textarea class="form-control" id="updateBio" name="updateBio" maxlength="250" placeholder="What's your story?" rows="3" required="required"><?php echo $user_bio?></textarea>
+                                <textarea class="form-control" id="updateBio" name="updateBio" maxlength="250" placeholder="What's your story?" rows="3" required="required"><?php echo stripslashes($user_bio)?></textarea>
                             </div>
                         </div>
                     </div>

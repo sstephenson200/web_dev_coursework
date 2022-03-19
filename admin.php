@@ -218,8 +218,8 @@
                                                     <td><?php echo $review_date ?></td>
                                                     <td><a role='button' href='user_profile.php?user_id=<?php echo $user_id ?>'><?php echo $username ?></a></td>
                                                     <td><a role='button' href='album.php?album_id=<?php echo $album_id ?>'><?php echo $album_id ?></a></td>
-                                                    <td><?php echo $review_title ?></td>
-                                                    <td><?php echo $review_text ?></td>
+                                                    <td><?php echo stripslashes($review_title) ?></td>
+                                                    <td><?php echo stripslashes($review_text) ?></td>
                                                     <td><?php echo $review_rating ?></td>
                                                     <td>  
                                                         <input type="hidden" name="review_id[]" value="<?php echo $review_id ?>" />
@@ -325,8 +325,8 @@
                                                     <td><?php echo $review_date ?></td>
                                                     <td><a role='button' href='user_profile.php?user_id=<?php echo $user_id ?>'><?php echo $username ?></a></td>
                                                     <td><a role='button' href='album.php?album_id=<?php echo $album_id ?>'><?php echo $album_id ?></a></td>
-                                                    <td><?php echo $review_title ?></td>
-                                                    <td><?php echo $review_text ?></td>
+                                                    <td><?php echo stripslashes($review_title) ?></td>
+                                                    <td><?php echo stripslashes($review_text) ?></td>
                                                     <td><?php echo $review_rating ?></td>
                                                     <td>  
                                                         <input type="hidden" name="review_id[]" value="<?php echo $review_id ?>" />
@@ -398,7 +398,7 @@
                                                 <td><?php echo $report_date ?></td>
                                                 <td><a role='button' href='user_profile.php?user_id=<?php echo $reporting_user ?>'><?php echo $reporting_user_name ?></a></td>
                                                 <td><a role='button' href='user_profile.php?user_id=<?php echo $reported_user ?>'><?php echo $reported_user_name ?></a></td>
-                                                <td><?php echo $report_reasoning ?></td>
+                                                <td><?php echo stripslashes($report_reasoning) ?></td>
                                                 <form action="php/user/processReportedUser.php" method="POST">
                                                     <input type="hidden" name="user_id" value="<?php echo $reported_user ?>" />
                                                     <input type="hidden" name="report_id" value="<?php echo $report_id ?>" />

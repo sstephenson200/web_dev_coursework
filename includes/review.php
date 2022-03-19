@@ -25,7 +25,7 @@
             </div>
         	<div class="col-12 col-md-7 col-lg-6">
                 <div class="row d-flex justify-content-center">
-                    <h4 class="card-title"><?php echo $review_title ?></h4>
+                    <h4 class="card-title"><?php echo stripslashes($review_title) ?></h4>
                     <h4>
                         <?php 
                             for($i=0; $i<$review_rating; $i++){
@@ -44,7 +44,7 @@
                 </div>
                 <div class="row d-flex justify-content-center mt-3">
                     <div class="col-12 col-sm-10">
-                        <p class="text-wrap"><?php echo $review_body ?></p>
+                        <p class="text-wrap"><?php echo stripslashes($review_body) ?></p>
                     </div>
                 </div>
         	</div>

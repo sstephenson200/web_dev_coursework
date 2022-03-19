@@ -149,7 +149,7 @@
                     </div>
                 </div>
                 <div class="row text-center mb-2">
-                    <p><?php echo $user_bio ?></p>
+                    <p><?php echo stripslashes($user_bio) ?></p>
                 </div>
                 <div class="row text-center mb-2">
                     <div class="col">
