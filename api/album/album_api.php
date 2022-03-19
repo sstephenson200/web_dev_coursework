@@ -559,6 +559,32 @@ class Album {
         return $statement;
     }
 
+    //Function to get song_id by title and album_id
+    public function getSongIDByTitle($album_id, $song_title){
+        $query = "SELECT song_id FROM song WHERE album_id=? AND song_title=?";
+
+        $statement = $this -> conn -> prepare($query);
+        $album_id = htmlspecialchars(strip_tags($album_id));
+        $album_id = $this -> conn -> real_escape_string($album_id);
+        $song_title = htmlspecialchars(strip_tags($song_title));
+        $song_title = $this -> conn -> real_escape_string($song_title);
+        $statement -> bind_param("ss", $album_id, $song_title);
+        $statement -> execute();
+        return $statement;  
+    }
+
+    //Function to delete a single track
+    public function deleteTrack($song_id){
+        $query = "DELETE FROM song WHERE song_id = ?";
+
+        $statement = $this -> conn -> prepare($query);
+        $song_id = htmlspecialchars(strip_tags($song_id));
+        $song_id = $this -> conn -> real_escape_string($song_id);
+        $statement -> bind_param("s", $song_id);
+        $statement -> execute();
+        return $statement;
+    }
+
 }
 
 ?>
