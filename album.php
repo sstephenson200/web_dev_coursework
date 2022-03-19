@@ -6,6 +6,8 @@
 
     include("php/user/processRememberMe.php");
 
+    $valid_album = true;
+
     //Card count variables
     $music_card_count = 0;
     $community_card_count = 0;
@@ -13,43 +15,55 @@
 
     $album_id = $_GET['album_id'];
 
-    //get album data
-    $album_endpoint = $base_url . "album/getAlbumByID.php?album_id=$album_id";
-    $album_resource = file_get_contents($album_endpoint);
-    $album_data = json_decode($album_resource, true);
+    //check valid album
+    $valid_endpoint = $base_url . "album/checkValidAlbum.php?album_id=$album_id";
+    $valid_resource = file_get_contents($valid_endpoint);
+    $valid_data = json_decode($valid_resource, true);
 
-    $album_art_url = $album_data[0]['art_url'];
-    $album_title = $album_data[0]['album_title'];
-    $album_artist = $album_data[0]['artist_name'];
-    $rating = $album_data[0]['AverageRating'];
-    $spotify_id = $album_data[0]['spotify_id'];
-    $year = $album_data[0]['year_value'];
-    $genres = $album_data[0]['Genres'];
-    $subgenres = $album_data[0]['Subgenres'];
-    
-    //get album songs
-    $songs_endpoint = $base_url . "album/getSongsByAlbumID.php?album_id=$album_id";
-    $songs_resource = @file_get_contents($songs_endpoint);
-    $songs_data = json_decode($songs_resource, true);
+    if($valid_data){
+        if($valid_data['message'] != "Album exists."){
+            $valid_album = false;
+        }
+    }
 
-    //get album reviews
-    $reviews_endpoint = $base_url . "review/getReviewsByAlbumID.php?album_id=$album_id";
-    $reviews_resource = @file_get_contents($reviews_endpoint);
-    $reviews_data = json_decode($reviews_resource, true);
+    if($valid_album){
+        //get album data
+        $album_endpoint = $base_url . "album/getAlbumByID.php?album_id=$album_id";
+        $album_resource = file_get_contents($album_endpoint);
+        $album_data = json_decode($album_resource, true);
 
-    //get related albums
-    $album_artist_edited = urlencode($album_artist);
-    $related_albums_endpoint = $base_url . "album/getAlbumsByArtistName.php?artist_name=$album_artist_edited";
-    $related_albums_resource = @file_get_contents($related_albums_endpoint);
-    $related_albums_data = json_decode($related_albums_resource, true);
+        $album_art_url = $album_data[0]['art_url'];
+        $album_title = $album_data[0]['album_title'];
+        $album_artist = $album_data[0]['artist_name'];
+        $rating = $album_data[0]['AverageRating'];
+        $spotify_id = $album_data[0]['spotify_id'];
+        $year = $album_data[0]['year_value'];
+        $genres = $album_data[0]['Genres'];
+        $subgenres = $album_data[0]['Subgenres'];
+        
+        //get album songs
+        $songs_endpoint = $base_url . "album/getSongsByAlbumID.php?album_id=$album_id";
+        $songs_resource = @file_get_contents($songs_endpoint);
+        $songs_data = json_decode($songs_resource, true);
 
-    //get related communities
-    $related_communities_endpoint = $base_url . "community/getCommunitiesByArtistName.php?artist_name=$album_artist_edited";
-    $related_communities_resource = @file_get_contents($related_communities_endpoint);
-    $related_communities_data = json_decode($related_communities_resource, true);
-    
+        //get album reviews
+        $reviews_endpoint = $base_url . "review/getReviewsByAlbumID.php?album_id=$album_id";
+        $reviews_resource = @file_get_contents($reviews_endpoint);
+        $reviews_data = json_decode($reviews_resource, true);
 
-    include ("php/pagination/pagination_reviews.php");
+        //get related albums
+        $album_artist_edited = urlencode($album_artist);
+        $related_albums_endpoint = $base_url . "album/getAlbumsByArtistName.php?artist_name=$album_artist_edited";
+        $related_albums_resource = @file_get_contents($related_albums_endpoint);
+        $related_albums_data = json_decode($related_albums_resource, true);
+
+        //get related communities
+        $related_communities_endpoint = $base_url . "community/getCommunitiesByArtistName.php?artist_name=$album_artist_edited";
+        $related_communities_resource = @file_get_contents($related_communities_endpoint);
+        $related_communities_data = json_decode($related_communities_resource, true);
+
+        include ("php/pagination/pagination_reviews.php");
+    }
 
 ?>
 
@@ -59,7 +73,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $album_title ?></title>
+    <title><?php if($valid_album) { echo $album_title; } else { echo "Album"; } ?></title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
@@ -108,6 +122,8 @@
         include("php/user/compareUserAlbums.php");
         include("php/user/getUserCommunities.php");
         ?>
+
+        <?php if($valid_album) { ?>
 
         <div class="row d-flex justify-content-center py-2">
             <div class="col-12 col-md-4">
@@ -522,6 +538,15 @@
 
             </div>
         </div>
+
+        <?php } else { ?>
+            <div class="row align-items-center restrictedMessage">
+                <div class="col text-center">
+                    <h3>Are you lost?</h3>
+                    <p>Sorry, this page isn't for you!</p>
+                </div>
+            </div>
+        <?php } ?>
 
         <!-- Footer -->
         <?php

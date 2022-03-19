@@ -6,6 +6,8 @@
 
     include("php/user/processRememberMe.php");
 
+    $valid_user = true;
+
     //Card count variables
     $music_card_count = 0;
     $community_card_count = 0;
@@ -18,47 +20,50 @@
     $active_resource = file_get_contents($active_endpoint);
     $active_data = json_decode($active_resource, true);
 
-    if($active_data['message']=="Account active."){
-        //get user profile data
-        $profile_endpoint = $base_url . "user/getProfileDataByUserID.php?user_id=$user_id";
-        $profile_resource = file_get_contents($profile_endpoint);
-        $profile_data = json_decode($profile_resource, true);
+    if($active_data){
+        if($active_data['message']=="Account active."){
+            //get user profile data
+            $profile_endpoint = $base_url . "user/getProfileDataByUserID.php?user_id=$user_id";
+            $profile_resource = file_get_contents($profile_endpoint);
+            $profile_data = json_decode($profile_resource, true);
 
-        $username = $profile_data[0]['user_name'];
-        $user_art = $profile_data[0]['art_url'];
-        $user_bio = $profile_data[0]['user_bio'];
-        $user_location = $profile_data[0]['location_code']; 
+            $username = $profile_data[0]['user_name'];
+            $user_art = $profile_data[0]['art_url'];
+            $user_bio = $profile_data[0]['user_bio'];
+            $user_location = $profile_data[0]['location_code']; 
 
-        //get owned music
-        $user_owned_endpoint = $base_url . "user/getOwnedAlbumsByUserID.php?user_id=$user_id";
-        $user_owned_resource = @file_get_contents($user_owned_endpoint);
-        $user_owned_data = json_decode($user_owned_resource, true);
+            //get owned music
+            $user_owned_endpoint = $base_url . "user/getOwnedAlbumsByUserID.php?user_id=$user_id";
+            $user_owned_resource = @file_get_contents($user_owned_endpoint);
+            $user_owned_data = json_decode($user_owned_resource, true);
 
-        //get favourited music
-        $favourited_endpoint = $base_url . "user/getFavouriteAlbumsByUserID.php?user_id=$user_id";
-        $favourited_resource = @file_get_contents($favourited_endpoint);
-        $favourited_data = json_decode($favourited_resource, true);
+            //get favourited music
+            $favourited_endpoint = $base_url . "user/getFavouriteAlbumsByUserID.php?user_id=$user_id";
+            $favourited_resource = @file_get_contents($favourited_endpoint);
+            $favourited_data = json_decode($favourited_resource, true);
 
-        //get joined communities
-        $community_endpoint = $base_url . "user/getJoinedCommunitiesByUserID.php?user_id=$user_id";
-        $community_resource = @file_get_contents($community_endpoint);
-        $community_data = json_decode($community_resource, true);
+            //get joined communities
+            $community_endpoint = $base_url . "user/getJoinedCommunitiesByUserID.php?user_id=$user_id";
+            $community_resource = @file_get_contents($community_endpoint);
+            $community_data = json_decode($community_resource, true);
 
-        //get user reviews
-        $review_endpoint = $base_url . "review/getReviewsByUserID.php?user_id=$user_id";
-        $review_resource = @file_get_contents($review_endpoint);
-        $review_data = json_decode($review_resource, true);
+            //get user reviews
+            $review_endpoint = $base_url . "review/getReviewsByUserID.php?user_id=$user_id";
+            $review_resource = @file_get_contents($review_endpoint);
+            $review_data = json_decode($review_resource, true);
 
-        //check if user is admin
-        $check_admin_endpoint = $base_url . "user/getUserAdminStatus.php?user_id=$user_id";
-        $check_admin_resource = file_get_contents($check_admin_endpoint);
-        $check_admin_data = json_decode($check_admin_resource, true);
+            //check if user is admin
+            $check_admin_endpoint = $base_url . "user/getUserAdminStatus.php?user_id=$user_id";
+            $check_admin_resource = file_get_contents($check_admin_endpoint);
+            $check_admin_data = json_decode($check_admin_resource, true);
 
-        if($check_admin_data[0]['AdminCount']){
-            $is_admin = true;
-        } else {
-            $is_admin = false;
+            if($check_admin_data[0]['AdminCount']){
+                $is_admin = true;
+            } else {
+                $is_admin = false;
+            }
         }
+
     }
 
 ?>
@@ -69,7 +74,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile</title>
+    <title><?php if($username) { echo $username; } else { echo "Profile"; } ?></title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
@@ -122,7 +127,7 @@
         include("php/user/getUserCommunities.php");
         ?>
 
-        <?php if($active_data['message']=="Account active.") { ?>
+        <?php if($active_data and array_key_exists('message',$active_data) and $active_data['message']=="Account active.") { ?>
 
         <div class="row d-flex justify-content-center userPage">
             <div class="col-12 col-sm-5 col-md-4 userSidebar">

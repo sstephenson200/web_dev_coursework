@@ -585,6 +585,18 @@ class Album {
         return $statement;
     }
 
+    //Function to check if an album exists
+    public function checkValidAlbum($album_id){
+        $query = "SELECT album_id FROM album WHERE album_id=?";
+
+        $statement = $this -> conn -> prepare($query);
+        $album_id = htmlspecialchars(strip_tags($album_id));
+        $album_id = $this -> conn -> real_escape_string($album_id);
+        $statement -> bind_param("s", $album_id);
+        $statement -> execute();
+        return $statement;
+    }
+
 }
 
 ?>

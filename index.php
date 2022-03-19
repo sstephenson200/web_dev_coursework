@@ -61,6 +61,12 @@
         }
     ?>
 
+    <?php
+        if(isset($_SESSION['deletedAlbumMessage'])){
+            include("includes/modal/deletedAlbumModal.php");
+        }
+    ?>
+
     <div class="container-fluid p-0 content">
 
         <?php

@@ -103,7 +103,7 @@ if(isset($_POST['confirmDelete'])){
                         $_SESSION['albumMessage'] = "Error.";
                         echo "<script>window.location = '$location'</script>";
                     } else {
-                        $_SESSION['albumMessage'] = "Album deleted.";
+                        $_SESSION['deletedAlbumMessage'] = "Album deleted.";
                     }
 
                 } else {
@@ -127,6 +127,13 @@ if(isset($_POST['confirmDelete'])){
     $_SESSION['albumMessage'] = "Error.";
 }
 
-echo "<script>window.location = '$location'</script>";
+if($_SESSION['deletedAlbumMessage'] = "Album deleted.") {
+    echo "<script>window.location = '../../index.php'</script>";
+} else {
+    echo "<script>window.location = '$location'</script>";
+}
+
+
+
 
 ?> 

@@ -18,10 +18,6 @@ if(isset($_SESSION['albumMessage'])){
             $title = "You are about to delete this album!";
             $body = "Are you sure? Users will no longer be able to access this content.";
             break;
-        case 'Album deleted.':
-            $title = "You have deleted this album.";
-            $body = "Users are no longer be able to access this content.";
-            break;
         case 'Edit Album.':
             $title = "Edit Album";
             break;
@@ -169,7 +165,7 @@ foreach($songs_data as $song){
 <?php 
 if(isset($_SESSION['albumMessage'])) {
 
-    if($_SESSION['albumMessage'] == "Album deleted."){
+    if( $_SESSION['albumMessage'] == "Album updated."){
         if(isset($_SESSION['album_data'])){
             unset($_SESSION['album_data']);
           }
