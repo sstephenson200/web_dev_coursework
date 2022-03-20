@@ -18,6 +18,9 @@
     //Card count variables
     $music_card_count=0;
 
+    //Year count
+    $year_count = 0;
+
     //filter variables
     $artist_filter = [];
     $genre_filter = [];
@@ -51,6 +54,8 @@
     $year_endpoint = $base_url . "album/getDecades.php";
     $year_resource = file_get_contents($year_endpoint);
     $year_data = json_decode($year_resource, true);
+
+    $decade_count = count($year_data);
 
     //get search data
     $search_endpoint = $base_url . "album/searchAlbums.php?search=$search";
@@ -186,8 +191,10 @@
 
                         foreach($_SESSION['search_filters']['artists'] as $artist) {
 
+                            $artist_edited = urlencode($artist);
+
                             echo "<li class='form-group'>$artist 
-                                    <a role='button' href='php/filter/removeSearchFilter.php?artist=$artist'>
+                                    <a role='button' href='php/filter/removeSearchFilter.php?artist=$artist_edited'>
                                         <i id='deleteFilter$artist' class='fas fa-times fa-lg' data-toggle='popover' title='Remove' data-content='Remove Filter'></i>
                                     </a>
                                 </li>";     
@@ -207,8 +214,11 @@
                                 <ul>";
 
                         foreach($_SESSION['search_filters']['genres'] as $genre) {
+
+                            $genre_edited = urlencode($genre);
+
                             echo "<li class='form-group'>$genre 
-                                    <a role='button' href='php/filter/removeSearchFilter.php?genre=$genre'>
+                                    <a role='button' href='php/filter/removeSearchFilter.php?genre=$genre_edited'>
                                         <i id='deleteFilter$genre' class='fas fa-times fa-lg' data-toggle='popover' title='Remove' data-content='Remove Filter'></i>
                                     </a>
                                 </li>";     
@@ -229,8 +239,11 @@
                                 <ul>";
 
                         foreach($_SESSION['search_filters']['subgenres'] as $subgenre) {
+
+                            $subgenre_edited = urlencode($subgenre);
+
                             echo "<li class='form-group'>$subgenre 
-                                    <a role='button' href='php/filter/removeSearchFilter.php?subgenre=$subgenre'>
+                                    <a role='button' href='php/filter/removeSearchFilter.php?subgenre=$subgenre_edited'>
                                         <i id='deleteFilter$subgenre' class='fas fa-times fa-lg' data-toggle='popover' title='Remove' data-content='Remove Filter'></i>
                                     </a>
                                 </li>";     
@@ -250,8 +263,18 @@
                                 <ul>";
 
                         foreach($_SESSION['search_filters']['ratings'] as $rating) {
-                            echo "<li class='form-group'>$rating 
-                                    <a role='button' href='php/filter/removeSearchFilter.php?rating=$rating'>
+
+                            $rating_edited = urlencode($rating);
+
+                            echo "<li class='form-group'>";
+                                    if($rating != 0){
+                                        for($i=0; $i<$rating; $i++){
+                                            echo "<i class='fas fa-star'></i>";  
+                                        }
+                                    } else {
+                                        echo "No rating";  
+                                    }
+                                    "<a role='button' href='php/filter/removeSearchFilter.php?rating=$rating_edited'>
                                         <i id='deleteFilter$rating' class='fas fa-times fa-lg' data-toggle='popover' title='Remove' data-content='Remove Filter'></i>
                                     </a>
                                 </li>";      
@@ -271,8 +294,11 @@
                                 <ul>";
 
                         foreach($_SESSION['search_filters']['decades'] as $decade) {
+
+                            $decade_edited = urlencode($decade);
+
                             echo "<li class='form-group'>$decade 
-                                    <a role='button' href='php/filter/removeSearchFilter.php?decade=$decade'>
+                                    <a role='button' href='php/filter/removeSearchFilter.php?decade=$decade_edited'>
                                         <i id='deleteFilter$decade' class='fas fa-times fa-lg' data-toggle='popover' title='Remove' data-content='Remove Filter'></i>
                                     </a>
                                 </li>"; 
@@ -304,7 +330,7 @@
                             <option selected>Select genre</option>
                             <?php
                             foreach($genre_data as $genre){
-                                echo "<option value='genre$genre[0]'>$genre[0]</option>";
+                                echo "<option value='$genre[0]'>$genre[0]</option>";
                             }                       
                             ?>
                         </select>
@@ -317,7 +343,7 @@
                             <option selected>Select subgenre</option>
                             <?php
                             foreach($subgenre_data as $subgenre){
-                                echo "<option value='subgenre$subgenreCount[0]'>$subgenre[0]</option>";
+                                echo "<option value='$subgenre[0]'>$subgenre[0]</option>";
                             } 
                             ?>
                         </select>
@@ -330,8 +356,9 @@
                     <div class="row collapse mb-1" id="ratingCollapse">
                         <?php
                             for($i=0; $i<5; $i++){
+                                $rating_value = 5 - $i;
                                 echo "<div class='form-check'>
-                                    <input class='form-check-input' type='checkbox' value='' id='ratingCheckbox'>
+                                    <input class='form-check-input' type='checkbox' value='$rating_value' id='ratingCheckbox' name='rating$rating_value'>
                                     <label class='form-check-label' for='ratingCheckbox'>";
                                 for($j=5; $j>$i; $j--) {
                                     echo "<i class='fas fa-star'></i>";  
@@ -340,7 +367,7 @@
                                 </div>";
                             }
                             echo "<div class='form-check'>
-                                    <input class='form-check-input' type='checkbox' value='' id='ratingCheckbox'>
+                                    <input class='form-check-input' type='checkbox' value='0' id='ratingCheckbox' name='rating0'>
                                     <label class='form-check-label' for='ratingCheckbox'>No rating</label>
                                     </div>";
                         ?>
@@ -354,9 +381,11 @@
                         <ul>
                             <?php
                                 foreach($year_data as $year){
+                                    $year_count++;
                                     echo "<div class='form-check'>
-                                    <input class='form-check-input' type='checkbox' value='$year[0]' id='year$year[0]'>
-                                    <label class='form-check-label' for='year$year[0]'>$year[0]</label>
+                                    <input type='hidden' name='decade_count' value='$decade_count' />
+                                    <input class='form-check-input' type='checkbox' value='$year[0]' name='year$year_count' id='year$year_count'>
+                                    <label class='form-check-label' for='year$year_count'>$year[0]</label>
                                     </div>";
                                 } 
                                 ?>

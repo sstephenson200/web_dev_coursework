@@ -139,7 +139,7 @@ class Album {
 
     //Function to get all albums with album_title or artist_name containing a given search phrase
     public function searchAlbums($search) {
-        $query = "SELECT album.album_id, album.album_title, album.album_rating, artist.artist_name, art.art_url, year_value.year_value, AVG(review.review_rating) AS AverageRating FROM album
+        $query = "SELECT album.album_id, album.album_title, album.album_rating, artist.artist_name, art.art_url, year_value.year_value, GROUP_CONCAT(DISTINCT genre.genre_title) AS Genres, GROUP_CONCAT(DISTINCT subgenre.subgenre_title) as Subgenres, AVG(review.review_rating) AS AverageRating FROM album
                     LEFT JOIN review 
                     ON album.album_id = review.album_id
                     INNER JOIN artist
