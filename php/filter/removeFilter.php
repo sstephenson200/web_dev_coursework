@@ -70,7 +70,6 @@ if(isset($_GET['subgenre'])){
 }
 
 
-
 //remove ratings filters
 if(isset($_GET['rating'])){
     $rating = $_GET['rating'];
