@@ -148,14 +148,22 @@ class Album {
                     ON album.art_id = art.art_id
                     INNER JOIN year_value
                     ON year_value.year_value_id = album.year_id
-                    WHERE artist.artist_name LIKE ? OR album.album_title LIKE ?
+                    LEFT JOIN album_genre 
+                    ON album.album_id = album_genre.album_id 
+                    LEFT JOIN genre
+                    ON album_genre.genre_id = genre.genre_id
+                    LEFT JOIN album_subgenre 
+                    ON album.album_id = album_subgenre.album_id 
+                    LEFT JOIN subgenre
+                    ON album_subgenre.subgenre_id = subgenre.subgenre_id
+                    WHERE artist.artist_name LIKE ? OR album.album_title LIKE ? OR genre.genre_title LIKE ? OR subgenre.subgenre_title LIKE ? OR year_value.year_value LIKE ?
                     GROUP BY album.album_id";
 
         $statement = $this -> conn -> prepare($query);
         $search = htmlspecialchars(strip_tags($search));
         $search = $this -> conn -> real_escape_string($search);
         $search = "%$search%";
-        $statement -> bind_param("ss", $search, $search);
+        $statement -> bind_param("sssss", $search, $search, $search, $search, $search);
         $statement -> execute();
         return $statement;        
     }
