@@ -43,6 +43,71 @@ if(isset($_POST['artistSelector'])){
     }    
 }
 
+//add genre to active_filters
+if(isset($_POST['genreSelector'])){
+    $genre = $_POST['genreSelector'];
+
+    if(!isset($active_filters['genres'])) {
+        $active_filters['genres'] = [];
+    }
+    
+    if(!check_item_unique($genre,$active_filters['genres'])) {
+        if($genre != "Select genre"){
+            array_push($active_filters['genres'], $genre);
+        }
+    }    
+}
+
+//add subgenre to active_filters
+if(isset($_POST['subgenreSelector'])){
+    $subgenre = $_POST['subgenreSelector'];
+
+    if(!isset($active_filters['subgenres'])) {
+        $active_filters['subgenres'] = [];
+    }
+    
+    if(!check_item_unique($subgenre,$active_filters['subgenres'])) {
+        if($subgenre != "Select subgenre"){
+            array_push($active_filters['subgenres'], $subgenre);
+        }
+    }    
+}
+
+//add rating to active_filters
+for($i=5; $i>=0; $i--){
+    $rating = "rating$i";
+    if(isset($_POST[$rating])){
+        $rating_value = $_POST[$rating];
+
+        if(!isset($active_filters['ratings'])) {
+            $active_filters['ratings'] = [];
+        }
+        
+        if(!check_item_unique($rating_value,$active_filters['ratings'])) {
+            array_push($active_filters['ratings'], $rating_value);
+        }  
+    }
+}
+
+//add year to active_filters
+if(isset($_POST['decade_count'])){
+    for($i=0; $i<=$_POST['decade_count']; $i++){
+        $decade = "year$i";
+        if(isset($_POST[$decade])){
+            $decade_value = $_POST[$decade];
+    
+            if(!isset($active_filters['decades'])) {
+                $active_filters['decades'] = [];
+            }
+            
+            if(!check_item_unique($decade_value,$active_filters['decades'])) {
+                array_push($active_filters['decades'], $decade_value);
+            }  
+        }
+    }
+}
+
+
 $_SESSION['active_filters'] = $active_filters;
 $album_data = $_SESSION["album_data"];
 $filtered_data= [];
