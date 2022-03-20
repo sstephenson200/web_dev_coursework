@@ -24,7 +24,10 @@ if($community_count != 0) {
             "community_name" => $community_name,
             "community_description" => $community_description,
             "art_url" => $art_url,
-            "artist_name" => $artist_name
+            "artist_name" => $artist_name,
+            "Genres" => $Genres,
+            "Subgenres" => $Subgenres,
+            "MemberCount" => $MemberCount
         );
 
         array_push($array, $community);

@@ -13,6 +13,8 @@ class Community {
     public $artist_name;
     public $genre_title;
     public $subgenre_title;
+    public $Genres;
+    public $Subgenres;
 
     public function __construct($db) {
         $this -> conn = $db;
@@ -30,7 +32,7 @@ class Community {
                     ON joined_communities.user_id = user.user_id
                     WHERE user.is_active=1
                     GROUP BY community.community_id
-                    ORDER BY COUNT(joined_communities.user_id) DESC
+                    ORDER BY COUNT(DISTINCT(joined_communities.user_id)) DESC
                     LIMIT 4";
        
         $statement = $this -> conn -> prepare($query);
@@ -40,11 +42,24 @@ class Community {
 
     //Function to get all communities
     public function getAllCommunities() {
-        $query = "SELECT community.community_id, community.community_name, community.community_description, art.art_url, artist.artist_name FROM community
+        $query = "SELECT community.community_id, community.community_name, community.community_description, art.art_url, artist.artist_name, GROUP_CONCAT(DISTINCT genre.genre_title) AS Genres, GROUP_CONCAT(DISTINCT subgenre.subgenre_title) as Subgenres, COUNT(DISTINCT(joined_communities.user_id)) AS MemberCount FROM community
                     INNER JOIN art
                     ON community.art_id = art.art_id
                     LEFT JOIN artist
                     ON community.artist_id = artist.artist_id
+                    LEFT JOIN community_genre 
+                    ON community.community_id = community_genre.community_id 
+                    LEFT JOIN genre
+                    ON community_genre.genre_id = genre.genre_id
+                    LEFT JOIN community_subgenre 
+                    ON community.community_id = community_subgenre.community_id 
+                    LEFT JOIN subgenre
+                    ON community_subgenre.subgenre_id = subgenre.subgenre_id
+                    INNER JOIN joined_communities
+                    ON community.community_id = joined_communities.community_id
+                    INNER JOIN user
+                    ON joined_communities.user_id = user.user_id
+                    WHERE user.is_active=1
                     GROUP BY community.community_id";
 
         $statement = $this -> conn -> prepare($query);
@@ -118,7 +133,7 @@ class Community {
 
     //Function to get community member count by community_id
     public function getCommunitySizeByCommunityID($community_id){
-        $query = "SELECT COUNT(joined_communities.user_id) AS MemberCount FROM community
+        $query = "SELECT COUNT(DISTINCT(joined_communities.user_id)) AS MemberCount FROM community
                     INNER JOIN joined_communities
                     ON community.community_id = joined_communities.community_id
                     INNER JOIN user

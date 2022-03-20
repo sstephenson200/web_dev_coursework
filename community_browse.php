@@ -166,8 +166,10 @@
 
                         foreach($_SESSION['community_filters']['artists'] as $artist) {
 
+                            $artist_edited = urlencode($artist);
+
                             echo "<li class='form-group'>$artist 
-                                    <a role='button' href='php/filter/removeCommunityFilter.php?artist=$artist'>
+                                    <a role='button' href='php/filter/removeCommunityFilter.php?artist=$artist_edited'>
                                         <i id='deleteFilter$artist' class='fas fa-times fa-lg' data-toggle='popover' title='Remove' data-content='Remove Filter'></i>
                                     </a>
                                 </li>";     
@@ -187,8 +189,11 @@
                                 <ul>";
 
                         foreach($_SESSION['community_filters']['genres'] as $genre) {
+
+                            $genre_edited = urlencode($genre);
+
                             echo "<li class='form-group'>$genre 
-                                    <a role='button' href='php/filter/removeCommunityFilter.php?genre=$genre'>
+                                    <a role='button' href='php/filter/removeCommunityFilter.php?genre=$genre_edited'>
                                         <i id='deleteFilter$genre' class='fas fa-times fa-lg' data-toggle='popover' title='Remove' data-content='Remove Filter'></i>
                                     </a>
                                 </li>";     
@@ -209,8 +214,11 @@
                                 <ul>";
 
                         foreach($_SESSION['community_filters']['subgenres'] as $subgenre) {
+
+                            $subgenre_edited = urlencode($subgenre);
+
                             echo "<li class='form-group'>$subgenre 
-                                    <a role='button' href='php/filter/removeCommunityFilter.php?subgenre=$subgenre'>
+                                    <a role='button' href='php/filter/removeCommunityFilter.php?subgenre=$subgenre_edited'>
                                         <i id='deleteFilter$subgenre' class='fas fa-times fa-lg' data-toggle='popover' title='Remove' data-content='Remove Filter'></i>
                                     </a>
                                 </li>";     
@@ -242,7 +250,7 @@
                             <option selected>Select genre</option>
                             <?php
                             foreach($genre_data as $genre){
-                                echo "<option value='genre$genre[0]'>$genre[0]</option>";
+                                echo "<option value='$genre[0]'>$genre[0]</option>";
                             }                       
                             ?>
                         </select>
@@ -255,7 +263,7 @@
                             <option selected>Select subgenre</option>
                             <?php
                             foreach($subgenre_data as $subgenre){
-                                echo "<option value='subgenre$subgenreCount[0]'>$subgenre[0]</option>";
+                                echo "<option value='$subgenre[0]'>$subgenre[0]</option>";
                             } 
                             ?>
                         </select>
