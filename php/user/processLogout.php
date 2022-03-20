@@ -18,7 +18,7 @@ if(isset($_GET['user_id'])){
 
 if($user_id){
     //delete user token
-    $delete_endpoint = $base_url . "user/deleteUserToken.php?user_id=$user_id";
+    $delete_endpoint = $base_url . "user/deleteUser/deleteUserToken.php?user_id=$user_id";
     $delete_resource = file_get_contents($delete_endpoint);
     $delete_data = json_decode($delete_resource, true);
 }

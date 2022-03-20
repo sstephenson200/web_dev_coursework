@@ -20,7 +20,7 @@ if(isset($_POST['updateEmailPreferences'])){
         //get user_id
         $tokens = $remember -> parse_token($_SESSION['userLoggedIn']);
         $token = $tokens[0];
-        $token_endpoint = $base_url . "user/getUserByToken.php?token=$token";
+        $token_endpoint = $base_url . "user/getUser/getUserByToken.php?token=$token";
         $token_resource = file_get_contents($token_endpoint);
         $token_data = json_decode($token_resource, true);
 
@@ -28,7 +28,7 @@ if(isset($_POST['updateEmailPreferences'])){
             $logged_in_user_id = $token_data[0]['user_id'];
 
             //update contact permissions
-            $contact_endpoint = $base_url . "user/updateUserContactPermissions.php?user_id=$logged_in_user_id&permissions=$contact_permissions";
+            $contact_endpoint = $base_url . "user/editUser/updateUserContactPermissions.php?user_id=$logged_in_user_id&permissions=$contact_permissions";
             $contact_resource = file_get_contents($contact_endpoint);
             $contact_data = json_decode($contact_resource, true);
 

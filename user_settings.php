@@ -9,7 +9,7 @@
     $user_id = $_GET['user_id'];
 
     //get user data
-    $profile_endpoint = $base_url . "user/getProfileDataByUserID.php?user_id=$user_id";
+    $profile_endpoint = $base_url . "user/getUser/getProfileDataByUserID.php?user_id=$user_id";
     $profile_resource = file_get_contents($profile_endpoint);
     $profile_data = json_decode($profile_resource, true);
     
@@ -21,7 +21,7 @@
     $user_contact_permissions = $profile_data[0]['user_contact_permissions'];
 
     //get all location options
-    $location_endpoint = $base_url . "user/getUserLocationName.php";
+    $location_endpoint = $base_url . "user/getUser/getUserLocationName.php";
     $location_resource = file_get_contents($location_endpoint);
     $location_data = json_decode($location_resource, true);
 

@@ -17,7 +17,7 @@ if(isset($_GET['community_id']) and isset($_GET['joined'])){
         //get user_id
         $tokens = $remember -> parse_token($_SESSION['userLoggedIn']);
         $token = $tokens[0];
-        $token_endpoint = $base_url . "user/getUserByToken.php?token=$token";
+        $token_endpoint = $base_url . "user/getUser/getUserByToken.php?token=$token";
         $token_resource = file_get_contents($token_endpoint);
         $token_data = json_decode($token_resource, true);
 
@@ -25,12 +25,12 @@ if(isset($_GET['community_id']) and isset($_GET['joined'])){
 
         if($joined){
             //leave community
-            $leave_endpoint = $base_url . "user/leaveCommunity.php?user_id=$logged_in_user_id&community_id=$community_id";
+            $leave_endpoint = $base_url . "user/deleteUser/leaveCommunity.php?user_id=$logged_in_user_id&community_id=$community_id";
             $leave_resource = file_get_contents($leave_endpoint);
             $leave_data = json_decode($leave_resource, true);
         } else {
             //join community
-            $join_endpoint = $base_url . "user/joinCommunity.php?user_id=$logged_in_user_id&community_id=$community_id";
+            $join_endpoint = $base_url . "user/addUser/joinCommunity.php?user_id=$logged_in_user_id&community_id=$community_id";
             $join_resource = file_get_contents($join_endpoint);
             $join_data = json_decode($join_resource, true);
         }

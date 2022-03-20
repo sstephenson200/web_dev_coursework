@@ -16,7 +16,7 @@ if(isset($_POST['report'])){
         //get user_id
         $tokens = $remember -> parse_token($_SESSION['userLoggedIn']);
         $token = $tokens[0];
-        $token_endpoint = $base_url . "user/getUserByToken.php?token=$token";
+        $token_endpoint = $base_url . "user/getUser/getUserByToken.php?token=$token";
         $token_resource = file_get_contents($token_endpoint);
         $token_data = json_decode($token_resource, true);
 
@@ -24,7 +24,7 @@ if(isset($_POST['report'])){
             $logged_in_user_id = $token_data[0]['user_id'];
 
             //get review_id
-            $review_endpoint = $base_url . "review/checkReviewExists.php?album_id=$album_id&user_id=$user_id";
+            $review_endpoint = $base_url . "review/getReview/checkReviewExists.php?album_id=$album_id&user_id=$user_id";
             $review_resource = file_get_contents($review_endpoint);
             $review_data = json_decode($review_resource, true);
 
@@ -33,7 +33,7 @@ if(isset($_POST['report'])){
                 $review_id = $review_data[0]['review_id'];
 
                 //report review
-                $report_endpoint = $base_url . "review/reportReview.php?review_id=$review_id";
+                $report_endpoint = $base_url . "review/editReview/reportReview.php?review_id=$review_id";
                 $report_resource = file_get_contents($report_endpoint);
                 $report_data = json_decode($report_resource, true);
 

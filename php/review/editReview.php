@@ -18,7 +18,7 @@ if(isset($_POST['edit'])){
         //get user_id
         $tokens = $remember -> parse_token($_SESSION['userLoggedIn']);
         $token = $tokens[0];
-        $token_endpoint = $base_url . "user/getUserByToken.php?token=$token";
+        $token_endpoint = $base_url . "user/getUser/getUserByToken.php?token=$token";
         $token_resource = file_get_contents($token_endpoint);
         $token_data = json_decode($token_resource, true);
 
@@ -26,7 +26,7 @@ if(isset($_POST['edit'])){
             $logged_in_user_id = $token_data[0]['user_id'];
 
             //update review
-            $edit_endpoint = $base_url . "review/updateReview.php?album_id=$album_id&user_id=$logged_in_user_id&review_title=$title&review_text=$text&review_rating=$rating";
+            $edit_endpoint = $base_url . "review/editReview/updateReview.php?album_id=$album_id&user_id=$logged_in_user_id&review_title=$title&review_text=$text&review_rating=$rating";
             $edit_resource = file_get_contents($edit_endpoint);
             $edit_data = json_decode($edit_resource, true);
 

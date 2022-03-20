@@ -13,7 +13,7 @@ if(isset($_SESSION['userLoggedIn'])){
 
         //check if provided username is valid
         if(strlen($username)>4 and strlen($username)<31){
-            $valid_username_endpoint = $base_url . "user/getUserIDByUsername.php?username=$username";
+            $valid_username_endpoint = $base_url . "user/getUser/getUserIDByUsername.php?username=$username";
             $valid_username_resource = file_get_contents($valid_username_endpoint);
             $valid_username_data = json_decode($valid_username_resource, true);
 

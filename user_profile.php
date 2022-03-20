@@ -16,14 +16,14 @@
     $user_id = $_GET['user_id'];
 
     //check user active
-    $active_endpoint = $base_url . "user/checkUserActive.php?user_id=$user_id";
+    $active_endpoint = $base_url . "user/getUser/checkUserActive.php?user_id=$user_id";
     $active_resource = file_get_contents($active_endpoint);
     $active_data = json_decode($active_resource, true);
 
     if($active_data){
         if($active_data['message']=="Account active."){
             //get user profile data
-            $profile_endpoint = $base_url . "user/getProfileDataByUserID.php?user_id=$user_id";
+            $profile_endpoint = $base_url . "user/getUser/getProfileDataByUserID.php?user_id=$user_id";
             $profile_resource = file_get_contents($profile_endpoint);
             $profile_data = json_decode($profile_resource, true);
 
@@ -33,27 +33,27 @@
             $user_location = $profile_data[0]['location_code']; 
 
             //get owned music
-            $user_owned_endpoint = $base_url . "user/getOwnedAlbumsByUserID.php?user_id=$user_id";
+            $user_owned_endpoint = $base_url . "user/getUser/getOwnedAlbumsByUserID.php?user_id=$user_id";
             $user_owned_resource = @file_get_contents($user_owned_endpoint);
             $user_owned_data = json_decode($user_owned_resource, true);
 
             //get favourited music
-            $favourited_endpoint = $base_url . "user/getFavouriteAlbumsByUserID.php?user_id=$user_id";
+            $favourited_endpoint = $base_url . "user/getUser/getFavouriteAlbumsByUserID.php?user_id=$user_id";
             $favourited_resource = @file_get_contents($favourited_endpoint);
             $favourited_data = json_decode($favourited_resource, true);
 
             //get joined communities
-            $community_endpoint = $base_url . "user/getJoinedCommunitiesByUserID.php?user_id=$user_id";
+            $community_endpoint = $base_url . "user/getUser/getJoinedCommunitiesByUserID.php?user_id=$user_id";
             $community_resource = @file_get_contents($community_endpoint);
             $community_data = json_decode($community_resource, true);
 
             //get user reviews
-            $review_endpoint = $base_url . "review/getReviewsByUserID.php?user_id=$user_id";
+            $review_endpoint = $base_url . "review/getReview/getReviewsByUserID.php?user_id=$user_id";
             $review_resource = @file_get_contents($review_endpoint);
             $review_data = json_decode($review_resource, true);
 
             //check if user is admin
-            $check_admin_endpoint = $base_url . "user/getUserAdminStatus.php?user_id=$user_id";
+            $check_admin_endpoint = $base_url . "user/getUser/getUserAdminStatus.php?user_id=$user_id";
             $check_admin_resource = file_get_contents($check_admin_endpoint);
             $check_admin_data = json_decode($check_admin_resource, true);
 
@@ -174,7 +174,7 @@
                         <?php if(isset($_SESSION['userLoggedIn']) and $logged_in_username != $username) {
                             
                             //check if visiting user has already reported user
-                            $reported_endpoint = $base_url . "user/checkUserReportExists.php?reporter=$logged_in_user_id&reportee=$user_id";
+                            $reported_endpoint = $base_url . "user/getUser/checkUserReportExists.php?reporter=$logged_in_user_id&reportee=$user_id";
                             $reported_resource = file_get_contents($reported_endpoint);
                             $reported_data = json_decode($reported_resource, true);
 
@@ -298,7 +298,7 @@
                                                 $community_description = $joined_community['community_description'];
     
                                                 //get community size
-                                                $community_size_endpoint = $base_url . "community/getCommunitySizeByCommunityID.php?community_id=$community_id";
+                                                $community_size_endpoint = $base_url . "community/getCommunity/getCommunitySizeByCommunityID.php?community_id=$community_id";
                                                 $community_size_resource = file_get_contents($community_size_endpoint);
                                                 $community_size_data = json_decode($community_size_resource, true);
     

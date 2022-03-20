@@ -15,12 +15,12 @@
     $community_card_count=0;
 
     //get trending album data
-    $album_endpoint = $base_url . "album/getTrendingAlbums.php";
+    $album_endpoint = $base_url . "album/getAlbum/getTrendingAlbums.php";
     $album_resource = file_get_contents($album_endpoint);
     $album_data = json_decode($album_resource, true);
 
     //get top community data
-    $community_endpoint = $base_url . "community/getTopCommunities.php";
+    $community_endpoint = $base_url . "community/getCommunity/getTopCommunities.php";
     $community_resource = file_get_contents($community_endpoint);
     $community_data = json_decode($community_resource, true);
 
@@ -162,7 +162,7 @@
                     $community_description = $row['community_description'];
 
                     //get community size
-                    $community_size_endpoint = $base_url . "community/getCommunitySizeByCommunityID.php?community_id=$community_id";
+                    $community_size_endpoint = $base_url . "community/getCommunity/getCommunitySizeByCommunityID.php?community_id=$community_id";
                     $community_size_resource = file_get_contents($community_size_endpoint);
                     $community_size_data = json_decode($community_size_resource, true);
 

@@ -22,22 +22,22 @@
     $_SESSION['community_filters'] = $community_filters;
 
     //get all artist data for filter menus
-    $artist_endpoint = $base_url . "album/getArtists.php";
+    $artist_endpoint = $base_url . "album/getAlbum/getArtists.php";
     $artist_resource = file_get_contents($artist_endpoint);
     $artist_data = json_decode($artist_resource, true);
 
     //get all genre data for filter menus
-    $genre_endpoint = $base_url . "album/getGenres.php";
+    $genre_endpoint = $base_url . "album/getAlbum/getGenres.php";
     $genre_resource = file_get_contents($genre_endpoint);
     $genre_data = json_decode($genre_resource, true);
 
     //get all subgenre data for filter menus
-    $subgenre_endpoint = $base_url . "album/getSubgenres.php";
+    $subgenre_endpoint = $base_url . "album/getAlbum/getSubgenres.php";
     $subgenre_resource = file_get_contents($subgenre_endpoint);
     $subgenre_data = json_decode($subgenre_resource, true);
 
     //get all community data
-    $community_endpoint = $base_url . "community/getAllCommunities.php";
+    $community_endpoint = $base_url . "community/getCommunity/getAllCommunities.php";
     $community_resource = file_get_contents($community_endpoint);
     $community_data = json_decode($community_resource, true);
 
@@ -291,7 +291,7 @@
                         $community_description = $row['community_description'];
 
                         //get community size
-                        $community_size_endpoint = $base_url . "community/getCommunitySizeByCommunityID.php?community_id=$community_id";
+                        $community_size_endpoint = $base_url . "community/getCommunity/getCommunitySizeByCommunityID.php?community_id=$community_id";
                         $community_size_resource = file_get_contents($community_size_endpoint);
                         $community_size_data = json_decode($community_size_resource, true);
 

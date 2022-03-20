@@ -9,7 +9,7 @@ if(isset($_POST['closeReport'])){
     $report_id = $_POST['report_id'];
 
     //delete user report
-    $close_endpoint = $base_url . "user/closeUserReport.php?report_id=$report_id";
+    $close_endpoint = $base_url . "user/deleteUser/closeUserReport.php?report_id=$report_id";
     $close_resource = @file_get_contents($close_endpoint);
     $close_data = json_decode($close_resource, true);
 

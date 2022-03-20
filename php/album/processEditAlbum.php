@@ -33,7 +33,7 @@ if(isset($_POST['confirmEdit'])){
     $edited_lengths = explode(',',$edited_lengths);
 
     //get original album data
-    $album_endpoint = $base_url . "album/getAlbumByID.php?album_id=$album_id";
+    $album_endpoint = $base_url . "album/getAlbum/getAlbumByID.php?album_id=$album_id";
     $album_resource = file_get_contents($album_endpoint);
     $album_data = json_decode($album_resource, true);
 
@@ -46,7 +46,7 @@ if(isset($_POST['confirmEdit'])){
     $original_genres = $album_data[0]['Genres'];
     $original_subgenres = $album_data[0]['Subgenres'];
 
-    $songs_endpoint = $base_url . "album/getSongsByAlbumID.php?album_id=$album_id";
+    $songs_endpoint = $base_url . "album/getAlbum/getSongsByAlbumID.php?album_id=$album_id";
     $songs_resource = @file_get_contents($songs_endpoint);
     $songs_data = json_decode($songs_resource, true);
 
@@ -76,7 +76,7 @@ if(isset($_POST['confirmEdit'])){
     }
 
     //get all artists
-    $all_artist_endpoint = $base_url . "album/getArtists.php";
+    $all_artist_endpoint = $base_url . "album/getAlbum/getArtists.php";
     $all_artist_resource = file_get_contents($all_artist_endpoint);
     $all_artist_data = json_decode($all_artist_resource, true);
     
@@ -84,7 +84,7 @@ if(isset($_POST['confirmEdit'])){
     if($original_artist == $edited_artist){
         $artist_unchanged = true;
         //get artist id
-        $get_artist_endpoint = $base_url . "album/getArtistIDByName.php?artist_name=$edited_artist";
+        $get_artist_endpoint = $base_url . "album/getAlbum/getArtistIDByName.php?artist_name=$edited_artist";
         $get_artist_resource = file_get_contents($get_artist_endpoint);
         $get_artist_data = json_decode($get_artist_resource, true);
 
@@ -96,7 +96,7 @@ if(isset($_POST['confirmEdit'])){
         foreach($all_artist_data as $current_artist){
             if(urlencode($current_artist[0]) == $edited_artist){
                 //get artist id for existing artist
-                $get_artist_endpoint = $base_url . "album/getArtistIDByName.php?artist_name=$edited_artist";
+                $get_artist_endpoint = $base_url . "album/getAlbum/getArtistIDByName.php?artist_name=$edited_artist";
                 $get_artist_resource = file_get_contents($get_artist_endpoint);
                 $get_artist_data = json_decode($get_artist_resource, true);
 
@@ -112,13 +112,13 @@ if(isset($_POST['confirmEdit'])){
         //artist doesn't exist
         if(!$existing_artist){
             //create new artist
-            $create_artist_endpoint = $base_url . "album/createArtist.php?artist_name=$edited_artist";
+            $create_artist_endpoint = $base_url . "album/addAlbum/createArtist.php?artist_name=$edited_artist";
             $create_artist_resource = file_get_contents($create_artist_endpoint);
             $create_artist_data = json_decode($create_artist_resource, true);
 
             if($create_artist_data){
                 if($create_artist_data['message'] == "Artist created."){
-                    $get_artist_endpoint = $base_url . "album/getArtistIDByName.php?artist_name=$edited_artist";
+                    $get_artist_endpoint = $base_url . "album/getAlbum/getArtistIDByName.php?artist_name=$edited_artist";
                     $get_artist_resource = file_get_contents($get_artist_endpoint);
                     $get_artist_data = json_decode($get_artist_resource, true);
 
@@ -139,7 +139,7 @@ if(isset($_POST['confirmEdit'])){
     if(urlencode($original_art) == $edited_art){
         $art_unchanged = true;
         $art = urlencode($original_art);
-        $get_art_endpoint = $base_url . "album/getArtIDByURL.php?art_url=$art";
+        $get_art_endpoint = $base_url . "album/getAlbum/getArtIDByURL.php?art_url=$art";
         $get_art_resource = file_get_contents($get_art_endpoint);
         $get_art_data = json_decode($get_art_resource, true);
 
@@ -149,7 +149,7 @@ if(isset($_POST['confirmEdit'])){
     } else {
         //get art_id
         $art = urlencode($original_art);
-        $get_art_endpoint = $base_url . "album/getArtIDByURL.php?art_url=$art";
+        $get_art_endpoint = $base_url . "album/getAlbum/getArtIDByURL.php?art_url=$art";
         $get_art_resource = file_get_contents($get_art_endpoint);
         $get_art_data = json_decode($get_art_resource, true);
 
@@ -157,7 +157,7 @@ if(isset($_POST['confirmEdit'])){
             $art_id = $get_art_data[0]['art_id'];
 
             //update art_url
-            $update_art_endpoint = $base_url . "album/updateArt.php?art_id=$art_id&art_url=$edited_art";
+            $update_art_endpoint = $base_url . "album/editAlbum/updateArt.php?art_id=$art_id&art_url=$edited_art";
             $update_art_resource = file_get_contents($update_art_endpoint);
             $update_art_data = json_decode($update_art_resource, true);
 
@@ -168,14 +168,14 @@ if(isset($_POST['confirmEdit'])){
     }
 
     //get all year data
-    $year_endpoint = $base_url . "album/getAllYears.php";
+    $year_endpoint = $base_url . "album/getAlbum/getAllYears.php";
     $year_resource = file_get_contents($year_endpoint);
     $year_data = json_decode($year_resource, true);
 
     //compare year
     if($original_year == $edited_year){
         $year_unchanged = true;
-        $get_year_endpoint = $base_url . "album/getYearIDByValue.php?year_value=$original_year";
+        $get_year_endpoint = $base_url . "album/getAlbum/getYearIDByValue.php?year_value=$original_year";
         $get_year_resource = file_get_contents($get_year_endpoint);
         $get_year_data = json_decode($get_year_resource, true);
 
@@ -187,7 +187,7 @@ if(isset($_POST['confirmEdit'])){
         foreach($year_data as $current_year){
             if($current_year[0] == $edited_year){
                 //get artist id for existing artist
-                $get_year_endpoint = $base_url . "album/getYearIDByValue.php?year_value=$edited_year";
+                $get_year_endpoint = $base_url . "album/getAlbum/getYearIDByValue.php?year_value=$edited_year";
                 $get_year_resource = file_get_contents($get_year_endpoint);
                 $get_year_data = json_decode($get_year_resource, true);
 
@@ -203,13 +203,13 @@ if(isset($_POST['confirmEdit'])){
         //year doesn't exist
         if(!$existing_year){
             //create new year
-            $create_year_endpoint = $base_url . "album/createYear.php?year_value=$edited_year";
+            $create_year_endpoint = $base_url . "album/addAlbum/createYear.php?year_value=$edited_year";
             $create_year_resource = file_get_contents($create_year_endpoint);
             $create_year_data = json_decode($create_year_resource, true);
 
             if($create_year_data){
                 if($create_year_data['message'] == "Year created."){
-                    $get_year_endpoint = $base_url . "album/getYearIDByValue.php?year_value=$edited_year";
+                    $get_year_endpoint = $base_url . "album/getAlbum/getYearIDByValue.php?year_value=$edited_year";
                     $get_year_resource = file_get_contents($get_year_endpoint);
                     $get_year_data = json_decode($get_year_resource, true);
 
@@ -226,7 +226,7 @@ if(isset($_POST['confirmEdit'])){
     }
 
     //edit album
-    $edit_album_endpoint = $base_url . "album/updateAlbum.php?album_id=$album_id&title=$edited_title&artist_id=$artist_id&art_id=$art_id&spotify_id=$edited_spotify_id&rating=$edited_rating&year_id=$year_id";
+    $edit_album_endpoint = $base_url . "album/editAlbum/updateAlbum.php?album_id=$album_id&title=$edited_title&artist_id=$artist_id&art_id=$art_id&spotify_id=$edited_spotify_id&rating=$edited_rating&year_id=$year_id";
     $edit_album_resource = file_get_contents($edit_album_endpoint);
     $edit_album_data = json_decode($edit_album_resource, true);
 
@@ -241,7 +241,7 @@ if(isset($_POST['confirmEdit'])){
     }
 
     //get all genres
-    $genre_endpoint = $base_url . "album/getGenres.php";
+    $genre_endpoint = $base_url . "album/getAlbum/getGenres.php";
     $genre_resource = file_get_contents($genre_endpoint);
     $genre_data = json_decode($genre_resource, true);
     $genre_list = [];
@@ -260,7 +260,7 @@ if(isset($_POST['confirmEdit'])){
             //check if genre exists
             if(!in_array($genre, $genre_list)){
                 //create genre
-                $create_genre_endpoint = $base_url . "album/createGenre.php?genre=$genre";
+                $create_genre_endpoint = $base_url . "album/addAlbum/createGenre.php?genre=$genre";
                 $create_genre_resource = file_get_contents($create_genre_endpoint);
                 $create_genre_data = json_decode($create_genre_resource, true);
 
@@ -274,7 +274,7 @@ if(isset($_POST['confirmEdit'])){
             } 
 
             //get genre_id
-            $get_genre_endpoint = $base_url . "album/getGenreIDByTitle.php?genre=$genre";
+            $get_genre_endpoint = $base_url . "album/getAlbum/getGenreIDByTitle.php?genre=$genre";
             $get_genre_resource = file_get_contents($get_genre_endpoint);
             $get_genre_data = json_decode($get_genre_resource, true);
 
@@ -282,7 +282,7 @@ if(isset($_POST['confirmEdit'])){
                 $genre_id = $get_genre_data[0]['genre_id'];
 
                 //add album_genre entries
-                $album_genre_endpoint = $base_url . "album/addAlbumGenre.php?genre_id=$genre_id&album_id=$album_id";
+                $album_genre_endpoint = $base_url . "album/addAlbum/addAlbumGenre.php?genre_id=$genre_id&album_id=$album_id";
                 $album_genre_resource = file_get_contents($album_genre_endpoint);
                 $album_genre_data = json_decode($album_genre_resource, true);
 
@@ -300,7 +300,7 @@ if(isset($_POST['confirmEdit'])){
         if(!in_array($genre, $edited_genres)){
 
             //get genre_id
-            $get_genre_endpoint = $base_url . "album/getGenreIDByTitle.php?genre=$genre";
+            $get_genre_endpoint = $base_url . "album/getAlbum/getGenreIDByTitle.php?genre=$genre";
             $get_genre_resource = file_get_contents($get_genre_endpoint);
             $get_genre_data = json_decode($get_genre_resource, true);
 
@@ -308,7 +308,7 @@ if(isset($_POST['confirmEdit'])){
                 $genre_id = $get_genre_data[0]['genre_id'];
 
                 //delete from genre_album
-                $delete_genre_endpoint = $base_url . "album/deleteAlbumGenre.php?genre_id=$genre_id&album_id=$album_id";
+                $delete_genre_endpoint = $base_url . "album/deleteAlbum/deleteAlbumGenre.php?genre_id=$genre_id&album_id=$album_id";
                 $delete_genre_resource = file_get_contents($delete_genre_endpoint);
                 $delete_genre_data = json_decode($delete_genre_resource, true);
             }
@@ -316,7 +316,7 @@ if(isset($_POST['confirmEdit'])){
     }
 
     //get all subgenres
-    $subgenre_endpoint = $base_url . "album/getSubgenres.php";
+    $subgenre_endpoint = $base_url . "album/getAlbum/getSubgenres.php";
     $subgenre_resource = file_get_contents($subgenre_endpoint);
     $subgenre_data = json_decode($subgenre_resource, true);
     $subgenre_list = [];
@@ -335,7 +335,7 @@ if(isset($_POST['confirmEdit'])){
             //check if subgenre exists
             if(!in_array($subgenre, $subgenre_list)){
                 //create subgenre
-                $create_subgenre_endpoint = $base_url . "album/createSubgenre.php?subgenre=$subgenre";
+                $create_subgenre_endpoint = $base_url . "album/addAlbum/createSubgenre.php?subgenre=$subgenre";
                 $create_subgenre_resource = file_get_contents($create_subgenre_endpoint);
                 $create_subgenre_data = json_decode($create_subgenre_resource, true);
 
@@ -349,7 +349,7 @@ if(isset($_POST['confirmEdit'])){
             } 
 
             //get subgenre_id
-            $get_subgenre_endpoint = $base_url . "album/getSubgenreIDByTitle.php?subgenre=$subgenre";
+            $get_subgenre_endpoint = $base_url . "album/getAlbum/getSubgenreIDByTitle.php?subgenre=$subgenre";
             $get_subgenre_resource = file_get_contents($get_subgenre_endpoint);
             $get_subgenre_data = json_decode($get_subgenre_resource, true);
 
@@ -357,7 +357,7 @@ if(isset($_POST['confirmEdit'])){
                 $subgenre_id = $get_subgenre_data[0]['subgenre_id'];
 
                 //add album_subgenre entries
-                $album_subgenre_endpoint = $base_url . "album/addAlbumSubgenre.php?subgenre_id=$subgenre_id&album_id=$album_id";
+                $album_subgenre_endpoint = $base_url . "album/addAlbum/addAlbumSubgenre.php?subgenre_id=$subgenre_id&album_id=$album_id";
                 $album_subgenre_resource = file_get_contents($album_subgenre_endpoint);
                 $album_subgenre_data = json_decode($album_subgenre_resource, true);
 
@@ -375,7 +375,7 @@ if(isset($_POST['confirmEdit'])){
         if(!in_array($subgenre, $edited_subgenres)){
 
             //get subgenre_id
-            $get_subgenre_endpoint = $base_url . "album/getSubgenreIDByTitle.php?subgenre=$subgenre";
+            $get_subgenre_endpoint = $base_url . "album/getAlbum/getSubgenreIDByTitle.php?subgenre=$subgenre";
             $get_subgenre_resource = file_get_contents($get_subgenre_endpoint);
             $get_subgenre_data = json_decode($get_subgenre_resource, true);
 
@@ -383,7 +383,7 @@ if(isset($_POST['confirmEdit'])){
                 $subgenre_id = $get_subgenre_data[0]['subgenre_id'];
 
                 //delete from subgenre_album
-                $delete_subgenre_endpoint = $base_url . "album/deleteAlbumGenre.php?subgenre_id=$subgenre_id&album_id=$album_id";
+                $delete_subgenre_endpoint = $base_url . "album/deleteAlbum/deleteAlbumSubgenre.php?subgenre_id=$subgenre_id&album_id=$album_id";
                 $delete_subgenre_resource = file_get_contents($delete_subgenre_endpoint);
                 $delete_subgenre_data = json_decode($delete_subgenre_resource, true);
             }
@@ -400,7 +400,7 @@ if(isset($_POST['confirmEdit'])){
         if(in_array($song_title, $original_songs)){
             //get original length
             $song_title = urlencode($title);
-            $length_endpoint = $base_url . "album/getSongLength.php?album_id=$album_id&song_title=$song_title";
+            $length_endpoint = $base_url . "album/getAlbum/getSongLength.php?album_id=$album_id&song_title=$song_title";
             $length_resource = file_get_contents($length_endpoint);
             $length_data = json_decode($length_resource, true);
 
@@ -409,7 +409,7 @@ if(isset($_POST['confirmEdit'])){
 
                 if($original_length != $length){
                     //update song length
-                    $update_length_endpoint = $base_url . "album/updateSongLength.php?album_id=$album_id&song_title=$song_title&song_length=$length";
+                    $update_length_endpoint = $base_url . "album/editAlbum/updateSongLength.php?album_id=$album_id&song_title=$song_title&song_length=$length";
                     $update_length_resource = file_get_contents($update_length_endpoint);
                     $update_length_data = json_decode($update_length_resource, true);
                 }
@@ -421,7 +421,7 @@ if(isset($_POST['confirmEdit'])){
             //add song
             $song_title = urlencode(trim($song_title));
             $song_length = trim($length);
-            $song_endpoint = $base_url . "album/addTrack.php?album_id=$album_id&title=$song_title&length=$song_length";
+            $song_endpoint = $base_url . "album/addAlbum/addTrack.php?album_id=$album_id&title=$song_title&length=$song_length";
             $song_resource = file_get_contents($song_endpoint);
             $song_data = json_decode($song_resource, true);
         }
@@ -435,7 +435,7 @@ if(isset($_POST['confirmEdit'])){
             $song_title = urlencode($song_title);
     
             //get song_id
-            $get_song_endpoint = $base_url . "album/getSongIDByTitle.php?album_id=$album_id&song_title=$song_title";
+            $get_song_endpoint = $base_url . "album/getAlbum/getSongIDByTitle.php?album_id=$album_id&song_title=$song_title";
             $get_song_resource = file_get_contents($get_song_endpoint);
             $get_song_data = json_decode($get_song_resource, true);
     
@@ -443,7 +443,7 @@ if(isset($_POST['confirmEdit'])){
                 $song_id = $get_song_data[0]['song_id'];
 
                 //delete song
-                $delete_song_endpoint = $base_url . "album/deleteTrack.php?song_id=$song_id";
+                $delete_song_endpoint = $base_url . "album/deleteAlbum/deleteTrack.php?song_id=$song_id";
                 $delete_song_resource = file_get_contents($delete_song_endpoint);
                 $delete_song_data = json_decode($delete_song_resource, true);
             } else {

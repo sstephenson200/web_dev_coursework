@@ -18,7 +18,7 @@ if(isset($_POST['submit'])) {
         //get user_id
         $tokens = $remember -> parse_token($_SESSION['userLoggedIn']);
         $token = $tokens[0];
-        $token_endpoint = $base_url . "user/getUserByToken.php?token=$token";
+        $token_endpoint = $base_url . "user/getUser/getUserByToken.php?token=$token";
         $token_resource = file_get_contents($token_endpoint);
         $token_data = json_decode($token_resource, true);
 
@@ -26,7 +26,7 @@ if(isset($_POST['submit'])) {
             $logged_in_user_id = $token_data[0]['user_id'];
 
             //check if user has already posted review
-            $previous_review_endpoint = $base_url . "review/checkReviewExists.php?album_id=$album_id&user_id=$logged_in_user_id";
+            $previous_review_endpoint = $base_url . "review/getReview/checkReviewExists.php?album_id=$album_id&user_id=$logged_in_user_id";
             $previous_review_resource = file_get_contents($previous_review_endpoint);
             $previous_review_data = json_decode($previous_review_resource, true);
 
@@ -34,7 +34,7 @@ if(isset($_POST['submit'])) {
                 if($previous_review_data['message'] == "No review."){
         
                     //create review
-                    $review_endpoint = $base_url . "review/createReview.php?album_id=$album_id&user_id=$logged_in_user_id&reviewTitle=$title&reviewText=$text&reviewRating=$rating";
+                    $review_endpoint = $base_url . "review/addReview/createReview.php?album_id=$album_id&user_id=$logged_in_user_id&reviewTitle=$title&reviewText=$text&reviewRating=$rating";
                     $review_resource = file_get_contents($review_endpoint);
                     $review_data = json_decode($review_resource, true);
         

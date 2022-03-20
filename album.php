@@ -16,7 +16,7 @@
     $album_id = $_GET['album_id'];
 
     //check valid album
-    $valid_endpoint = $base_url . "album/checkValidAlbum.php?album_id=$album_id";
+    $valid_endpoint = $base_url . "album/getAlbum/checkValidAlbum.php?album_id=$album_id";
     $valid_resource = file_get_contents($valid_endpoint);
     $valid_data = json_decode($valid_resource, true);
 
@@ -28,7 +28,7 @@
 
     if($valid_album){
         //get album data
-        $album_endpoint = $base_url . "album/getAlbumByID.php?album_id=$album_id";
+        $album_endpoint = $base_url . "album/getAlbum/getAlbumByID.php?album_id=$album_id";
         $album_resource = file_get_contents($album_endpoint);
         $album_data = json_decode($album_resource, true);
 
@@ -42,23 +42,23 @@
         $subgenres = $album_data[0]['Subgenres'];
         
         //get album songs
-        $songs_endpoint = $base_url . "album/getSongsByAlbumID.php?album_id=$album_id";
+        $songs_endpoint = $base_url . "album/getAlbum/getSongsByAlbumID.php?album_id=$album_id";
         $songs_resource = @file_get_contents($songs_endpoint);
         $songs_data = json_decode($songs_resource, true);
 
         //get album reviews
-        $reviews_endpoint = $base_url . "review/getReviewsByAlbumID.php?album_id=$album_id";
+        $reviews_endpoint = $base_url . "review/getReview/getReviewsByAlbumID.php?album_id=$album_id";
         $reviews_resource = @file_get_contents($reviews_endpoint);
         $reviews_data = json_decode($reviews_resource, true);
 
         //get related albums
         $album_artist_edited = urlencode($album_artist);
-        $related_albums_endpoint = $base_url . "album/getAlbumsByArtistName.php?artist_name=$album_artist_edited";
+        $related_albums_endpoint = $base_url . "album/getAlbum/getAlbumsByArtistName.php?artist_name=$album_artist_edited";
         $related_albums_resource = @file_get_contents($related_albums_endpoint);
         $related_albums_data = json_decode($related_albums_resource, true);
 
         //get related communities
-        $related_communities_endpoint = $base_url . "community/getCommunitiesByArtistName.php?artist_name=$album_artist_edited";
+        $related_communities_endpoint = $base_url . "community/getCommunity/getCommunitiesByArtistName.php?artist_name=$album_artist_edited";
         $related_communities_resource = @file_get_contents($related_communities_endpoint);
         $related_communities_data = json_decode($related_communities_resource, true);
 
@@ -524,7 +524,7 @@
                         include("php/user/compareUserCommunities.php");
 
                         //get community size
-                        $community_size_endpoint = $base_url . "community/getCommunitySizeByCommunityID.php?community_id=$community_id";
+                        $community_size_endpoint = $base_url . "community/getCommunity/getCommunitySizeByCommunityID.php?community_id=$community_id";
                         $community_size_resource = file_get_contents($community_size_endpoint);
                         $community_size_data = json_decode($community_size_resource, true);
 

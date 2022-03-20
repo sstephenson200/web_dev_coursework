@@ -19,7 +19,7 @@ if(isset($_POST['submit'])) {
     $errors = $login -> checkLogin();
     if(!$errors){
         //get password for provided email
-        $login_endpoint = $base_url . "user/getUserPassword.php?emailLogin=$email";
+        $login_endpoint = $base_url . "user/getUser/getUserPassword.php?emailLogin=$email";
         $login_resource = file_get_contents($login_endpoint);
         $login_data = json_decode($login_resource, true);
 
@@ -42,14 +42,14 @@ if(isset($_POST['submit'])) {
                     //create token
                     [$selector, $validator, $token] = $remember -> generate_token();
                     //delete prior token
-                    $delete_endpoint = $base_url . "user/deleteUserToken.php?user_id=$user_id";
+                    $delete_endpoint = $base_url . "user/deleteUser/deleteUserToken.php?user_id=$user_id";
                     $delete_resource = file_get_contents($delete_endpoint);
                     $delete_data = json_decode($delete_resource, true);
                     //set expiration
                     $expiry = date('Y-m-d H:i:s', time() + (86400 * 30));
                     $expiry_request = urlencode($expiry);
                     //create new token
-                    $create_endpoint = $base_url . "user/createUserToken.php?selector=$selector&validator=$validator&expiry_date=$expiry_request&user_id=$user_id";
+                    $create_endpoint = $base_url . "user/addUser/createUserToken.php?selector=$selector&validator=$validator&expiry_date=$expiry_request&user_id=$user_id";
                     $create_resource = file_get_contents($create_endpoint);
                     $create_data = json_decode($create_resource, true);
                     

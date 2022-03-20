@@ -16,7 +16,7 @@ if(isset($_POST['submit'])) {
     $errors = $password_reset -> checkPasswordReset();
     if(!$errors){
         //get user_id for provided email
-        $user_endpoint = $base_url . "user/getUserIDByEmail.php?email=$email";
+        $user_endpoint = $base_url . "user/getUser/getUserIDByEmail.php?email=$email";
         $user_resource = @file_get_contents($user_endpoint);
         $user_data = json_decode($user_resource, true);
 
@@ -32,7 +32,7 @@ if(isset($_POST['submit'])) {
                     //generate new password
                     $password = $password_reset -> generateUserPassword();
                     //update user password
-                    $password_endpoint = $base_url . "user/updatePassword.php?password=$password&user_id=$user_id";
+                    $password_endpoint = $base_url . "user/editUser/updatePassword.php?password=$password&user_id=$user_id";
                     $password_resource = file_get_contents($password_endpoint);
                     $password_data = json_decode($password_resource, true);
         

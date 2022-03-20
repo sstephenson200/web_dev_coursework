@@ -7,22 +7,22 @@
     include("php/user/processRememberMe.php");
 
     //get pending reviews
-    $pending_review_endpoint = $base_url . "review/getReviewsByStatus.php?status_title=Pending";
+    $pending_review_endpoint = $base_url . "review/getReview/getReviewsByStatus.php?status_title=Pending";
     $pending_review_resource = @file_get_contents($pending_review_endpoint);
     $pending_review_data = json_decode($pending_review_resource, true);
 
     //get reported reviews
-    $reported_review_endpoint = $base_url . "review/getReviewsByStatus.php?status_title=Flagged";
+    $reported_review_endpoint = $base_url . "review/getReview/getReviewsByStatus.php?status_title=Flagged";
     $reported_review_resource = @file_get_contents($reported_review_endpoint);
     $reported_review_data = json_decode($reported_review_resource, true);
 
     //get reported users
-    $reported_users_endpoint = $base_url . "user/getReportedUsers.php";
+    $reported_users_endpoint = $base_url . "user/getUser/getReportedUsers.php";
     $reported_users_resource = @file_get_contents($reported_users_endpoint);
     $reported_users_data = json_decode($reported_users_resource, true);
 
     //get all albums
-    $album_endpoint = $base_url . "album/getAllAlbums.php";
+    $album_endpoint = $base_url . "album/getAlbum/getAllAlbums.php";
     $album_resource = file_get_contents($album_endpoint);
     $album_data = json_decode($album_resource, true);
 
@@ -381,13 +381,13 @@
                                             $report_reasoning = $report['report_reasoning'];
     
                                             //get reporting username
-                                            $reporting_user_endpoint = $base_url . "user/getProfileDataByUserID.php?user_id=$reporting_user";
+                                            $reporting_user_endpoint = $base_url . "user/getUser/getProfileDataByUserID.php?user_id=$reporting_user";
                                             $reporting_user_resource = file_get_contents($reporting_user_endpoint);
                                             $reporting_user_data = json_decode($reporting_user_resource, true);
                                             $reporting_user_name = $reporting_user_data[0]['user_name'];
     
                                             //get reported username
-                                            $reported_user_endpoint = $base_url . "user/getProfileDataByUserID.php?user_id=$reported_user";
+                                            $reported_user_endpoint = $base_url . "user/getUser/getProfileDataByUserID.php?user_id=$reported_user";
                                             $reported_user_resource = file_get_contents($reported_user_endpoint);
                                             $reported_user_data = json_decode($reported_user_resource, true);
                                             $reported_user_name = $reported_user_data[0]['user_name'];

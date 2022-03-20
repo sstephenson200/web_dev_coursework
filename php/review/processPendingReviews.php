@@ -10,19 +10,13 @@ if(isset($_POST['savePendingReviews']) or isset($_POST['saveReportedReviews'])){
         
         if($status == "Approved") {
             //approve review
-            $approve_endpoint = $base_url . "review/approveReview.php?review_id=$review_id";
+            $approve_endpoint = $base_url . "review/editReview/approveReview.php?review_id=$review_id";
             $approve_resource = file_get_contents($approve_endpoint);
             $approve_data = json_decode($approve_resource, true);
 
-            if($approve_data){
-                $_SESSION['adminMessage'] = $approve_data['message'];
-            } else {
-                $_SESSION['adminMessage'] = "Error.";
-            }
-
         } else if ($status == "Rejected") {
             //approve review
-            $reject_endpoint = $base_url . "review/rejectReview.php?review_id=$review_id";
+            $reject_endpoint = $base_url . "review/editReview/rejectReview.php?review_id=$review_id";
             $reject_resource = file_get_contents($reject_endpoint);
             $reject_data = json_decode($reject_resource, true);
 
@@ -31,15 +25,10 @@ if(isset($_POST['savePendingReviews']) or isset($_POST['saveReportedReviews'])){
 
                 if($reject_data['message'] == "Review rejected."){
                     //delete review
-                    $delete_endpoint = $base_url . "review/deleteReviewByID.php?review_id=$review_id";
+                    $delete_endpoint = $base_url . "review/deleteReview/deleteReviewByID.php?review_id=$review_id";
                     $delete_resource = file_get_contents($delete_endpoint);
                     $delete_data = json_decode($delete_resource, true);
 
-                    if($delete_data){
-                        $_SESSION['adminMessage'] = $reject_data['message'];
-                    } else {
-                        $_SESSION['adminMessage'] = "Error.";
-                    }
                 }
 
             } else {

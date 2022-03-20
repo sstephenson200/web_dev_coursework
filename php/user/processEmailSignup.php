@@ -10,7 +10,7 @@ if(isset($_GET['emailListSignup'])){
     $email = filter_var($email, FILTER_SANITIZE_EMAIL);
 
     if(trim($email) !== "" and filter_var($email, FILTER_VALIDATE_EMAIL)){
-        $add_email_endpoint = $base_url . "user/createEmailSignup.php?email=$email";
+        $add_email_endpoint = $base_url . "user/addUser/createEmailSignup.php?email=$email";
         $add_email_resource = file_get_contents($add_email_endpoint);
         $add_email_data = json_decode($add_email_resource, true);
 

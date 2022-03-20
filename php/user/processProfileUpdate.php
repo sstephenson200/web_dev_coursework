@@ -17,7 +17,7 @@ if(isset($_POST['saveProfile'])){
         //get user_id
         $tokens = $remember -> parse_token($_SESSION['userLoggedIn']);
         $token = $tokens[0];
-        $token_endpoint = $base_url . "user/getUserByToken.php?token=$token";
+        $token_endpoint = $base_url . "user/getUser/getUserByToken.php?token=$token";
         $token_resource = file_get_contents($token_endpoint);
         $token_data = json_decode($token_resource, true);
 
@@ -25,7 +25,7 @@ if(isset($_POST['saveProfile'])){
             $logged_in_user_id = $token_data[0]['user_id'];
 
             //update profile data
-            $profile_endpoint = $base_url . "user/updateUserProfile.php?user_id=$logged_in_user_id&art_url=$user_art&location_name=$location&user_bio=$bio";
+            $profile_endpoint = $base_url . "user/editUser/updateUserProfile.php?user_id=$logged_in_user_id&art_url=$user_art&location_name=$location&user_bio=$bio";
             $profile_resource = file_get_contents($profile_endpoint);
             $profile_data = json_decode($profile_resource, true);
 

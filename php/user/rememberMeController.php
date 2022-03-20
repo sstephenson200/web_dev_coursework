@@ -29,7 +29,7 @@ class RememberMeController {
     public function check_token_valid($selector, $validator) {
         $base_url = "http://localhost/web_dev_coursework/api/";
 
-        $token_endpoint = $base_url . "user/getUserTokenBySelector.php?selector=$selector";
+        $token_endpoint = $base_url . "user/getUser/getUserTokenBySelector.php?selector=$selector";
         $token_resource = file_get_contents($token_endpoint);
         $token_data = json_decode($token_resource, true);
 

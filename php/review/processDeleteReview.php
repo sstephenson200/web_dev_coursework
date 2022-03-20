@@ -15,7 +15,7 @@ if(isset($_POST['delete'])){
         //get user_id
         $tokens = $remember -> parse_token($_SESSION['userLoggedIn']);
         $token = $tokens[0];
-        $token_endpoint = $base_url . "user/getUserByToken.php?token=$token";
+        $token_endpoint = $base_url . "user/getUser/getUserByToken.php?token=$token";
         $token_resource = file_get_contents($token_endpoint);
         $token_data = json_decode($token_resource, true);
 
@@ -23,7 +23,7 @@ if(isset($_POST['delete'])){
             $logged_in_user_id = $token_data[0]['user_id'];
 
             //delete review
-            $delete_endpoint = $base_url . "review/deleteReview.php?album_id=$album_id&user_id=$logged_in_user_id";
+            $delete_endpoint = $base_url . "review/deleteReview/deleteReview.php?album_id=$album_id&user_id=$logged_in_user_id";
             $delete_resource = file_get_contents($delete_endpoint);
             $delete_data = json_decode($delete_resource, true);
 

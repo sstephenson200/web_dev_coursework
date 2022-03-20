@@ -13,7 +13,7 @@ if(isset($_SESSION['userLoggedIn'])){
         //check if provided email is valid
         if(trim($email) !== "" and filter_var($email, FILTER_VALIDATE_EMAIL)){
             $email = urlencode($email);
-            $valid_email_endpoint = $base_url . "user/getUserIDByEmail.php?email=$email";
+            $valid_email_endpoint = $base_url . "user/getUser/getUserIDByEmail.php?email=$email";
             $valid_email_resource = file_get_contents($valid_email_endpoint);
             $valid_email_data = json_decode($valid_email_resource, true);
 

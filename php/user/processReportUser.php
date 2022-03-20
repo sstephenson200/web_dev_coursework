@@ -16,7 +16,7 @@ if(isset($_POST['confirmReport'])){
         //get user_id
         $tokens = $remember -> parse_token($_SESSION['userLoggedIn']);
         $token = $tokens[0];
-        $token_endpoint = $base_url . "user/getUserByToken.php?token=$token";
+        $token_endpoint = $base_url . "user/getUser/getUserByToken.php?token=$token";
         $token_resource = file_get_contents($token_endpoint);
         $token_data = json_decode($token_resource, true);
 
@@ -24,7 +24,7 @@ if(isset($_POST['confirmReport'])){
             $logged_in_user_id = $token_data[0]['user_id'];
 
             //report user
-            $report_endpoint = $base_url . "user/reportUser.php?reporter=$logged_in_user_id&reportee=$user_id&reason=$report_reason";
+            $report_endpoint = $base_url . "user/addUser/reportUser.php?reporter=$logged_in_user_id&reportee=$user_id&reason=$report_reason";
             $report_resource = file_get_contents($report_endpoint);
             $report_data = json_decode($report_resource, true);
 

@@ -7,7 +7,7 @@
         //get user_id
         $tokens = $remember -> parse_token($_SESSION['userLoggedIn']);
         $token = $tokens[0];
-        $token_endpoint = $base_url . "user/getUserByToken.php?token=$token";
+        $token_endpoint = $base_url . "user/getUser/getUserByToken.php?token=$token";
         $token_resource = @file_get_contents($token_endpoint);
         $token_data = json_decode($token_resource, true);
 
@@ -15,7 +15,7 @@
             $logged_in_user_id = $token_data[0]['user_id'];
 
             //get user profile data
-            $user_endpoint = $base_url . "user/getProfileDataByUserID.php?user_id=$logged_in_user_id";
+            $user_endpoint = $base_url . "user/getUser/getProfileDataByUserID.php?user_id=$logged_in_user_id";
             $user_resource = file_get_contents($user_endpoint);
             $user_data = json_decode($user_resource, true);
 
@@ -23,7 +23,7 @@
             $logged_in_user_art = $user_data[0]['art_url'];
 
             //check is user is admin
-            $admin_endpoint = $base_url . "user/getUserAdminStatus.php?user_id=$logged_in_user_id";
+            $admin_endpoint = $base_url . "user/getUser/getUserAdminStatus.php?user_id=$logged_in_user_id";
             $admin_resource = file_get_contents($admin_endpoint);
             $admin_data = json_decode($admin_resource, true);
             

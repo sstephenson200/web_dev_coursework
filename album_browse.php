@@ -27,29 +27,29 @@
     $_SESSION['active_filters'] = $active_filters;
 
     //get all artist data for filter menus
-    $artist_endpoint = $base_url . "album/getArtists.php";
+    $artist_endpoint = $base_url . "album/getAlbum/getArtists.php";
     $artist_resource = file_get_contents($artist_endpoint);
     $artist_data = json_decode($artist_resource, true);
 
     //get all genre data for filter menus
-    $genre_endpoint = $base_url . "album/getGenres.php";
+    $genre_endpoint = $base_url . "album/getAlbum/getGenres.php";
     $genre_resource = file_get_contents($genre_endpoint);
     $genre_data = json_decode($genre_resource, true);
 
     //get all subgenre data for filter menus
-    $subgenre_endpoint = $base_url . "album/getSubgenres.php";
+    $subgenre_endpoint = $base_url . "album/getAlbum/getSubgenres.php";
     $subgenre_resource = file_get_contents($subgenre_endpoint);
     $subgenre_data = json_decode($subgenre_resource, true);
 
     //get all year data for filter menus
-    $year_endpoint = $base_url . "album/getDecades.php";
+    $year_endpoint = $base_url . "album/getAlbum/getDecades.php";
     $year_resource = file_get_contents($year_endpoint);
     $year_data = json_decode($year_resource, true);
 
     $decade_count = count($year_data);
 
     //get all album data
-    $album_endpoint = $base_url . "album/getAllAlbums.php";
+    $album_endpoint = $base_url . "album/getAlbum/getAllAlbums.php";
     $album_resource = file_get_contents($album_endpoint);
     $album_data = json_decode($album_resource, true);
 

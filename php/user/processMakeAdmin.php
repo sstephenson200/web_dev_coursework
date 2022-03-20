@@ -16,7 +16,7 @@ if(isset($_SESSION['userLoggedIn']) and isset($_POST['confirmAdmin'])){
     //get logged in user id
     $tokens = $remember -> parse_token($_SESSION['userLoggedIn']);
     $token = $tokens[0];
-    $token_endpoint = $base_url . "user/getUserByToken.php?token=$token";
+    $token_endpoint = $base_url . "user/getUser/getUserByToken.php?token=$token";
     $token_resource = file_get_contents($token_endpoint);
     $token_data = json_decode($token_resource, true);
 
@@ -24,7 +24,7 @@ if(isset($_SESSION['userLoggedIn']) and isset($_POST['confirmAdmin'])){
         $logged_in_user_id = $token_data[0]['user_id'];
 
         //get password for logged in user
-        $check_password_endpoint = $base_url . "user/getUserPasswordByID.php?user_id=$logged_in_user_id";
+        $check_password_endpoint = $base_url . "user/getUser/getUserPasswordByID.php?user_id=$logged_in_user_id";
         $check_password_resource = file_get_contents($check_password_endpoint);
         $check_password_data = json_decode($check_password_resource, true);
 
@@ -32,7 +32,7 @@ if(isset($_SESSION['userLoggedIn']) and isset($_POST['confirmAdmin'])){
             $hashed_password = $check_password_data[0]['user_password'];
             if(password_verify($password, $hashed_password)) {
                 //give admin access
-                $admin_endpoint = $base_url . "user/createAdmin.php?user_id=$user_id";
+                $admin_endpoint = $base_url . "user/addUser/createAdmin.php?user_id=$user_id";
                 $admin_resource = file_get_contents($admin_endpoint);
                 $admin_data = json_decode($admin_resource, true);
 

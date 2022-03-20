@@ -18,7 +18,7 @@ if(isset($_POST['confirmDelete'])){
         //get user_id
         $tokens = $remember -> parse_token($_SESSION['userLoggedIn']);
         $token = $tokens[0];
-        $token_endpoint = $base_url . "user/getUserByToken.php?token=$token";
+        $token_endpoint = $base_url . "user/getUser/getUserByToken.php?token=$token";
         $token_resource = file_get_contents($token_endpoint);
         $token_data = json_decode($token_resource, true);
 
@@ -26,7 +26,7 @@ if(isset($_POST['confirmDelete'])){
             $logged_in_user_id = $token_data[0]['user_id'];
     
             //get password for logged in user
-            $check_password_endpoint = $base_url . "user/getUserPasswordByID.php?user_id=$logged_in_user_id";
+            $check_password_endpoint = $base_url . "user/getUser/getUserPasswordByID.php?user_id=$logged_in_user_id";
             $check_password_resource = file_get_contents($check_password_endpoint);
             $check_password_data = json_decode($check_password_resource, true);
     
@@ -35,7 +35,7 @@ if(isset($_POST['confirmDelete'])){
                 if(password_verify($password, $hashed_password)) {
                     
                     //delete songs
-                    $songs_endpoint = $base_url . "album/deleteSongsPerAlbum.php?album_id=$album_id";
+                    $songs_endpoint = $base_url . "album/deleteAlbum/deleteSongsPerAlbum.php?album_id=$album_id";
                     $songs_resource = file_get_contents($songs_endpoint);
                     $songs_data = json_decode($songs_resource, true);
 
@@ -45,7 +45,7 @@ if(isset($_POST['confirmDelete'])){
                     } 
 
                     //delete genres
-                    $genres_endpoint = $base_url . "album/deleteGenresPerAlbum.php?album_id=$album_id";
+                    $genres_endpoint = $base_url . "album/deleteAlbum/deleteGenresPerAlbum.php?album_id=$album_id";
                     $genres_resource = file_get_contents($genres_endpoint);
                     $genres_data = json_decode($genres_resource, true);
 
@@ -55,7 +55,7 @@ if(isset($_POST['confirmDelete'])){
                     } 
 
                     //delete subgenres
-                    $subgenres_endpoint = $base_url . "album/deleteSubgenresPerAlbum.php?album_id=$album_id";
+                    $subgenres_endpoint = $base_url . "album/deleteAlbum/deleteSubgenresPerAlbum.php?album_id=$album_id";
                     $subgenres_resource = file_get_contents($subgenres_endpoint);
                     $subgenres_data = json_decode($subgenres_resource, true);
 
@@ -65,7 +65,7 @@ if(isset($_POST['confirmDelete'])){
                     } 
 
                     //delete favourites
-                    $favourite_endpoint = $base_url . "album/deleteFavouriteAlbumsByAlbumID.php?album_id=$album_id";
+                    $favourite_endpoint = $base_url . "album/deleteAlbum/deleteFavouriteAlbumsByAlbumID.php?album_id=$album_id";
                     $favourite_resource = file_get_contents($favourite_endpoint);
                     $favourite_data = json_decode($favourite_resource, true);
 
@@ -75,7 +75,7 @@ if(isset($_POST['confirmDelete'])){
                     } 
 
                     //delete owned
-                    $owned_endpoint = $base_url . "album/deleteOwnedAlbumsByAlbumID.php?album_id=$album_id";
+                    $owned_endpoint = $base_url . "album/deleteAlbum/deleteOwnedAlbumsByAlbumID.php?album_id=$album_id";
                     $owned_resource = file_get_contents($owned_endpoint);
                     $owned_data = json_decode($owned_resource, true);
 
@@ -85,7 +85,7 @@ if(isset($_POST['confirmDelete'])){
                     } 
 
                     //delete reviews
-                    $review_endpoint = $base_url . "review/deleteReviewByAlbumID.php?album_id=$album_id";
+                    $review_endpoint = $base_url . "review/deleteReview/deleteReviewByAlbumID.php?album_id=$album_id";
                     $review_resource = file_get_contents($review_endpoint);
                     $review_data = json_decode($review_resource, true);
 
@@ -95,7 +95,7 @@ if(isset($_POST['confirmDelete'])){
                     } 
 
                     //delete album
-                    $album_endpoint = $base_url . "album/deleteAlbum.php?album_id=$album_id";
+                    $album_endpoint = $base_url . "album/deleteAlbum/deleteAlbum.php?album_id=$album_id";
                     $album_resource = file_get_contents($album_endpoint);
                     $album_data = json_decode($album_resource, true);
 

@@ -15,7 +15,7 @@ if(isset($_SESSION['userLoggedIn']) and isset($_POST['confirmDelete'])){
     //get logged in user id
     $tokens = $remember -> parse_token($_SESSION['userLoggedIn']);
     $token = $tokens[0];
-    $token_endpoint = $base_url . "user/getUserByToken.php?token=$token";
+    $token_endpoint = $base_url . "user/getUser/getUserByToken.php?token=$token";
     $token_resource = file_get_contents($token_endpoint);
     $token_data = json_decode($token_resource, true);
 
@@ -23,7 +23,7 @@ if(isset($_SESSION['userLoggedIn']) and isset($_POST['confirmDelete'])){
         $logged_in_user_id = $token_data[0]['user_id'];
 
         //get password for logged in user
-        $check_password_endpoint = $base_url . "user/getUserPasswordByID.php?user_id=$logged_in_user_id";
+        $check_password_endpoint = $base_url . "user/getUser/getUserPasswordByID.php?user_id=$logged_in_user_id";
         $check_password_resource = file_get_contents($check_password_endpoint);
         $check_password_data = json_decode($check_password_resource, true);
 
@@ -31,7 +31,7 @@ if(isset($_SESSION['userLoggedIn']) and isset($_POST['confirmDelete'])){
             $hashed_password = $check_password_data[0]['user_password'];
             if(password_verify($password, $hashed_password)) {
                 //delete account
-                $delete_endpoint = $base_url . "user/deleteAccount.php?user_id=$logged_in_user_id";
+                $delete_endpoint = $base_url . "user/deleteUser/deleteAccount.php?user_id=$logged_in_user_id";
                 $delete_resource = file_get_contents($delete_endpoint);
                 $delete_data = json_decode($delete_resource, true);
 
