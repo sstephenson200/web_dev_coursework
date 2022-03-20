@@ -16,38 +16,96 @@ function check_item_unique ($item, $array) {
 function oneFilterSet($active_filters){
 
     $flag = false;
+    $first_filter = "No filter";
 
     if(!empty($active_filters['artists']) and empty($active_filters['genres']) and empty($active_filters['subgenres']) and empty($active_filters['ratings']) and empty($active_filters['decades'])){
         $flag = true;
+        $first_filter = "artists";
     }
 
     if(empty($active_filters['artists']) and !empty($active_filters['genres']) and empty($active_filters['subgenres']) and empty($active_filters['ratings']) and empty($active_filters['decades'])){
         $flag = true;
+        $first_filter = "genres";
     }
 
     if(empty($active_filters['artists']) and empty($active_filters['genres']) and !empty($active_filters['subgenres']) and empty($active_filters['ratings']) and empty($active_filters['decades'])){
         $flag = true;
+        $first_filter = "subgenres";
     }
 
     if(empty($active_filters['artists']) and empty($active_filters['genres']) and empty($active_filters['subgenres']) and !empty($active_filters['ratings']) and empty($active_filters['decades'])){
         $flag = true;
+        $first_filter = "ratings";
     }
 
     if(empty($active_filters['artists']) and empty($active_filters['genres']) and empty($active_filters['subgenres']) and empty($active_filters['ratings']) and !empty($active_filters['decades'])){
         $flag = true;
+        $first_filter = "decades";
     }
 
-    return $flag;
+    return [$flag, $first_filter];
 
 }
 
 //Function to check if album data matches filter options
-function checkAlbumFiltering($album, $active_filters) {
+function checkAlbumFiltering($album, $active_filters, $first_filter_applied) {
 
     $flag = true;
+    $genre_check = true;
+    $subgenre_check = true;
 
-    if(isset($active_filters['artists'])){
+    if(isset($active_filters['artists']) and !empty($active_filters['artists'])){
         if(!in_array($album['artist_name'], $active_filters['artists'])){
+            $flag = false;
+        }
+    }
+
+    if(isset($active_filters['genres']) and !empty($active_filters['genres'])){
+        foreach($album['Genres'] as $genre){
+            if(!in_array($genre, $active_filters['genres'])){
+                $genre_check = false;
+            } else {
+                //if one genre for album is in active_filters, show album
+                $genre_check = true;
+                break;
+            }
+        }
+    }
+
+    if(!$genre_check){
+        $flag = false;
+    }
+
+    if(isset($active_filters['subgenres']) and !empty($active_filters['subgenres'])){
+        foreach($album['Subgenres'] as $subgenre){
+            if(!in_array($subgenre, $active_filters['subgenres'])){
+                $subgenre_check = false;
+            } else {
+                //if one genre for album is in active_filters, show album
+                $subgenre_check = true;
+                break;
+            }
+        }
+    }
+
+    if(!$subgenre_check){
+        $flag = false;
+    }
+
+    if(isset($active_filters['ratings']) and !empty($active_filters['ratings'])){
+        $album_rating = $album['AverageRating'];
+        $album_rating = floor($album_rating);
+
+        if(!in_array($album_rating, $active_filters['ratings'])){
+            $flag = false;
+        }
+    }
+
+    if(isset($active_filters['decades']) and !empty($active_filters['decades'])){
+        $year = $album['year_value'];
+        $decade = (floor($year/10)*10);
+        
+        if(!in_array($decade, $active_filters['decades'])){
             $flag = false;
         }
     }
@@ -147,8 +205,11 @@ if(isset($_SESSION['filtered_data'])){
     $filtered_data= [];
 }
 
+$single_filter_applied = oneFilterSet($active_filters)[0];
+$first_filter_applied = oneFilterSet($active_filters)[1];
+
 //if filtered data exists, apply filters, else apply to album_data
-if(empty($filtered_data) or oneFilterSet($active_filters)){
+if(empty($filtered_data) or $single_filter_applied){
     $array = $album_data;
 } else {
     $array = $filtered_data;
@@ -162,7 +223,7 @@ foreach($array as $album) {
         break;
     }
 
-    $flag = checkAlbumFiltering($album, $active_filters);
+    $flag = checkAlbumFiltering($album, $active_filters, $first_filter_applied);
 
     if($flag and !check_item_unique($album,$filtered_data)){
         array_push($filtered_data, $album);
