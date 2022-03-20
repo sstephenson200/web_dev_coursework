@@ -12,6 +12,35 @@ function check_item_unique ($item, $array) {
     }
 }
 
+//Function to check if only one filter has been set
+function oneFilterSet($active_filters){
+
+    $flag = false;
+
+    if(!empty($active_filters['artists']) and empty($active_filters['genres']) and empty($active_filters['subgenres']) and empty($active_filters['ratings']) and empty($active_filters['decades'])){
+        $flag = true;
+    }
+
+    if(empty($active_filters['artists']) and !empty($active_filters['genres']) and empty($active_filters['subgenres']) and empty($active_filters['ratings']) and empty($active_filters['decades'])){
+        $flag = true;
+    }
+
+    if(empty($active_filters['artists']) and empty($active_filters['genres']) and !empty($active_filters['subgenres']) and empty($active_filters['ratings']) and empty($active_filters['decades'])){
+        $flag = true;
+    }
+
+    if(empty($active_filters['artists']) and empty($active_filters['genres']) and empty($active_filters['subgenres']) and !empty($active_filters['ratings']) and empty($active_filters['decades'])){
+        $flag = true;
+    }
+
+    if(empty($active_filters['artists']) and empty($active_filters['genres']) and empty($active_filters['subgenres']) and empty($active_filters['ratings']) and !empty($active_filters['decades'])){
+        $flag = true;
+    }
+
+    return $flag;
+
+}
+
 //Function to check if album data matches filter options
 function checkAlbumFiltering($album, $active_filters) {
 
@@ -107,13 +136,27 @@ if(isset($_POST['decade_count'])){
     }
 }
 
-
+//get active filters
 $_SESSION['active_filters'] = $active_filters;
 $album_data = $_SESSION["album_data"];
-$filtered_data= [];
 
-foreach($album_data as $album) { 
+//check if filtered data already exists
+if(isset($_SESSION['filtered_data'])){
+    $filtered_data = $_SESSION['filtered_data'];
+} else {
+    $filtered_data= [];
+}
 
+//if filtered data exists, apply filters, else apply to album_data
+if(empty($filtered_data) or oneFilterSet($active_filters)){
+    $array = $album_data;
+} else {
+    $array = $filtered_data;
+}
+
+foreach($array as $album) { 
+
+    //if no filters, clear filtered data
     if(empty($active_filters['artists']) and empty($active_filters['genres']) and empty($active_filters['subgenres']) and empty($active_filters['ratings']) and empty($active_filters['decades'])){
         $_SESSION['filtered_data'] = [];
         break;
@@ -121,7 +164,7 @@ foreach($album_data as $album) {
 
     $flag = checkAlbumFiltering($album, $active_filters);
 
-    if($flag){
+    if($flag and !check_item_unique($album,$filtered_data)){
         array_push($filtered_data, $album);
         $_SESSION['filtered_data'] = $filtered_data;
     }
