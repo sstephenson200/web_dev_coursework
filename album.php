@@ -157,10 +157,10 @@
                 <?php if(isset($_SESSION['userLoggedIn']) and $AdminCount != 0) { ?>
                     <div class="row">
                         <div class="col-3 col-sm-2 offset-9 offset-sm-10">
-                            <a role='button px-1' href='php/album/confirmEditAlbum.php' class='text-reset text-decoration-none'>
+                            <a role='button px-1' href='php/album/editAlbum/confirmEditAlbum.php' class='text-reset text-decoration-none'>
                                 <i id='editAlbum' class='fas fa-edit fa-lg editAlbum' data-toggle='popover' title='Edit' data-content='Edit Content' data-target='editAlbum'></i>
                             </a>
-                            <a role='button px-1' href='php/album/confirmDeleteAlbum.php?album_id=<?php echo $album_id ?>' class='text-reset text-decoration-none'>
+                            <a role='button px-1' href='php/album/deleteAlbum/confirmDeleteAlbum.php?album_id=<?php echo $album_id ?>' class='text-reset text-decoration-none'>
                                 <i id='deleteAlbum' class='far fa-trash-alt fa-lg delete' data-toggle='popover' title='Delete' data-content='Delete Content' data-target='deleteAlbum'></i>
                             </a>
                         </div>
@@ -308,7 +308,7 @@
                 <div class="row">
                     <h2>Your Review</h2>
                 </div> 
-                <form action="php/review/processPostReview.php" method="POST">
+                <form action="php/review/addReview/processPostReview.php" method="POST">
                     <div class="row d-flex justify-content-center">
                         <div class="col-6 col-sm-8">
                             <div class="form-group mb-3">

@@ -183,7 +183,7 @@
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="pendingReviews">
                             <?php if($pending_review_data){ ?>
-                                <form action="php/review/processPendingReviews.php" method="POST">
+                                <form action="php/review/editReview/processPendingReviews.php" method="POST">
                                 <table class="table table-sm table-bordered table-striped table-dark">
                                     <thead>
                                         <tr>
@@ -290,7 +290,7 @@
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="reportedReviews">
                             <?php if($reported_review_data){ ?>
-                                <form action="php/review/processPendingReviews.php" method="POST">
+                                <form action="php/review/editReview/processPendingReviews.php" method="POST">
                                 <table class="table table-sm table-bordered table-striped table-dark">
                                     <thead>
                                         <tr>

@@ -23,7 +23,7 @@ if(isset($_SESSION['editDetails'])){
         </button>
       </div>
       <div class="modal-body">
-        <form action="php/review/editReview.php" method="POST">
+        <form action="php/review/editReview/editReview.php" method="POST">
             <div class="row d-flex justify-content-center">
                 <div class="col-6 col-sm-8">
                     <div class="form-group mb-3">

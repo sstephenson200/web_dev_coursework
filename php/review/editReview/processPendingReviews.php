@@ -42,6 +42,6 @@ if(isset($_POST['savePendingReviews']) or isset($_POST['saveReportedReviews'])){
     $_SESSION['adminMessage'] = "Error.";
 }
 
-echo "<script>window.location = '../../admin.php'</script>";
+echo "<script>window.location = '../../../admin.php'</script>";
 
 ?>

@@ -194,7 +194,7 @@
                             $artist_edited = urlencode($artist);
 
                             echo "<li class='form-group'>$artist 
-                                    <a role='button' href='php/filter/removeSearchFilter.php?artist=$artist_edited'>
+                                    <a role='button' href='php/filter/search/removeSearchFilter.php?artist=$artist_edited'>
                                         <i id='deleteFilter$artist' class='fas fa-times fa-lg' data-toggle='popover' title='Remove' data-content='Remove Filter'></i>
                                     </a>
                                 </li>";     
@@ -218,7 +218,7 @@
                             $genre_edited = urlencode($genre);
 
                             echo "<li class='form-group'>$genre 
-                                    <a role='button' href='php/filter/removeSearchFilter.php?genre=$genre_edited'>
+                                    <a role='button' href='php/filter/search/removeSearchFilter.php?genre=$genre_edited'>
                                         <i id='deleteFilter$genre' class='fas fa-times fa-lg' data-toggle='popover' title='Remove' data-content='Remove Filter'></i>
                                     </a>
                                 </li>";     
@@ -243,7 +243,7 @@
                             $subgenre_edited = urlencode($subgenre);
 
                             echo "<li class='form-group'>$subgenre 
-                                    <a role='button' href='php/filter/removeSearchFilter.php?subgenre=$subgenre_edited'>
+                                    <a role='button' href='php/filter/search/removeSearchFilter.php?subgenre=$subgenre_edited'>
                                         <i id='deleteFilter$subgenre' class='fas fa-times fa-lg' data-toggle='popover' title='Remove' data-content='Remove Filter'></i>
                                     </a>
                                 </li>";     
@@ -274,7 +274,7 @@
                                     } else {
                                         echo "No rating";  
                                     }
-                                    "<a role='button' href='php/filter/removeSearchFilter.php?rating=$rating_edited'>
+                                    "<a role='button' href='php/filter/search/removeSearchFilter.php?rating=$rating_edited'>
                                         <i id='deleteFilter$rating' class='fas fa-times fa-lg' data-toggle='popover' title='Remove' data-content='Remove Filter'></i>
                                     </a>
                                 </li>";      
@@ -298,7 +298,7 @@
                             $decade_edited = urlencode($decade);
 
                             echo "<li class='form-group'>$decade 
-                                    <a role='button' href='php/filter/removeSearchFilter.php?decade=$decade_edited'>
+                                    <a role='button' href='php/filter/search/removeSearchFilter.php?decade=$decade_edited'>
                                         <i id='deleteFilter$decade' class='fas fa-times fa-lg' data-toggle='popover' title='Remove' data-content='Remove Filter'></i>
                                     </a>
                                 </li>"; 
@@ -308,7 +308,7 @@
                                 </div>";
                     }
                 ?>
-                <form action="php/filter/processSearchFilter.php" method="POST">
+                <form action="php/filter/search/processSearchFilter.php" method="POST">
                     <div class="row mb-1">
                         <h5>Artist</h5>
                     </div>
@@ -393,7 +393,7 @@
                     </div>
                     <div class="row mb-5 d-flex justify-content-center form-group">
                         <div class="col-12 col-sm-4 mb-2 text-center">
-                            <a type="button" class="btn clearButton" href="php/filter/clearSearchFilters.php">Clear</a>
+                            <a type="button" class="btn clearButton" href="php/filter/search/clearSearchFilters.php">Clear</a>
                         </div>
                         <div class="col-12 col-sm-4 mb-2 text-center">
                             <button type="submit" class="btn  applyButton">Apply</button>

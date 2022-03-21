@@ -6,7 +6,7 @@ session_start();
 
 $location = $_SERVER['HTTP_REFERER'];
 
-include("../user/rememberMeController.php");
+include("../../user/rememberMeController.php");
 
 $remember = new rememberMeController();
 
@@ -120,7 +120,7 @@ if(isset($_POST['confirmDelete'])){
         }
     
     } else {
-        echo '<script>window.location = "../../index.php"</script>';
+        echo '<script>window.location = "../../../index.php"</script>';
     }   
 
 } else {
@@ -128,7 +128,7 @@ if(isset($_POST['confirmDelete'])){
 }
 
 if($_SESSION['deletedAlbumMessage'] = "Album deleted.") {
-    echo "<script>window.location = '../../index.php'</script>";
+    echo "<script>window.location = '../../../index.php'</script>";
 } else {
     echo "<script>window.location = '$location'</script>";
 }

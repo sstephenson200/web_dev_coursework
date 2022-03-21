@@ -62,7 +62,7 @@ if(isset($_SESSION['reportDetails'])){
       </div>
       <?php if($_SESSION['postReview'] == "Delete review.") { ?>
         <div class="modal-footer">
-          <form action="php/review/processDeleteReview.php" method="POST">
+          <form action="php/review/deleteReview/processDeleteReview.php" method="POST">
             <div class="form-group">
               <input type="hidden" name="album_id" value="<?php echo $album_id ?>" />
               <button type="submit" name="delete" class="btn btn-danger">Confirm Deletion</button>
@@ -73,7 +73,7 @@ if(isset($_SESSION['reportDetails'])){
       <?php } ?>
       <?php if($_SESSION['postReview'] == "Report review.") { ?>
         <div class="modal-footer">
-          <form action="php/review/processReportReview.php" method="POST">
+          <form action="php/review/editReview/processReportReview.php" method="POST">
             <div class="form-group">
               <input type="hidden" name="album_id" value="<?php echo $album_id ?>" />
               <input type="hidden" name="user_id" value="<?php echo $user_id ?>" />

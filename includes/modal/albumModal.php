@@ -60,7 +60,7 @@ foreach($songs_data as $song){
       </div>
       <div class="modal-body">
         <?php if($_SESSION['albumMessage'] == "Edit Album.") { ?>
-          <form action="php/album/processEditAlbum.php" method="POST">
+          <form action="php/album/editAlbum/processEditAlbum.php" method="POST">
             <div class="col-12">
                 <div class="form-group mb-3">
                 <input type="hidden" name="album_id" value="<?php echo $album_id ?>" />
@@ -133,7 +133,7 @@ foreach($songs_data as $song){
         <?php } else {?> 
         <p><?php echo $body ?></p>
         <?php if($_SESSION['albumMessage'] == "Delete Album.") { ?>
-          <form action="php/album/processDeleteAlbum.php" method="POST">
+          <form action="php/album/deleteAlbum/processDeleteAlbum.php" method="POST">
           <div class="form-group mb-3">
             <input type="hidden" name="album_id" value="<?php echo $album_id ?>" />
             <label for="passwordConfirmDelete">Password</label>

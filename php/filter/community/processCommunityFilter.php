@@ -191,6 +191,6 @@ foreach($array as $community) {
 
 }
 
-echo '<script>window.location = "../../community_browse.php"</script>';
+echo '<script>window.location = "../../../community_browse.php"</script>';
 
 ?>

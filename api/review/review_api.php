@@ -85,6 +85,42 @@ class Review {
 
     // *** EDIT REVIEW ***
 
+    //Function to update review status to approved
+    public function approveReview($review_id){
+        $query = "UPDATE review SET status_id=1 WHERE review_id=?";
+
+        $statement = $this -> conn -> prepare($query);
+        $review_id = htmlspecialchars(strip_tags($review_id));
+        $review_id = $this -> conn -> real_escape_string($review_id);
+        $statement -> bind_param("s", $review_id);
+        $statement -> execute();
+        return $statement;
+    }
+
+    //Function to update review status to rejected
+    public function rejectReview($review_id){
+        $query = "UPDATE review SET status_id=3 WHERE review_id=?";
+
+        $statement = $this -> conn -> prepare($query);
+        $review_id = htmlspecialchars(strip_tags($review_id));
+        $review_id = $this -> conn -> real_escape_string($review_id);
+        $statement -> bind_param("s", $review_id);
+        $statement -> execute();
+        return $statement;
+    }
+
+    //Function to report a review
+    public function reportReview($review_id){
+        $query = "UPDATE review SET status_id=4 WHERE review_id=?";
+
+        $statement = $this -> conn -> prepare($query);
+        $review_id = htmlspecialchars(strip_tags($review_id));
+        $review_id = $this -> conn -> real_escape_string($review_id);
+        $statement -> bind_param("s", $review_id);
+        $statement -> execute();
+        return $statement;
+    }  
+
     //Function to edit an existing review
     public function updateReview($user_id, $album_id, $review_title, $review_text, $review_rating){
         $query = "UPDATE review SET review_title=?, review_text=?, review_rating=?, status_id=2 WHERE user_id=? AND album_id =?";
@@ -178,44 +214,6 @@ class Review {
         $statement -> execute();
         return $statement;
     }
-
-    // *** UPDATE REVIEW STATUS ***
-
-    //Function to update review status to approved
-    public function approveReview($review_id){
-        $query = "UPDATE review SET status_id=1 WHERE review_id=?";
-
-        $statement = $this -> conn -> prepare($query);
-        $review_id = htmlspecialchars(strip_tags($review_id));
-        $review_id = $this -> conn -> real_escape_string($review_id);
-        $statement -> bind_param("s", $review_id);
-        $statement -> execute();
-        return $statement;
-    }
-
-    //Function to update review status to rejected
-    public function rejectReview($review_id){
-        $query = "UPDATE review SET status_id=3 WHERE review_id=?";
-
-        $statement = $this -> conn -> prepare($query);
-        $review_id = htmlspecialchars(strip_tags($review_id));
-        $review_id = $this -> conn -> real_escape_string($review_id);
-        $statement -> bind_param("s", $review_id);
-        $statement -> execute();
-        return $statement;
-    }
-
-    //Function to report a review
-    public function reportReview($review_id){
-        $query = "UPDATE review SET status_id=4 WHERE review_id=?";
-
-        $statement = $this -> conn -> prepare($query);
-        $review_id = htmlspecialchars(strip_tags($review_id));
-        $review_id = $this -> conn -> real_escape_string($review_id);
-        $statement -> bind_param("s", $review_id);
-        $statement -> execute();
-        return $statement;
-    }  
 
 }
 

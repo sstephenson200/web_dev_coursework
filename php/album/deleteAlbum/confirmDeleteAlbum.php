@@ -10,7 +10,7 @@ if(isset($_SESSION['userLoggedIn'])){
         $_SESSION['albumDetails'] = $album_id;
     }
 } else {
-    echo "<script>window.location = '../../index.php'</script>";
+    echo "<script>window.location = '../../../index.php'</script>";
 }
 
 $location = $_SERVER['HTTP_REFERER'];

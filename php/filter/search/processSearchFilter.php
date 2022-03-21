@@ -251,6 +251,6 @@ foreach($array as $album) {
 
 }
 
-echo '<script>window.location = "../../search.php"</script>';
+echo '<script>window.location = "../../../search.php"</script>';
 
 ?>
