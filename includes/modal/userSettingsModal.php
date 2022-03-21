@@ -107,7 +107,7 @@ if(isset($_SESSION['emailResetDetails'])){
       <div class="modal-body">
         <p><?php echo $body ?></p>
         <?php if($_SESSION['userSettingsMessage'] == "Delete account.") { ?>
-          <form action="php/user/processDeleteAccount.php" method="POST">
+          <form action="php/user/deleteUser/processDeleteAccount.php" method="POST">
           <div class="form-group mb-3">
             <label for="passwordConfirmDelete">Password</label>
             <input type="password" class="form-control" id="passwordConfirmDelete" name="passwordConfirmDelete" placeholder="Password" required="required">
@@ -121,7 +121,7 @@ if(isset($_SESSION['emailResetDetails'])){
             </div>
           </form>
       <?php } else if($_SESSION['userSettingsMessage'] == "Reset email.") { ?>
-        <form action="php/user/processResetEmail.php" method="POST">
+        <form action="php/user/editUser/processResetEmail.php" method="POST">
           <div class="form-group mb-3">
             <input type="hidden" name="email" value="<?php echo $email ?>" />
             <label for="passwordConfirmEmailReset">Password</label>
@@ -136,7 +136,7 @@ if(isset($_SESSION['emailResetDetails'])){
             </div>
           </form>
           <?php } else if($_SESSION['userSettingsMessage'] == "Reset username.") { ?>
-        <form action="php/user/processResetUsername.php" method="POST">
+        <form action="php/user/editUser/processResetUsername.php" method="POST">
           <div class="form-group mb-3">
             <input type="hidden" name="username" value="<?php echo $username ?>" />
             <label for="passwordConfirmUsernameReset">Password</label>
@@ -151,7 +151,7 @@ if(isset($_SESSION['emailResetDetails'])){
             </div>
           </form>
           <?php } else if($_SESSION['userSettingsMessage'] == "Ban account.") { ?>
-            <form action="php/user/processBanAccount.php" method="POST">
+            <form action="php/user/deleteUser/processBanAccount.php" method="POST">
           <div class="form-group mb-3">
             <input type="hidden" name="user_id" value="<?php echo $user_id ?>" />
             <label for="passwordConfirmBan">Password</label>
@@ -166,7 +166,7 @@ if(isset($_SESSION['emailResetDetails'])){
             </div>
           </form>
           <?php } else if($_SESSION['userSettingsMessage'] == "Make admin.") { ?>
-            <form action="php/user/processMakeAdmin.php" method="POST">
+            <form action="php/user/addUser/processMakeAdmin.php" method="POST">
           <div class="form-group mb-3">
             <input type="hidden" name="user_id" value="<?php echo $user_id ?>" />
             <label for="passwordConfirmAdmin">Password</label>

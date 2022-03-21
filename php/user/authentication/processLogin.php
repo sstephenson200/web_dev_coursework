@@ -72,9 +72,9 @@ if(isset($_POST['submit'])) {
     }
 
     if(isset($_SESSION['loginErrors']) ){
-        echo "<script>window.location = '../../login.php'</script>";
+        echo "<script>window.location = '../../../login.php'</script>";
     } else {
-        echo "<script>window.location = '../../index.php'</script>";
+        echo "<script>window.location = '../../../index.php'</script>";
     }
 }
 

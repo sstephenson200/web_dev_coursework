@@ -4,7 +4,7 @@
 
     session_start();
 
-    include("php/user/processRememberMe.php");
+    include("php/user/authentication/processRememberMe.php");
 
     $valid_album = true;
 
@@ -118,9 +118,9 @@
 
         <?php
         include("includes/navbar.php");
-        include("php/user/getUserAlbums.php");    
-        include("php/user/compareUserAlbums.php");
-        include("php/user/getUserCommunities.php");
+        include("php/user/getUser/getUserAlbums.php");    
+        include("php/user/getUser/compareUserAlbums.php");
+        include("php/user/getUser/getUserCommunities.php");
         ?>
 
         <?php if($valid_album) { ?>
@@ -132,9 +132,9 @@
                     <div class='col-2 col-xl-1 own text-center'>
                     <a role='button'
                     <?php if(!isset($_SESSION['userLoggedIn'])) {
-                         echo "href='php/user/processCardFunctionError.php'"; 
+                         echo "href='php/user/authentication/processCardFunctionError.php'"; 
                         } else {
-                            echo "href='php/user/processOwnedAlbum.php?album_id=$album_id&owned=$ownedFlag'";
+                            echo "href='php/user/addUser/processOwnedAlbum.php?album_id=$album_id&owned=$ownedFlag'";
                         } 
                     ?>>
                         <i id='ownIcon' class='fas <?php if($ownedFlag) { ?> fa-check <?php } else { ?> fa-plus <?php } ?> fa-2x own' data-toggle='popover' title='Own' data-content='Owned music' data-target='ownIcon'></i>
@@ -143,9 +143,9 @@
                     <div class='col-2 col-xl-1 favourite'>
                         <a role='button'
                         <?php if(!isset($_SESSION['userLoggedIn'])) {
-                         echo "href='php/user/processCardFunctionError.php'"; 
+                         echo "href='php/user/authentication/processCardFunctionError.php'"; 
                         } else {
-                            echo "href='php/user/processFavouriteAlbum.php?album_id=$album_id&favourited=$favouriteFlag'";
+                            echo "href='php/user/addUser/processFavouriteAlbum.php?album_id=$album_id&favourited=$favouriteFlag'";
                            } 
                         ?>>
                             <i id='favouriteIcon' class='<?php if($favouriteFlag) { ?> fas <?php } else { ?> far <?php } ?> fa-heart fa-2x favourite' data-toggle='popover' title='Favourite' data-content='Favourited Music' data-target='favouriteIcon'></i>
@@ -521,7 +521,7 @@
                         $community_name = $related_community['community_name'];
                         $community_description = $related_community['community_description'];
 
-                        include("php/user/compareUserCommunities.php");
+                        include("php/user/getUser/compareUserCommunities.php");
 
                         //get community size
                         $community_size_endpoint = $base_url . "community/getCommunity/getCommunitySizeByCommunityID.php?community_id=$community_id";

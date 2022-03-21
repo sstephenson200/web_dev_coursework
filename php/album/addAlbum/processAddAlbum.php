@@ -86,14 +86,14 @@ if(isset($_POST['addAlbum'])){
         //check if track and tracklength are the same length
         if(count($tracks) != count($trackLengths)){
             $_SESSION['adminMessage'] = "Incorrect songs.";
-            echo "<script>window.location = '../../admin.php'</script>";
+            echo "<script>window.location = '../../../admin.php'</script>";
         }
 
         //check track lengths are in the correct format
         foreach($trackLengths as $length){
             if(!strpos($length, ":")){
                 $_SESSION['adminMessage'] = "Song Length Format.";
-                echo "<script>window.location = '../../admin.php'</script>";
+                echo "<script>window.location = '../../../admin.php'</script>";
             }
         }
 
@@ -132,7 +132,7 @@ if(isset($_POST['addAlbum'])){
                     }
                 } else {
                     $_SESSION['adminMessage'] = "Error.";
-                    echo "<script>window.location = '../../admin.php'</script>";
+                    echo "<script>window.location = '../../../admin.php'</script>";
                 }
             }
             
@@ -173,7 +173,7 @@ if(isset($_POST['addAlbum'])){
                     }
                 } else {
                     $_SESSION['adminMessage'] = "Error.";
-                    echo "<script>window.location = '../../admin.php'</script>";
+                    echo "<script>window.location = '../../../admin.php'</script>";
                 }
             }
             
@@ -191,7 +191,7 @@ if(isset($_POST['addAlbum'])){
                 
             } else {
                 $_SESSION['adminMessage'] = "Error.";
-                echo "<script>window.location = '../../admin.php'</script>";
+                echo "<script>window.location = '../../../admin.php'</script>";
             }
         }
 
@@ -209,7 +209,7 @@ if(isset($_POST['addAlbum'])){
                 }
             } else {
                 $_SESSION['adminMessage'] = "Error.";
-                echo "<script>window.location = '../../admin.php'</script>";
+                echo "<script>window.location = '../../../admin.php'</script>";
             }
         }
 
@@ -227,7 +227,7 @@ if(isset($_POST['addAlbum'])){
                     if($create_genre_data['message'] != "Genre created."){
                         
                         $_SESSION['adminMessage'] = "Error.";
-                        echo "<script>window.location = '../../admin.php'</script>";
+                        echo "<script>window.location = '../../../admin.php'</script>";
                         
                     }
                 }
@@ -252,7 +252,7 @@ if(isset($_POST['addAlbum'])){
 
             } else {
                 $_SESSION['adminMessage'] = "Error.";
-                echo "<script>window.location = '../../admin.php'</script>";
+                echo "<script>window.location = '../../../admin.php'</script>";
             } 
             
         }
@@ -270,7 +270,7 @@ if(isset($_POST['addAlbum'])){
                     if($create_subgenre_data['message'] != "Subgenre created."){
                         
                         $_SESSION['adminMessage'] = "Error.";
-                        echo "<script>window.location = '../../admin.php'</script>";
+                        echo "<script>window.location = '../../../admin.php'</script>";
                         
                     }
                 }
@@ -295,7 +295,7 @@ if(isset($_POST['addAlbum'])){
 
             } else {
                 $_SESSION['adminMessage'] = "Error.";
-                echo "<script>window.location = '../../admin.php'</script>";
+                echo "<script>window.location = '../../../admin.php'</script>";
             } 
             
         }
@@ -315,6 +315,6 @@ if(isset($_POST['addAlbum'])){
     $_SESSION['adminMessage'] = "Error.";
 }
 
-echo "<script>window.location = '../../admin.php'</script>";
+echo "<script>window.location = '../../../admin.php'</script>";
 
 ?>

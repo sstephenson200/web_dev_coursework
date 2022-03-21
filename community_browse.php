@@ -4,7 +4,7 @@
 
     session_start();
 
-    include("php/user/processRememberMe.php");
+    include("php/user/authentication/processRememberMe.php");
 
     //Card count variables
     $community_card_count=0;    
@@ -105,7 +105,7 @@
 
         <?php
         include("includes/navbar.php");
-        include("php/user/getUserCommunities.php");
+        include("php/user/getUser/getUserCommunities.php");
         ?>
 
         <!-- Title -->

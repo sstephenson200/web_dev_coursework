@@ -1,7 +1,7 @@
 <?php
     session_start(); 
 
-    include("php/user/processRememberMe.php");
+    include("php/user/authentication/processRememberMe.php");
 ?>
 
 <!DOCTYPE html>
@@ -59,7 +59,7 @@
                     <h3>Create An Account</h3>
                     <p>Have an account?<a type="button" class="btn loginLink" href="login.php">Login</a></p>
                 </div>
-                <form action="php/user/processSignup.php" method="POST">
+                <form action="php/user/authentication/processSignup.php" method="POST">
                     <div class="form-group mb-3">
                         <i class="fas fa-envelope"></i>
                         <label for="emailSignup">Email Address</label>

@@ -1,6 +1,6 @@
 <?php 
     
-    include("php/user/compareUserCommunities.php");
+    include("php/user/getUser/compareUserCommunities.php");
 
 ?>
 
@@ -15,9 +15,9 @@
                 <div class="col-6">
                     <a role="button"
                     <?php if(!isset($_SESSION['userLoggedIn'])) {
-                        echo "href='php/user/processCardFunctionError.php'"; 
+                        echo "href='php/user/authentication/processCardFunctionError.php'"; 
                         } else {
-                        echo "href='php/user/processJoinedCommunity.php?community_id=$community_id&joined=$communityFlag'"; 
+                        echo "href='php/user/addUser/processJoinedCommunity.php?community_id=$community_id&joined=$communityFlag'"; 
                         }
                 ?>>
                         <i id="joinIcon<?php echo $community_card_count ?>" class="fas <?php if($communityFlag) { ?> fa-users <?php } else { ?> fa-user-plus <?php } ?> fa-lg join" data-toggle="popover" title="Join" data-content="Join this community" data-target='joinIcon<?php echo $community_card_count ?>'></i>

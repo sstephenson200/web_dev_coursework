@@ -33,7 +33,7 @@ if(isset($_SESSION['userLoggedIn'])){
     }
 
 } else {
-    echo "<script>window.location = '../../index.php'</script>";
+    echo "<script>window.location = '../../../index.php'</script>";
 }
 
 echo "<script>window.location = '$location'</script>";

@@ -1,6 +1,6 @@
 <?php 
 
-    include("php/user/compareUserAlbums.php");
+    include("php/user/getUser/compareUserAlbums.php");
     
 ?>
 
@@ -30,9 +30,9 @@
             <div class='col-4'>
                 <a role='button' 
                 <?php if(!isset($_SESSION['userLoggedIn'])) {
-                         echo "href='php/user/processCardFunctionError.php'";  
+                         echo "href='php/user/authentication/processCardFunctionError.php'";  
                         } else {
-                            echo "href='php/user/processOwnedAlbum.php?album_id=$album_id&owned=$ownedFlag'";
+                            echo "href='php/user/addUser/processOwnedAlbum.php?album_id=$album_id&owned=$ownedFlag'";
                         }
                 ?>>
                     <i id='ownIcon<?php echo $music_card_count ?>' class='fas <?php 
@@ -42,9 +42,9 @@
             <div class='col-4'>
                 <a role='button'
                 <?php if(!isset($_SESSION['userLoggedIn'])) {
-                         echo "href='php/user/processCardFunctionError.php'"; 
+                         echo "href='php/user/authentication/processCardFunctionError.php'"; 
                         } else {
-                            echo "href='php/user/processFavouriteAlbum.php?album_id=$album_id&favourited=$favouriteFlag'";
+                            echo "href='php/user/addUser/processFavouriteAlbum.php?album_id=$album_id&favourited=$favouriteFlag'";
                         } 
                 ?>>
                     <i id='favouriteIcon<?php echo $music_card_count ?>' class='<?php

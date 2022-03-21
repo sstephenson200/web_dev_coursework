@@ -4,7 +4,7 @@
 
     session_start();
 
-    include("php/user/processRememberMe.php");
+    include("php/user/authentication/processRememberMe.php");
 
     if(isset($_POST['search'])){
         $search = urlencode($_POST['search']);
@@ -127,7 +127,7 @@
 
         <?php
         include("includes/navbar.php");
-        include("php/user/getUserAlbums.php");
+        include("php/user/getUser/getUserAlbums.php");
         ?>
 
         <!-- Title -->
@@ -274,7 +274,7 @@
                                     } else {
                                         echo "No rating";  
                                     }
-                                    "<a role='button' href='php/filter/search/removeSearchFilter.php?rating=$rating_edited'>
+                                    echo "<a role='button' href='php/filter/search/removeSearchFilter.php?rating=$rating_edited'>
                                         <i id='deleteFilter$rating' class='fas fa-times fa-lg' data-toggle='popover' title='Remove' data-content='Remove Filter'></i>
                                     </a>
                                 </li>";      

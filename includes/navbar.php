@@ -101,7 +101,7 @@
                             <a class='dropdown-item' href='admin.php'>Admin</a>
                         <?php } ?>
                         <div class='dropdown-divider'></div>
-                        <a class='dropdown-item' href='php/user/processLogout.php?user_id=<?php echo $logged_in_user_id ?>'>Logout</a>
+                        <a class='dropdown-item' href='php/user/authentication/processLogout.php?user_id=<?php echo $logged_in_user_id ?>'>Logout</a>
                     </div>
                 </div>
             <?php

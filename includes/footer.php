@@ -8,7 +8,7 @@
                         <p>Sign up to our newsletter to hear more about Pebble Revolution!</p>
                     </div>
                     <div class="d-flex flex-row">
-                        <form action="php/user/processEmailSignup.php" method="GET">
+                        <form action="php/user/addUser/processEmailSignup.php" method="GET">
                             <div class="form-group">
                                 <input type="email" class="form-control" id="emailListSignup" placeholder="name@example.com" name="emailListSignup">
                             </div>

@@ -4,7 +4,7 @@ $base_url = "http://localhost/web_dev_coursework/api/";
 
 session_start();
 
-include("../user/rememberMeController.php");
+include("../authentication/rememberMeController.php");
 
 $remember = new rememberMeController();
 
@@ -33,7 +33,7 @@ if(isset($_POST['confirmReport'])){
             }
 
         } else {
-            echo "<script>window.location = '../../index.php'</script>";
+            echo "<script>window.location = '../../../index.php'</script>";
         }    
 
     } else {
@@ -41,7 +41,7 @@ if(isset($_POST['confirmReport'])){
     }
 
 } else {
-    echo "<script>window.location = '../../index.php'</script>";
+    echo "<script>window.location = '../../../index.php'</script>";
 }
 
 $location = $_SERVER['HTTP_REFERER'];

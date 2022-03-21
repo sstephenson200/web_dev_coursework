@@ -6,7 +6,7 @@ session_start();
 
 $location = $_SERVER['HTTP_REFERER'];
 
-include("../../user/rememberMeController.php");
+include("../../user/authentication/rememberMeController.php");
 
 $remember = new rememberMeController();
 

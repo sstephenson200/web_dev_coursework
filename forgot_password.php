@@ -1,7 +1,7 @@
 <?php
     session_start(); 
 
-    include("php/user/processRememberMe.php");
+    include("php/user/authentication/processRememberMe.php");
 ?>
 
 <!DOCTYPE html>
@@ -51,7 +51,7 @@
         include("includes/navbar.php");
         ?>
 
-        <form action="php/user/processPasswordReset.php" method="POST">
+        <form action="php/user/authentication/processPasswordReset.php" method="POST">
             <div class="row signup d-flex justify-content-center align-items-center py-2">
                 <div class="col-10 col-sm-6 col-md-5 col-lg-4 col-xl-3 signupForm border px-3">
                     <div class="text-center mt-3">

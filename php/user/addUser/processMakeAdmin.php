@@ -4,15 +4,15 @@ $base_url = "http://localhost/web_dev_coursework/api/";
 
 session_start();
 
-include("../user/rememberMeController.php");
+include("../authentication/rememberMeController.php");
 $remember = new rememberMeController();
 
 $location = $_SERVER['HTTP_REFERER'];
 
-if(isset($_SESSION['userLoggedIn']) and isset($_POST['confirmEmailReset'])){
+if(isset($_SESSION['userLoggedIn']) and isset($_POST['confirmAdmin'])){
 
-    $email = $_POST['email'];
-    $password = $_POST['passwordConfirmEmailReset'];
+    $password = $_POST['passwordConfirmAdmin'];
+    $user_id =  $_POST['user_id'];
     //get logged in user id
     $tokens = $remember -> parse_token($_SESSION['userLoggedIn']);
     $token = $tokens[0];
@@ -31,16 +31,20 @@ if(isset($_SESSION['userLoggedIn']) and isset($_POST['confirmEmailReset'])){
         if($check_password_data){
             $hashed_password = $check_password_data[0]['user_password'];
             if(password_verify($password, $hashed_password)) {
-                //reset email
-                $email_endpoint = $base_url . "user/editUser/updateUserEmail.php?user_id=$logged_in_user_id&email=$email";
-                $email_resource = file_get_contents($email_endpoint);
-                $email_data = json_decode($email_resource, true);
+                //give admin access
+                $admin_endpoint = $base_url . "user/addUser/createAdmin.php?user_id=$user_id";
+                $admin_resource = file_get_contents($admin_endpoint);
+                $admin_data = json_decode($admin_resource, true);
 
-                if($email_data){
-                    $_SESSION['userSettingsMessage'] = $email_data['message'];
+                if($admin_data){
+                    $_SESSION['userSettingsMessage'] = $admin_data['message'];
                 } else {
                     $_SESSION['userSettingsMessage'] = "Error.";
-                } 
+                }
+
+                } else {
+                    $_SESSION['userSettingsMessage'] = "Error.";
+                }
 
             } else {
                 $_SESSION['userSettingsMessage'] = "Incorrect password.";
@@ -50,12 +54,8 @@ if(isset($_SESSION['userLoggedIn']) and isset($_POST['confirmEmailReset'])){
             $_SESSION['userSettingsMessage'] = "Error.";
         }
 
-    } else {
-        $_SESSION['userSettingsMessage'] = "Error.";
-    }
-
 } else {
-    echo "<script>window.location = '../../index.php'</script>";
+    echo "<script>window.location = '../../../index.php'</script>";
 }
 
 echo "<script>window.location = '$location'</script>";

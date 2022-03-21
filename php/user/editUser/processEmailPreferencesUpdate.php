@@ -4,7 +4,7 @@ $base_url = "http://localhost/web_dev_coursework/api/";
 
 session_start();
 
-include("rememberMeController.php");
+include("../authentication/rememberMeController.php");
 
 $remember = new rememberMeController();
 
@@ -39,17 +39,17 @@ if(isset($_POST['updateEmailPreferences'])){
             }
 
         } else {
-            echo "<script>window.location = '../../index.php'</script>";
+            echo "<script>window.location = '../../../index.php'</script>";
         }
 
     } else {
-        echo "<script>window.location = '../../index.php'</script>";
+        echo "<script>window.location = '../../../index.php'</script>";
     }
 
 } else {
     $_SESSION['userSettingsMessage'] = "Error.";
 }
 
-echo "<script>window.location = '../../user_settings.php?user_id=$logged_in_user_id'</script>";
+echo "<script>window.location = '../../../user_settings.php?user_id=$logged_in_user_id'</script>";
 
 ?>

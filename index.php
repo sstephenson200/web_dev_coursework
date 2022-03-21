@@ -4,7 +4,7 @@
 
     session_start();
 
-    include("php/user/processRememberMe.php");
+    include("php/user/authentication/processRememberMe.php");
 
     if(isset($_SESSION['rememberMe'])){
         setcookie("rememberMe", $_SESSION['rememberMe'][0], time() + (86400 * 30), "/");
@@ -71,8 +71,8 @@
 
         <?php
         include("includes/navbar.php");
-        include("php/user/getUserAlbums.php");   
-        include("php/user/getUserCommunities.php"); 
+        include("php/user/getUser/getUserAlbums.php");   
+        include("php/user/getUser/getUserCommunities.php"); 
         ?>
 
         <!-- Jumbotron -->

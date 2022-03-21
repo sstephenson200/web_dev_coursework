@@ -26,6 +26,6 @@ if($user_id){
 session_unset();
 session_destroy();
 
-echo "<script>window.location = '../../index.php'</script>";
+echo "<script>window.location = '../../../index.php'</script>";
 
 ?>

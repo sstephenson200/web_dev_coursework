@@ -55,7 +55,7 @@ if(isset($_SESSION['banUserDetails'])){
       <div class="modal-body">
         <p><?php echo $body ?></p>
         <?php if($_SESSION['adminMessage'] == "Delete account.") { ?>
-          <form action="php/user/processBanAccount.php" method="POST">
+          <form action="php/user/deleteUser/processBanAccount.php" method="POST">
           <div class="form-group mb-3">
             <input type="hidden" name="user_id" value="<?php echo $user_id ?>" />
             <label for="passwordConfirmBan">Password</label>

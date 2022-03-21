@@ -65,17 +65,17 @@ if(isset($_POST['changePassword'])) {
             }
 
         } else {
-            echo "<script>window.location = '../../index.php'</script>";
+            echo "<script>window.location = '../../../index.php'</script>";
         }
 
     } else {
-        echo "<script>window.location = '../../index.php'</script>";
+        echo "<script>window.location = '../../../index.php'</script>";
     }
 
 } else {
     $_SESSION['userSettingsMessage'] = "Error.";
 }
 
-echo "<script>window.location = '../../user_settings.php?user_id=$logged_in_user_id'</script>";
+echo "<script>window.location = '../../../user_settings.php?user_id=$logged_in_user_id'</script>";
 
 ?>

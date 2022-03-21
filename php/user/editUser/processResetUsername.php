@@ -4,7 +4,7 @@ $base_url = "http://localhost/web_dev_coursework/api/";
 
 session_start();
 
-include("../user/rememberMeController.php");
+include("../authentication/rememberMeController.php");
 $remember = new rememberMeController();
 
 $location = $_SERVER['HTTP_REFERER'];
@@ -55,7 +55,7 @@ if(isset($_SESSION['userLoggedIn']) and isset($_POST['confirmUsernameReset'])){
     }
 
 } else {
-    echo "<script>window.location = '../../index.php'</script>";
+    echo "<script>window.location = '../../../index.php'</script>";
 }
 
 echo "<script>window.location = '$location'</script>";

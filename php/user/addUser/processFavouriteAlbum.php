@@ -4,7 +4,7 @@ $base_url = "http://localhost/web_dev_coursework/api/";
 
 session_start();
 
-include("rememberMeController.php");
+include("../authentication/rememberMeController.php");
 
 $remember = new rememberMeController();
 

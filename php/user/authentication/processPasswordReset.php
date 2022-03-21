@@ -58,7 +58,7 @@ if(isset($_POST['submit'])) {
         $_SESSION['passwordResetMessage'] = $errors[0];
     }
 
-    echo "<script>window.location = '../../forgot_password.php'</script>";
+    echo "<script>window.location = '../../../forgot_password.php'</script>";
     
 }
 

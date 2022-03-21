@@ -12,7 +12,7 @@ if(isset($_SESSION['userLoggedIn']) and isset($_GET['user_id'])){
     }
 
 } else {
-    echo "<script>window.location = '../../index.php'</script>";
+    echo "<script>window.location = '../../../index.php'</script>";
 }
 
 $location = $_SERVER['HTTP_REFERER'];

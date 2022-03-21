@@ -68,9 +68,9 @@ if(isset($_POST['submit'])) {
     unset($_SESSION['password2Signup']);
 
     if(isset($_SESSION['signupErrors']) ){
-        echo "<script>window.location = '../../signup.php'</script>";
+        echo "<script>window.location = '../../../signup.php'</script>";
     } else {
-        echo "<script>window.location = '../../index.php'</script>";
+        echo "<script>window.location = '../../../index.php'</script>";
     }
 }
 

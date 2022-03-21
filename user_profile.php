@@ -4,7 +4,7 @@
 
     session_start();
 
-    include("php/user/processRememberMe.php");
+    include("php/user/authentication/processRememberMe.php");
 
     $valid_user = true;
 
@@ -123,8 +123,8 @@
 
         <?php
         include("includes/navbar.php");
-        include("php/user/getUserAlbums.php");
-        include("php/user/getUserCommunities.php");
+        include("php/user/getUser/getUserAlbums.php");
+        include("php/user/getUser/getUserCommunities.php");
         ?>
 
         <?php if($active_data and array_key_exists('message',$active_data) and $active_data['message']=="Account active.") { ?>
@@ -191,18 +191,18 @@
                                 <i id='reported' class='fas fa-flag fa-lg report' data-toggle='popover' title='Reported' data-content='Reported Content' data-target='reportIcon'></i>
                             <?php } else { ?>
 
-                            <a role='button' href='php/user/confirmReportUser.php?user_id=<?php echo $user_id?>&reported=<?php echo $reported_flag ?>' class='text-reset text-decoration-none px-1'>
+                            <a role='button' href='php/user/addUser/confirmReportUser.php?user_id=<?php echo $user_id?>&reported=<?php echo $reported_flag ?>' class='text-reset text-decoration-none px-1'>
                                 <i id='reportIcon' class='<?php if($reported_flag) { ?> fas <?php } else { ?> far <?php } ?> fa-flag fa-lg report' data-toggle='popover' title='Report' data-content='Report Content' data-target='reportIcon'></i>
                             </a>
                         <?php }
                         } ?>
                         <?php if(isset($_SESSION['userLoggedIn']) and $logged_in_username != $username) {
                             if($AdminCount != 0) { ?>
-                                <a role='button' href='php/user/confirmBanUser.php?user_id=<?php echo $user_id?>' class='text-reset text-decoration-none px-1'>
+                                <a role='button' href='php/user/deleteUser/confirmBanUser.php?user_id=<?php echo $user_id?>' class='text-reset text-decoration-none px-1'>
                                     <i id='banIcon' class='fas fa-ban fa-lg ban' data-toggle='popover' title='Ban' data-content='Ban User' data-target='banIcon'></i>
                                 </a>
                                 <?php if(!$is_admin) { ?>
-                                <a role='button' href='php/user/confirmMakeAdmin.php?user_id=<?php echo $user_id?>' class='text-reset text-decoration-none px-1'>
+                                <a role='button' href='php/user/addUser/confirmMakeAdmin.php?user_id=<?php echo $user_id?>' class='text-reset text-decoration-none px-1'>
                                     <i id='adminIcon' class='fas fa-tools fa-lg admin' data-toggle='popover' title='Admin' data-content='Give User Admin Rights' data-target='adminIcon'></i>
                                 </a>
                                 <?php } ?>

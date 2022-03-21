@@ -31,7 +31,7 @@ if(isset($_POST['closeReport'])){
     $_SESSION['adminMessage'] = "Error.";
 }
 
-echo "<script>window.location = '../../admin.php'</script>";
+echo "<script>window.location = '../../../admin.php'</script>";
 
 
 ?>

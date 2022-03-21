@@ -4,7 +4,7 @@
 
     session_start();
 
-    include("php/user/processRememberMe.php");
+    include("php/user/authentication/processRememberMe.php");
 
     $user_id = $_GET['user_id'];
 
@@ -95,7 +95,7 @@
             </div>
         </div>
 
-        <form action="php/user/processProfileUpdate.php" method="POST">
+        <form action="php/user/editUser/processProfileUpdate.php" method="POST">
             <div class="row d-flex justify-content-center">
                 <div class="col-12 col-sm-10">
                     <div class="row mb-2 d-flex justify-content-center">
@@ -171,7 +171,7 @@
 
                 <div class="row d-flex justify-content-center">
                     <div class="col-12 col-sm-10">
-                        <form action="php/user/processEmailPreferencesUpdate.php" method="POST">
+                        <form action="php/user/editUser/processEmailPreferencesUpdate.php" method="POST">
                             <div class="row mb-2">
                                 <div class="col">
                                     <div class="form-check" >
@@ -214,7 +214,7 @@
 
                 <div class="row d-flex justify-content-center">
                     <div class="col-10 col-sm-8">
-                        <form action="php/user/confirmEmailUpdate.php" method="POST">
+                        <form action="php/user/editUser/confirmEmailUpdate.php" method="POST">
                             <div class="form-group mb-3">
                                 <label for="emailReset">New Email Address</label>
                                 <input type="email" class="form-control" id="emailReset" name="emailReset" placeholder="name@example.com" required="required">
@@ -243,7 +243,7 @@
 
                 <div class="row d-flex justify-content-center">
                     <div class="col-10 col-sm-8">
-                        <form action="php/user/confirmUsernameUpdate.php" method="POST">
+                        <form action="php/user/editUser/confirmUsernameUpdate.php" method="POST">
                             <div class="form-group mb-3">
                                 <label for="usernameReset">New Username</label>
                                 <input type="text" class="form-control" id="usernameReset" name="usernameReset" placeholder="Username" required="required">
@@ -278,7 +278,7 @@
 
                 <div class="row d-flex justify-content-center">
                     <div class="col-10 col-sm-8">
-                        <form action="php/user/processPasswordUpdate.php" method="POST">
+                        <form action="php/user/authentication/processPasswordUpdate.php" method="POST">
                             <div class="form-group mb-3">
                                 <label for="passwordResetOld">Old Password</label>
                                 <input type="password" class="form-control" id="passwordResetOld" name="passwordResetOld" placeholder="Password" required="required">
@@ -326,7 +326,7 @@
 
                         <div class="row text-center mb-2">
                             <div class="col">
-                                <a type='submit' name="deleteAccount" href='php/user/confirmDeleteAccount.php' class='btn styled_button'>Delete Account</a>
+                                <a type='submit' name="deleteAccount" href='php/user/deleteUser/confirmDeleteAccount.php' class='btn styled_button'>Delete Account</a>
                             </div>
                         </div>
 

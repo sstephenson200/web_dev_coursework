@@ -4,7 +4,7 @@
 
     session_start();
 
-    include("php/user/processRememberMe.php");
+    include("php/user/authentication/processRememberMe.php");
 
     //get pending reviews
     $pending_review_endpoint = $base_url . "review/getReview/getReviewsByStatus.php?status_title=Pending";
@@ -86,7 +86,7 @@
 
         <div class="row d-flex justify-content-center">
             <div class="col-12">
-                <form action="php/user/processAddAlbum.php" method="POST">
+                <form action="php/album/addAlbum/processAddAlbum.php" method="POST">
                     <div class="row d-flex justify-content-center">
                         <div class="col-10 col-sm-5">
                             <div class="form-group mb-3">
@@ -399,7 +399,7 @@
                                                 <td><a role='button' href='user_profile.php?user_id=<?php echo $reporting_user ?>'><?php echo $reporting_user_name ?></a></td>
                                                 <td><a role='button' href='user_profile.php?user_id=<?php echo $reported_user ?>'><?php echo $reported_user_name ?></a></td>
                                                 <td><?php echo stripslashes($report_reasoning) ?></td>
-                                                <form action="php/user/processReportedUser.php" method="POST">
+                                                <form action="php/user/editUser/processReportedUser.php" method="POST">
                                                     <input type="hidden" name="user_id" value="<?php echo $reported_user ?>" />
                                                     <input type="hidden" name="report_id" value="<?php echo $report_id ?>" />
                                                     <td><button type='submit' name="closeReport" class='btn styled_button'>Close Report</button>

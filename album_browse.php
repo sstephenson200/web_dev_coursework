@@ -4,7 +4,7 @@
 
     session_start();
 
-    include("php/user/processRememberMe.php");
+    include("php/user/authentication/processRememberMe.php");
 
     //Card count variables
     $music_card_count=0;
@@ -119,7 +119,7 @@
         <?php
         include("includes/navbar.php");
          
-        include("php/user/getUserAlbums.php");
+        include("php/user/getUser/getUserAlbums.php");
         ?>
 
         <!-- Title -->

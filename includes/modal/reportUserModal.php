@@ -39,7 +39,7 @@ if(isset($_SESSION['reportUserDetails'])){
       <div class="modal-body">
         <p><?php echo $body ?></p>
         <?php if($_SESSION['reportUser'] == "Report user.") { ?>
-          <form action="php/user/processReportUser.php" method="POST">
+          <form action="php/user/addUser/processReportUser.php" method="POST">
           <div class="form-group mb-3">
             <input type="hidden" name="user_id" value="<?php echo $user_id ?>" />
             <label for="reportReason">Reason For Report</label>
